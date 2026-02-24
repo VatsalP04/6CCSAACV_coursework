@@ -1,7 +1,8 @@
+from tqdm import tqdm
 from layers import (
     Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, CrossEntropyLoss
 )
-from utils import PatchShuffleDataLoader, mount_google_drive, compute_total_receptive_field
+from utils import PatchShuffleDataLoader, mount_google_drive, compute_total_receptive_field, setup_logging, save_checkpoint
 
 
 def build_network():
@@ -43,17 +44,23 @@ def build_network():
 
 
 if __name__ == "__main__":
-    # Mount Google Drive (no-op outside Colab)
-    mount_google_drive()
+    log = setup_logging()
 
-    # ---- Configuration ----
-    dataset_dir = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32"
-    json_file = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32_cross_val/fold_1.json"
+    # # Mount Google Drive (no-op outside Colab)
+    # mount_google_drive()
 
-    batch_size = 32
+    # # ---- Configuration ----
+    # dataset_dir = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32"
+    # json_file = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32_cross_val/fold_1.json"
+
+    ## ---- Local Configuration ----
+    dataset_dir = "dataset/acv_train_32x32"
+    json_file = "dataset/acv_train_32x32_cross_val/fold_1.json"
+
+    batch_size = 4
     image_size = (32, 32)
     num_patches = 4
-    num_epochs = 50
+    num_epochs = 5
     learning_rate = 1e-3
 
     loader = PatchShuffleDataLoader(
@@ -66,23 +73,30 @@ if __name__ == "__main__":
     )
 
     net = build_network()
-    print(f"[INFO] Receptive field: {compute_total_receptive_field(net)} pixels")
+    log.info(f"Receptive field: {compute_total_receptive_field(net)} pixels")
+    log.info(f"Starting training | epochs={num_epochs} | batch_size={batch_size}")
 
     # ---- Training loop ----
     for epoch in range(num_epochs):
+        epoch_loss = 0.0
         iter_train = 0
 
-        for X_batch, Y_batch in loader.train_batches():
+        pbar = tqdm(loader.train_batches(), desc=f"Epoch {epoch+1}/{num_epochs}", leave=False)
+        for X_batch, Y_batch in pbar:
             iter_train += 1
 
-            out_batch = net.forward(X_batch)   # (B, C, H, W)
+            out_batch = net.forward(X_batch)
 
             loss_layer = CrossEntropyLoss()
             loss = loss_layer.forward(out_batch, Y_batch)
+            epoch_loss += loss
 
-            print(f"[INFO] Mode: Training, Epoch: {epoch}, "
-                  f"Iteration: {iter_train}, Loss: {loss}")
+            pbar.set_postfix(loss=f"{loss:.4f}")
 
             dX = loss_layer.backward()
             net.backward(dX)
             net.step(learning_rate)
+
+        avg_loss = epoch_loss / max(iter_train, 1)
+        ckpt_path = save_checkpoint(net, epoch)
+        log.info(f"Epoch {epoch+1}/{num_epochs} | Avg Loss: {avg_loss:.4f} | Checkpoint: {ckpt_path}")

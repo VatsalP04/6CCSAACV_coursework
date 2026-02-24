@@ -6,6 +6,9 @@ import cv2 as cv
 import matplotlib.pyplot as plt
 import scipy.optimize
 from typing import Tuple, List
+import logging
+import os
+import pickle
 
 # Google Colab guard — allows the file to be imported outside Colab
 try:
@@ -30,6 +33,70 @@ def mount_google_drive(drive_path="/content/drive"):
         else:
             print("Failed to mount Google Drive. Please try again.")
 
+def setup_logging(log_file="train.log"):
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler(),
+        ]
+    )
+    return logging.getLogger(__name__)
+
+
+def save_checkpoint(net, epoch, checkpoint_dir="checkpoints"):
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    path = os.path.join(checkpoint_dir, f"epoch_{epoch}.pkl")
+    with open(path, "wb") as f:
+        pickle.dump(net, f)
+    return path
+
+def list_all_images(file_path):
+    """List all image filenames in a directory."""
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Directory not found: {file_path}")
+
+    images = []
+    for filename in os.listdir(file_path):
+        if filename.lower().endswith((".jpg", ".jpeg", ".png")):
+            images.append(filename)
+
+    if len(images) == 0:
+        print("No images found in the directory.")
+
+    return images
+
+def cross_val_imgs(SEED, K, file_path, output_jsons):
+    os.makedirs(output_jsons, exist_ok=True)
+
+    all_images = list_all_images(file_path)
+    if len(all_images) < K:
+        raise ValueError(f"Need at least {K} images, found {len(all_images)}")
+
+    random.seed(SEED)
+    random.shuffle(all_images)
+
+    n = len(all_images)
+    fold_size = n // K
+
+    for i in range(K):
+        val_start = i * fold_size
+        val_end = (i + 1) * fold_size if i < K - 1 else n
+
+        val_files = all_images[val_start:val_end]
+        train_files = all_images[:val_start] + all_images[val_end:]
+
+        fold_data = {"train": train_files, "val": val_files}
+
+        fold_path = os.path.join(output_jsons, f"fold_{i+1}.json")
+        with open(fold_path, "w") as f:
+            json.dump(fold_data, f, indent=4)
+
+        print("Saved:", fold_path)
+
+# cross_val_imgs(SEED = 2025, K = 5, file_path = "dataset/acv_train_32x32", output_jsons= "dataset/acv_train_32x32_cross_val")
+# print(os.listdir("dataset/acv_train_32x32_cross_val"))
 
 class PatchShuffleDataLoader:
     def __init__(self, json_file: str, dataset_dir: str, batch_size: int = 8,
@@ -52,6 +119,11 @@ class PatchShuffleDataLoader:
         self.image_size = image_size
         self.num_patches = num_patches
         self.shuffle = shuffle
+
+        if not os.path.exists(json_file):
+            output_jsons = os.path.dirname(json_file)
+            print(f"Fold file not found, generating cross-validation splits in {output_jsons} ...")
+            cross_val_imgs(SEED=2025, K=5, file_path=dataset_dir, output_jsons=output_jsons)
 
         with open(json_file, 'r') as f:
             data = json.load(f)
