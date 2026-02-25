@@ -1,14 +1,14 @@
-import random
-import json
 import os
+import json
+import random
+import logging
+import pickle
+from typing import Tuple, List
+
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
 import scipy.optimize
-from typing import Tuple, List
-import logging
-import os
-import pickle
 
 # Google Colab guard — allows the file to be imported outside Colab
 try:
@@ -127,25 +127,25 @@ class PatchShuffleDataLoader:
 
         with open(json_file, 'r') as f:
             data = json.load(f)
-        self.train_files = data['train']
-        self.val_files = data['val']
+        self.train_files = data["train"]
+        self.val_files = data["val"]
+
+        self.patch_size = None  # set on first use
 
     def _shuffle_patches(self, image: np.ndarray, indices: np.ndarray = None) -> Tuple[np.ndarray, np.ndarray]:
         """
-        Divide image into patches, shuffle them, and return the shuffled image
-        along with the permutation labels.
+        Vectorised patch shuffle using reshape/transpose instead of loops.
 
         Args:
-            image (np.ndarray): Input image of shape (H, W, C)
-            indices (np.ndarray, optional): Predefined permutation of patch indices.
-                                            If None, a random shuffle is used.
+            image: (H, W, C)
+            indices: optional predefined permutation
 
         Returns:
-            Tuple[np.ndarray, np.ndarray]: Shuffled image and permutation indices
+            shuffled_image: (H, W, C)
+            label: (N*N,) where label[original_patch_id] = new_position
         """
-        H, W = image.shape[0], image.shape[1]
+        H, W, C = image.shape
         N = self.num_patches
-        ph, pw = H // N, W // N
 
         if H % N != 0 or W % N != 0:
             raise ValueError(
@@ -153,14 +153,8 @@ class PatchShuffleDataLoader:
                 "Choose a different num_patches or resize/crop the image."
             )
 
+        ph, pw = H // N, W // N
         self.patch_size = (ph, pw)
-
-        patches = []
-        for i in range(N):
-            for j in range(N):
-                patch = image[i*ph:(i+1)*ph, j*pw:(j+1)*pw, :]
-                patches.append(patch)
-        patches = np.array(patches)  # (N^2, ph, pw, C)
 
         num_total = N * N
         if indices is None:
@@ -172,14 +166,16 @@ class PatchShuffleDataLoader:
             if set(indices.tolist()) != set(range(num_total)):
                 raise ValueError("indices must be a permutation of 0..N^2-1 (no repeats, none missing)")
 
-        shuffled_image = np.empty_like(image)
-        label = np.empty(num_total, dtype=np.int64)
+        # Split into patches: (H,W,C) -> (N,ph,N,pw,C) -> (N*N,ph,pw,C)
+        patches = image.reshape(N, ph, N, pw, C).transpose(0, 2, 1, 3, 4).reshape(num_total, ph, pw, C)
 
-        for new_pos, original_id in enumerate(indices):
-            out_i = new_pos // N
-            out_j = new_pos % N
-            shuffled_image[out_i*ph:(out_i+1)*ph, out_j*pw:(out_j+1)*pw, :] = patches[original_id]
-            label[original_id] = new_pos
+        # Reorder patches and stitch back: (N*N,ph,pw,C) -> (H,W,C)
+        shuffled_patches = patches[indices]
+        shuffled_image = shuffled_patches.reshape(N, N, ph, pw, C).transpose(0, 2, 1, 3, 4).reshape(H, W, C)
+
+        # label[original_id] = new_pos
+        label = np.empty(num_total, dtype=np.int64)
+        label[indices] = np.arange(num_total, dtype=np.int64)
 
         return shuffled_image, label
 
@@ -220,7 +216,7 @@ class PatchShuffleDataLoader:
                 - Batch of labels: shape (B, N^2) where N is num_patches
         """
         files = list(file_list)
-        if getattr(self, "shuffle", False):
+        if self.shuffle:
             random.shuffle(files)
 
         for start in range(0, len(files), self.batch_size):
@@ -234,7 +230,7 @@ class PatchShuffleDataLoader:
                 X.append(img)
                 Y.append(label)
 
-            if len(X) > 0:
+            if X:
                 yield np.stack(X, axis=0), np.stack(Y, axis=0)
 
     def train_batches(self):
@@ -246,41 +242,43 @@ class PatchShuffleDataLoader:
     def display_training_image(self, image: np.ndarray):
         new_im = np.transpose(image, (1, 2, 0))
         new_im = np.clip(new_im * 255.0, 0, 255).astype(np.uint8)
-        plt.imshow(new_im)
+        plt.imshow(new_im.squeeze(), cmap="gray")
         plt.axis("off")
         plt.show()
 
     def display_reconstructed_training_image(self, image: np.ndarray, label: np.ndarray):
+        """
+        label is original_id -> new_pos.
+        To reconstruct, we need the inverse: new_pos -> original_id = argsort(label).
+        """
         new_im = np.transpose(image, (1, 2, 0))
         new_im = np.clip(new_im * 255.0, 0, 255).astype(np.uint8)
-        new_im, _ = self._shuffle_patches(new_im, label)
-        plt.imshow(new_im)
+        inv = np.argsort(label)
+        recon, _ = self._shuffle_patches(new_im, inv)
+        plt.imshow(recon.squeeze(), cmap="gray")
         plt.axis("off")
         plt.show()
 
 
-def assign_patches(probs):
+def assign_patches(probs: np.ndarray) -> np.ndarray:
     """
-    Solve the patch assignment problem using predicted probabilities.
+    Hungarian assignment on predicted probabilities.
 
     Args:
-        probs: np.ndarray of shape (C, H, W),
-               where C = H * W,
-               probs[i, h, w] = probability that patch (h, w)
-               was originally at position i.
+        probs: (C, H, W) with C = H*W
 
     Returns:
-        np.ndarray of shape (C,) containing assigned original position index for each patch.
+        (C,) assignment where assignment[row] = col
     """
     C, H, W = probs.shape
-    assert C == H * W, "[ ERROR ] Invalid shape for probabilities."
+    if C != H * W:
+        raise ValueError(f"Expected C == H*W, got C={C}, H*W={H*W}")
 
     cost = -probs.transpose(1, 2, 0).reshape(-1, C)
     row_ind, col_ind = scipy.optimize.linear_sum_assignment(cost)
 
-    assignment = np.zeros(C, dtype=int)
+    assignment = np.empty(C, dtype=np.int64)
     assignment[row_ind] = col_ind
-
     return assignment
 
 

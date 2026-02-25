@@ -258,22 +258,18 @@ class ConvLayer(Layer):
         self.b = np.zeros(out_channels)
 
     def forward(self, X):
-        """Forward pass: Y = W_col @ X_col + b"""
         B, C, H, W = X.shape
         F = self.out_channels
 
         H_out, W_out, patches_col = im2col(X, self.kernel_size, self.stride, self.pad)
 
+        # Flatten filters to (F, C*KH*KW) and compute convolution as matrix multiply
         W_col = self.W.reshape(F, -1)
-
-        # GPU matmul (or CPU fallback via xp=numpy)
-        out = np.asarray(
-            xp.matmul(xp.asarray(W_col), xp.asarray(patches_col))
-            + xp.asarray(self.b[:, None])
-        )
+        out = W_col @ patches_col + self.b[:, None]
 
         out = out.reshape(F, B, H_out, W_out).transpose(1, 0, 2, 3)
 
+        # Cache for backward pass
         self.patches = patches_col
         self.H_in = H
         self.W_in = W
@@ -281,30 +277,21 @@ class ConvLayer(Layer):
         return out
 
     def backward(self, dY):
-        """Backward pass: compute dW, db, dX."""
         B, F, H_out, W_out = dY.shape
         C = self.in_channels
         H, W = self.H_in, self.W_in
 
-        dY_reshaped = dY.transpose(1, 0, 2, 3).reshape(F, -1)
+        # Flatten dY to (F, B*H_out*W_out) to match im2col layout
+        dY_flat = dY.transpose(1, 0, 2, 3).reshape(F, -1)
 
-        # Gradient wrt weights
-        self.dW = np.asarray(
-            xp.matmul(xp.asarray(dY_reshaped), xp.asarray(self.patches.T))
-        ).reshape(self.W.shape)
+        self.dW = (dY_flat @ self.patches.T).reshape(self.W.shape)
+        self.db = dY.sum(axis=(0, 2, 3))
 
-        # Gradient wrt bias
-        self.db = np.asarray(xp.sum(xp.asarray(dY), axis=(0, 2, 3)))
-
-        # Gradient wrt input
+        # Propagate gradient back through input
         W_col = self.W.reshape(F, -1)
-        dX_patches = np.asarray(
-            xp.matmul(xp.asarray(W_col.T), xp.asarray(dY_reshaped))
-        )
+        dX_cols = W_col.T @ dY_flat
 
-        dX = col2im(dX_patches, (B, C, H, W), self.kernel_size, self.stride, self.pad)
-
-        return dX
+        return col2im(dX_cols, (B, C, H, W), self.kernel_size, self.stride, self.pad)
 
 
 class ReLULayer(Layer):
@@ -328,42 +315,40 @@ class MaxPoolLayer(Layer):
         self.stride = stride
 
     def forward(self, X):
-        self.X = X
+        self.X_shape = X.shape
         B, C, H, W = X.shape
+        K = self.size
 
-        H_out, W_out, patches_col = im2col(X, self.size, self.stride)
+        H_out, W_out, cols = im2col(X, kernel_size=K, stride=self.stride, pad=0)
+        self.H_out = H_out
+        self.W_out = W_out
 
-        patches_reshaped = patches_col.reshape(C, self.size * self.size, -1)
+        # Reshape so each channel pools independently: (C, K*K, N)
+        N = B * H_out * W_out
+        cols_c = cols.reshape(C, K * K, N)
 
-        self.max_idx = np.argmax(patches_reshaped, axis=1)  # (C, N)
-        self.rows = np.arange(C)[:, None]
-        self.cols = np.arange(B * H_out * W_out)
+        self.max_idx = np.argmax(cols_c, axis=1)  # (C, N)
+        out_flat = np.max(cols_c, axis=1)          # (C, N)
+        self.N = N
 
-        out_flat = patches_reshaped[self.rows, self.max_idx, self.cols]  # (C, N)
         out = out_flat.reshape(C, B, H_out, W_out).transpose(1, 0, 2, 3)
-
-        self.H_in = H
-        self.W_in = W
-
         return out
 
     def backward(self, dY):
-        B, C, H_out, W_out = dY.shape
-        H, W = self.H_in, self.W_in
+        B, C, H, W = self.X_shape
+        K = self.size
+        N = self.N
 
-        dpatches = np.zeros(
-            (C, self.size * self.size, B * H_out * W_out),
-            dtype=dY.dtype
-        )
+        dY_flat = dY.transpose(1, 0, 2, 3).reshape(C, N)
 
-        dpatches[self.rows, self.max_idx, self.cols] = \
-            dY.transpose(1, 0, 2, 3).reshape(C, B * H_out * W_out)
+        # Scatter gradients to argmax positions
+        dcols_c = np.zeros((C, K * K, N), dtype=dY.dtype)
+        c_idx = np.arange(C)[:, None]
+        n_idx = np.arange(N)[None, :]
+        dcols_c[c_idx, self.max_idx, n_idx] = dY_flat
 
-        dpatches_col = dpatches.reshape(C * self.size * self.size, -1)
-
-        dX = col2im(dpatches_col, (B, C, H, W), kernel_size=self.size, stride=self.stride)
-
-        return dX
+        dcols = dcols_c.reshape(C * K * K, N)
+        return col2im(dcols, (B, C, H, W), kernel_size=K, stride=self.stride, pad=0)
 
 
 class ReshapeLayer(Layer):
@@ -410,49 +395,57 @@ class CrossEntropyLoss(Layer):
             X: Network output probabilities, shape (B, C, H, W).
             Y: Ground-truth permutation labels, shape (B, N^2).
             images: Original input images (B, 1, H_img, W_img). When provided,
-                    black patches (mean < eps_black) are masked out of the loss.
+                    black patches (all pixels < eps_black) are masked out of the loss.
             eps_black: Threshold below which a patch is considered black.
         """
         B, C, H, W = X.shape
+        Y_hw = Y.reshape(B, H, W)
 
-        self.X_reshaped = np.transpose(X, (0, 2, 3, 1))  # (B, H, W, C)
+        # Move class dim last for gather indexing: (B, H, W, C)
+        X_bhwc = X.transpose(0, 2, 3, 1)
+        self.X_bhwc = X_bhwc
+        self.Y_hw = Y_hw
 
-        self.target_one_hot = np.zeros_like(self.X_reshaped, dtype=np.float32)
-        self.target_one_hot[
-            np.arange(B)[:, None, None],
-            np.arange(H)[None, :, None],
-            np.arange(W)[None, None, :],
-            Y.reshape(B, H, W)
-        ] = 1.0
-
-        # Build per-patch mask: 1 for non-black, 0 for black
+        # Build per-patch mask: 1 for non-black, 0 for black (B, H, W, 1)
         if images is not None:
             _, _, H_img, W_img = images.shape
             ph, pw = H_img // H, W_img // W
-            # mask shape (B, H, W)
-            mask = np.ones((B, H, W), dtype=np.float32)
-            for i in range(H):
-                for j in range(W):
-                    patch = images[:, 0, i*ph:(i+1)*ph, j*pw:(j+1)*pw]
-                    # Match compute_reconstruction_accuracy: black if ALL pixels < eps
-                    is_black = np.all(patch < eps_black, axis=(1, 2))  # (B,)
-                    mask[:, i, j] = (~is_black).astype(np.float32)
-            self.mask = mask[:, :, :, np.newaxis]  # (B, H, W, 1)
+            # Tile image into (B, H, ph, W, pw) and check if all pixels < eps
+            im_tiles = images[:, 0].reshape(B, H, ph, W, pw)
+            is_black = np.all(im_tiles < eps_black, axis=(2, 4))  # (B, H, W)
+            mask = (~is_black).astype(np.float32)[..., None]
         else:
-            self.mask = np.ones((B, H, W, 1), dtype=np.float32)
+            mask = np.ones((B, H, W, 1), dtype=np.float32)
 
-        num_valid = max(self.mask.sum(), 1.0)
-
-        loss = -np.sum(
-            self.mask * self.target_one_hot * np.log(self.X_reshaped + 1e-12)
-        ) / num_valid
-
+        self.mask = mask
+        num_valid = float(max(mask.sum(), 1.0))
         self._num_valid = num_valid
+
+        # Gather probability of the target class at each spatial position
+        b_idx = np.arange(B)[:, None, None]
+        h_idx = np.arange(H)[None, :, None]
+        w_idx = np.arange(W)[None, None, :]
+        target_p = X_bhwc[b_idx, h_idx, w_idx, Y_hw]
+
+        loss = -np.sum(mask[..., 0] * np.log(target_p + 1e-12)) / num_valid
         return loss
 
     def backward(self) -> np.ndarray:
-        dX_reshaped = -self.mask * self.target_one_hot / (self.X_reshaped + 1e-12)
-        dX_reshaped /= self._num_valid
+        X_bhwc = self.X_bhwc
+        Y_hw = self.Y_hw
+        mask = self.mask
+        B, H, W, C = X_bhwc.shape
 
-        dX = np.transpose(dX_reshaped, (0, 3, 1, 2))
-        return dX
+        dX_bhwc = np.zeros_like(X_bhwc, dtype=np.float32)
+
+        b_idx = np.arange(B)[:, None, None]
+        h_idx = np.arange(H)[None, :, None]
+        w_idx = np.arange(W)[None, None, :]
+
+        # Gradient of -log(p) at target class only
+        target_p = X_bhwc[b_idx, h_idx, w_idx, Y_hw] + 1e-12
+        dX_bhwc[b_idx, h_idx, w_idx, Y_hw] = -1.0 / target_p
+
+        dX_bhwc *= (mask / self._num_valid)
+
+        return dX_bhwc.transpose(0, 3, 1, 2)
