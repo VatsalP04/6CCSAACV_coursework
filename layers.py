@@ -123,9 +123,57 @@ class Layer:
         raise NotImplementedError
 
 
+def _param_layers(layers):
+    """Yield layers that have trainable weights."""
+    for layer in layers:
+        if hasattr(layer, 'W') and hasattr(layer, 'b'):
+            yield layer
+
+
+class SGD:
+    def __init__(self, lr=1e-3):
+        self.lr = lr
+
+    def step(self, layers):
+        for layer in _param_layers(layers):
+            layer.W -= self.lr * layer.dW
+            layer.b -= self.lr * layer.db
+
+
+class Adam:
+    def __init__(self, lr=1e-3, beta1=0.9, beta2=0.999, eps=1e-8):
+        self.lr = lr
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.eps = eps
+        self.t = 0
+
+    def step(self, layers):
+        self.t += 1
+        for layer in _param_layers(layers):
+            if not hasattr(layer, 'mW'):
+                layer.mW = np.zeros_like(layer.W)
+                layer.vW = np.zeros_like(layer.W)
+                layer.mb = np.zeros_like(layer.b)
+                layer.vb = np.zeros_like(layer.b)
+
+            layer.mW = self.beta1 * layer.mW + (1 - self.beta1) * layer.dW
+            layer.vW = self.beta2 * layer.vW + (1 - self.beta2) * (layer.dW ** 2)
+            mW_hat = layer.mW / (1 - self.beta1 ** self.t)
+            vW_hat = layer.vW / (1 - self.beta2 ** self.t)
+            layer.W -= self.lr * mW_hat / (np.sqrt(vW_hat) + self.eps)
+
+            layer.mb = self.beta1 * layer.mb + (1 - self.beta1) * layer.db
+            layer.vb = self.beta2 * layer.vb + (1 - self.beta2) * (layer.db ** 2)
+            mb_hat = layer.mb / (1 - self.beta1 ** self.t)
+            vb_hat = layer.vb / (1 - self.beta2 ** self.t)
+            layer.b -= self.lr * mb_hat / (np.sqrt(vb_hat) + self.eps)
+
+
 class Network:
-    def __init__(self, layers):
+    def __init__(self, layers, optimizer=None):
         self.layers = layers
+        self.optimizer = optimizer or SGD()
 
     def forward(self, X):
         for layer in self.layers:
@@ -137,11 +185,8 @@ class Network:
             dY = layer.backward(dY)
         return dY
 
-    def step(self, learning_rate):
-        for layer in self.layers:
-            if hasattr(layer, 'W') and hasattr(layer, 'b'):
-                layer.W -= learning_rate * layer.dW
-                layer.b -= learning_rate * layer.db
+    def step(self):
+        self.optimizer.step(self.layers)
 
 
 class ConvLayer(Layer):
@@ -317,7 +362,16 @@ class SoftmaxLayer(Layer):
 
 
 class CrossEntropyLoss(Layer):
-    def forward(self, X: np.ndarray, Y: np.ndarray) -> float:
+    def forward(self, X: np.ndarray, Y: np.ndarray, images: np.ndarray = None,
+                eps_black: float = 0.05) -> float:
+        """
+        Args:
+            X: Network output probabilities, shape (B, C, H, W).
+            Y: Ground-truth permutation labels, shape (B, N^2).
+            images: Original input images (B, 1, H_img, W_img). When provided,
+                    black patches (mean < eps_black) are masked out of the loss.
+            eps_black: Threshold below which a patch is considered black.
+        """
         B, C, H, W = X.shape
 
         self.X_reshaped = np.transpose(X, (0, 2, 3, 1))  # (B, H, W, C)
@@ -330,17 +384,34 @@ class CrossEntropyLoss(Layer):
             Y.reshape(B, H, W)
         ] = 1.0
 
-        loss = -np.sum(
-            self.target_one_hot * np.log(self.X_reshaped + 1e-12)
-        ) / (B * H * W)
+        # Build per-patch mask: 1 for non-black, 0 for black
+        if images is not None:
+            _, _, H_img, W_img = images.shape
+            ph, pw = H_img // H, W_img // W
+            # mask shape (B, H, W)
+            mask = np.ones((B, H, W), dtype=np.float32)
+            for i in range(H):
+                for j in range(W):
+                    patch = images[:, 0, i*ph:(i+1)*ph, j*pw:(j+1)*pw]
+                    # Match compute_reconstruction_accuracy: black if ALL pixels < eps
+                    is_black = np.all(patch < eps_black, axis=(1, 2))  # (B,)
+                    mask[:, i, j] = (~is_black).astype(np.float32)
+            self.mask = mask[:, :, :, np.newaxis]  # (B, H, W, 1)
+        else:
+            self.mask = np.ones((B, H, W, 1), dtype=np.float32)
 
+        num_valid = max(self.mask.sum(), 1.0)
+
+        loss = -np.sum(
+            self.mask * self.target_one_hot * np.log(self.X_reshaped + 1e-12)
+        ) / num_valid
+
+        self._num_valid = num_valid
         return loss
 
     def backward(self) -> np.ndarray:
-        B, H, W, _ = self.X_reshaped.shape
-
-        dX_reshaped = -self.target_one_hot / (self.X_reshaped + 1e-12)
-        dX_reshaped /= (B * H * W)
+        dX_reshaped = -self.mask * self.target_one_hot / (self.X_reshaped + 1e-12)
+        dX_reshaped /= self._num_valid
 
         dX = np.transpose(dX_reshaped, (0, 3, 1, 2))
         return dX
