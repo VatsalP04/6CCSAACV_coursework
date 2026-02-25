@@ -191,7 +191,8 @@ class PatchShuffleDataLoader:
         image = cv.imread(full_path)
 
         if image is None:
-            raise ValueError(f"Failed to load image: {full_path}")
+            print(f"[Warning] Failed to load image: {full_path}. Skipping...")
+            return None, None
 
         image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         image = cv.resize(image, self.image_size)
@@ -228,13 +229,13 @@ class PatchShuffleDataLoader:
             X, Y = [], []
             for fname in batch_files:
                 img, label = self._load_image(fname)
+                if img is None:
+                    continue
                 X.append(img)
                 Y.append(label)
 
-            X = np.stack(X, axis=0)  # (B, C, H, W)
-            Y = np.stack(Y, axis=0)  # (B, N^2)
-
-            yield X, Y
+            if len(X) > 0:
+                yield np.stack(X, axis=0), np.stack(Y, axis=0)
 
     def train_batches(self):
         return self._get_batches(self.train_files)
