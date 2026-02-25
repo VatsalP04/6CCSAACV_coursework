@@ -18,7 +18,7 @@ from utils import (
 # Data augmentation (grayscale HWC uint8, applied BEFORE patch shuffle)
 # ---------------------------------------------------------------------------
 def augment_image(image, p_flip=0.5, max_rotation=10,
-                  brightness_range=0.2, contrast_range=0.2):
+                  brightness_range=0.2, contrast_range=0.2, blur_prob=0.3):
     """Apply random augmentations to a grayscale image (H, W, C) uint8."""
     h, w = image.shape[:2]
 
@@ -39,7 +39,7 @@ def augment_image(image, p_flip=0.5, max_rotation=10,
     mean = image.mean()
     image = np.clip((image.astype(np.float32) - mean) * factor + mean, 0, 255).astype(np.uint8)
 
-    if random.random() < 0.3:
+    if random.random() < blur_prob:
         ksize = random.choice([3, 5])
         image = cv.GaussianBlur(image, (ksize, ksize), 0)
         if image.ndim == 2:
@@ -48,8 +48,11 @@ def augment_image(image, p_flip=0.5, max_rotation=10,
     return image
 
 
-def augmented_train_batches(loader):
+def augmented_train_batches(loader, aug_params=None):
     """Yield augmented training batches. Augmentation runs before patch shuffle."""
+    if aug_params is None:
+        aug_params = {}
+
     files = list(loader.train_files)
     if loader.shuffle:
         random.shuffle(files)
@@ -67,7 +70,7 @@ def augmented_train_batches(loader):
             if image.ndim == 2:
                 image = image[:, :, np.newaxis]
 
-            image = augment_image(image)
+            image = augment_image(image, **aug_params)
 
             image, labels = loader._shuffle_patches(image)
             image = image.astype(np.float32) / 255.0
@@ -121,72 +124,21 @@ def build_network(lr=1e-3):
     ], optimizer=Adam(lr=lr))
 
 
-if __name__ == "__main__":
-    log = setup_logging()
-
-    # # Mount Google Drive (no-op outside Colab)
-    # mount_google_drive()
-
-    # # ---- Colab Configuration ----
-    # dataset_dir = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32"
-    # json_file = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32_cross_val/fold_1.json"
-
-    ## ---- Local Configuration ----
-    dataset_dir = "dataset/acv_train_32x32"
-    json_file = "dataset/acv_train_32x32_cross_val/fold_1.json"
-
-    # ---- Run / resume configuration ----
-    run_name = "stage2_2x2_10k_aug"
-    batch_size = 16
-    image_size = (32, 32)
-    num_patches = 4
-    additional_epochs = 50
-    lr = 1e-3
-    use_augmentation = True
-
-    # LR decay: halve LR if val loss doesn't improve for `lr_patience` epochs
-    lr_patience = 10
-    lr_factor = 0.5
-    lr_min = 1e-6
-
-    resume_checkpoint = "checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl"
-    resume_epoch = 111
-
-    # ---- Run directory ----
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    run_dir = os.path.join("checkpoints", f"run_{timestamp}")
+# ---------------------------------------------------------------------------
+# Training loop (reusable across runs)
+# ---------------------------------------------------------------------------
+def train_run(net, loader, start_epoch, end_epoch, run_dir, run_name,
+              use_augmentation, num_patches, lr_patience, lr_factor, lr_min,
+              log, aug_params=None):
+    """
+    Run training for [start_epoch, end_epoch) and return the path to the best checkpoint.
+    """
     os.makedirs(run_dir, exist_ok=True)
 
-    # ---- Single loader (used for both train + val) ----
-    loader = PatchShuffleDataLoader(
-        json_file, dataset_dir,
-        batch_size=batch_size, image_size=image_size,
-        num_patches=num_patches, shuffle=True
-    )
-
-    # ---- Load or build network ----
-    if resume_checkpoint and os.path.exists(resume_checkpoint):
-        log.info(f"Resuming from checkpoint: {resume_checkpoint}")
-        with open(resume_checkpoint, "rb") as f:
-            net = pickle.load(f)
-        # Switch optimizer to Adam when resuming from SGD-trained checkpoint
-        net.optimizer = Adam(lr=lr)
-        start_epoch = resume_epoch
-        log.info(f"Loaded model — continuing from epoch {start_epoch + 1}")
-    else:
-        net = build_network(lr=lr)
-        start_epoch = 0
-        log.info("No checkpoint found — training from scratch")
-
-    end_epoch = start_epoch + additional_epochs
-    log.info(f"Receptive field: {compute_total_receptive_field(net)} pixels")
-    log.info(f"Training epochs {start_epoch + 1} → {end_epoch} | "
-             f"batch_size={batch_size} | augmentation={use_augmentation}")
-
-    # ---- Training loop ----
     best_val_acc = 0.0
     best_val_loss = float('inf')
     epochs_no_improve = 0
+    best_path = None
 
     for epoch in range(start_epoch, end_epoch):
         # ---- Train ----
@@ -194,7 +146,7 @@ if __name__ == "__main__":
         iter_train = 0
 
         if use_augmentation:
-            train_iter = augmented_train_batches(loader)
+            train_iter = augmented_train_batches(loader, aug_params=aug_params)
         else:
             train_iter = loader.train_batches()
 
@@ -277,4 +229,124 @@ if __name__ == "__main__":
             f"Ckpt: {ckpt_path}"
         )
 
-    log.info(f"Training complete. Best val accuracy: {best_val_acc:.4f}")
+    log.info(f"Run complete. Best val accuracy: {best_val_acc:.4f}")
+    return best_path
+
+
+if __name__ == "__main__":
+    log = setup_logging()
+
+    # # Mount Google Drive (no-op outside Colab)
+    # mount_google_drive()
+
+    # # ---- Colab Configuration ----
+    # dataset_dir = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32"
+    # json_file = "/content/drive/MyDrive/Colab Notebooks/acv_exercises/datasets/acv_train_32x32_cross_val/fold_1.json"
+
+    ## ---- Local Configuration ----
+    dataset_dir = "dataset/acv_train_32x32"
+    json_file = "dataset/acv_train_32x32_cross_val/fold_1.json"
+
+    image_size = (32, 32)
+    num_patches = 4
+    lr_factor = 0.5
+    lr_min = 1e-6
+
+    # ======================================================================
+    # RUN 1: Adam lr=1e-3, batch=16, 50 epochs, default augmentation
+    # ======================================================================
+    log.info("=" * 60)
+    log.info("RUN 1: Adam lr=1e-3, batch=16, default augmentation")
+    log.info("=" * 60)
+
+    run1_name = "run1_adam_b16"
+    run1_batch_size = 16
+    run1_lr = 1e-3
+    run1_epochs = 50
+    run1_lr_patience = 10
+    run1_resume_ckpt = "checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl"
+    run1_resume_epoch = 111
+
+    timestamp1 = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run1_dir = os.path.join("checkpoints", f"run_{timestamp1}")
+
+    loader1 = PatchShuffleDataLoader(
+        json_file, dataset_dir,
+        batch_size=run1_batch_size, image_size=image_size,
+        num_patches=num_patches, shuffle=True
+    )
+
+    if run1_resume_ckpt and os.path.exists(run1_resume_ckpt):
+        log.info(f"Resuming from checkpoint: {run1_resume_ckpt}")
+        with open(run1_resume_ckpt, "rb") as f:
+            net = pickle.load(f)
+        net.optimizer = Adam(lr=run1_lr)
+        start_epoch = run1_resume_epoch
+    else:
+        net = build_network(lr=run1_lr)
+        start_epoch = 0
+
+    end_epoch = start_epoch + run1_epochs
+    log.info(f"Receptive field: {compute_total_receptive_field(net)} pixels")
+    log.info(f"Training epochs {start_epoch + 1} → {end_epoch}")
+
+    best_ckpt_1 = train_run(
+        net, loader1, start_epoch, end_epoch, run1_dir, run1_name,
+        use_augmentation=True, num_patches=num_patches,
+        lr_patience=run1_lr_patience, lr_factor=lr_factor, lr_min=lr_min,
+        log=log, aug_params=None
+    )
+
+    # ======================================================================
+    # RUN 2: Adam lr=5e-4, batch=32, 40 epochs, stronger augmentation
+    # ======================================================================
+    log.info("=" * 60)
+    log.info("RUN 2: Adam lr=5e-4, batch=32, stronger augmentation")
+    log.info("=" * 60)
+
+    run2_name = "run2_adam_b32_strong_aug"
+    run2_batch_size = 32
+    run2_lr = 5e-4
+    run2_epochs = 40
+    run2_lr_patience = 8
+    run2_aug_params = {
+        "max_rotation": 15,
+        "brightness_range": 0.3,
+        "contrast_range": 0.3,
+        "blur_prob": 0.5,
+    }
+
+    timestamp2 = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run2_dir = os.path.join("checkpoints", f"run_{timestamp2}")
+
+    loader2 = PatchShuffleDataLoader(
+        json_file, dataset_dir,
+        batch_size=run2_batch_size, image_size=image_size,
+        num_patches=num_patches, shuffle=True
+    )
+
+    if best_ckpt_1 and os.path.exists(best_ckpt_1):
+        log.info(f"Loading Run 1 best checkpoint: {best_ckpt_1}")
+        with open(best_ckpt_1, "rb") as f:
+            net2 = pickle.load(f)
+        net2.optimizer = Adam(lr=run2_lr)
+    else:
+        log.info("No Run 1 best checkpoint found, building fresh network")
+        net2 = build_network(lr=run2_lr)
+
+    run2_start = end_epoch
+    run2_end = run2_start + run2_epochs
+    log.info(f"Training epochs {run2_start + 1} → {run2_end}")
+
+    best_ckpt_2 = train_run(
+        net2, loader2, run2_start, run2_end, run2_dir, run2_name,
+        use_augmentation=True, num_patches=num_patches,
+        lr_patience=run2_lr_patience, lr_factor=lr_factor, lr_min=lr_min,
+        log=log, aug_params=run2_aug_params
+    )
+
+    log.info("=" * 60)
+    log.info("All runs complete.")
+    log.info(f"Run 1 best checkpoint: {best_ckpt_1}")
+    log.info(f"Run 2 best checkpoint: {best_ckpt_2}")
+    log.info("=" * 60)
