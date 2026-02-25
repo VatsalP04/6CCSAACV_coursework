@@ -6,7 +6,7 @@ import cv2 as cv
 from datetime import datetime
 from tqdm import tqdm
 from layers import (
-    Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, CrossEntropyLoss
+    Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, CrossEntropyLoss, Adam
 )
 from utils import (
     PatchShuffleDataLoader, compute_total_receptive_field,
@@ -83,7 +83,7 @@ def augmented_train_batches(loader):
 # ---------------------------------------------------------------------------
 # Network builder
 # ---------------------------------------------------------------------------
-def build_network():
+def build_network(lr=1e-3):
     """Construct and return the patch-sorting CNN (Week 5 architecture)."""
     return Network([
         ConvLayer(in_channels=1, out_channels=32, kernel_size=3, stride=1, pad=1),
@@ -118,7 +118,7 @@ def build_network():
         ConvLayer(in_channels=64, out_channels=16, kernel_size=1, stride=1, pad=0),
 
         SoftmaxLayer(axis=1),  # softmax across channel/class dimension
-    ])
+    ], optimizer=Adam(lr=lr))
 
 
 if __name__ == "__main__":
@@ -137,14 +137,20 @@ if __name__ == "__main__":
 
     # ---- Run / resume configuration ----
     run_name = "stage2_2x2_10k_aug"
-    batch_size = 4
+    batch_size = 16
     image_size = (32, 32)
     num_patches = 4
     additional_epochs = 50
+    lr = 1e-3
     use_augmentation = True
 
-    resume_checkpoint = "checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_76.pkl"
-    resume_epoch = 77  # checkpoint was saved at END of epoch 77 (0-indexed 76)
+    # LR decay: halve LR if val loss doesn't improve for `lr_patience` epochs
+    lr_patience = 10
+    lr_factor = 0.5
+    lr_min = 1e-6
+
+    resume_checkpoint = "checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl"
+    resume_epoch = 111
 
     # ---- Run directory ----
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -163,10 +169,12 @@ if __name__ == "__main__":
         log.info(f"Resuming from checkpoint: {resume_checkpoint}")
         with open(resume_checkpoint, "rb") as f:
             net = pickle.load(f)
+        # Switch optimizer to Adam when resuming from SGD-trained checkpoint
+        net.optimizer = Adam(lr=lr)
         start_epoch = resume_epoch
         log.info(f"Loaded model — continuing from epoch {start_epoch + 1}")
     else:
-        net = build_network()
+        net = build_network(lr=lr)
         start_epoch = 0
         log.info("No checkpoint found — training from scratch")
 
@@ -177,6 +185,8 @@ if __name__ == "__main__":
 
     # ---- Training loop ----
     best_val_acc = 0.0
+    best_val_loss = float('inf')
+    epochs_no_improve = 0
 
     for epoch in range(start_epoch, end_epoch):
         # ---- Train ----
@@ -232,6 +242,18 @@ if __name__ == "__main__":
         avg_val_loss = val_loss_sum / max(iter_val, 1)
         val_acc = val_correct / max(val_total, 1)
 
+        # ---- LR decay on plateau ----
+        if avg_val_loss < best_val_loss:
+            best_val_loss = avg_val_loss
+            epochs_no_improve = 0
+        else:
+            epochs_no_improve += 1
+            if epochs_no_improve >= lr_patience and net.optimizer.lr > lr_min:
+                old_lr = net.optimizer.lr
+                net.optimizer.lr = max(net.optimizer.lr * lr_factor, lr_min)
+                log.info(f"Reducing LR: {old_lr:.6f} → {net.optimizer.lr:.6f}")
+                epochs_no_improve = 0
+
         # ---- Save checkpoint ----
         ckpt_name = f"epoch_{run_name}_epoch_{epoch}.pkl"
         ckpt_path = os.path.join(run_dir, ckpt_name)
@@ -251,6 +273,7 @@ if __name__ == "__main__":
             f"Val Loss: {avg_val_loss:.4f} | "
             f"Val Acc: {val_acc:.4f}"
             f"{' ★ best' if is_best else ''} | "
+            f"LR: {net.optimizer.lr:.6f} | "
             f"Ckpt: {ckpt_path}"
         )
 
