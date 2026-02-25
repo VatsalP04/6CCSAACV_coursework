@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.lib.stride_tricks import as_strided
 
 # CuPy is used for GPU-accelerated matrix ops in ConvLayer.
 # Falls back to NumPy transparently on CPU-only machines (e.g. Mac laptops).
@@ -10,7 +11,7 @@ except ImportError:
 
 def im2col(X, kernel_size, stride=1, pad=0):
     """
-    Convert image patches to columns for efficient convolution.
+    Convert image patches to columns using stride tricks for efficient convolution.
 
     Args:
         X: ndarray of shape (B, C, H, W)
@@ -31,42 +32,110 @@ def im2col(X, kernel_size, stride=1, pad=0):
         KH, KW = kernel_size
 
     if pad > 0:
-        X_p = np.pad(
-            X,
-            pad_width=((0, 0), (0, 0), (pad, pad), (pad, pad)),
-            mode="constant",
-            constant_values=0
-        )
+        X_p = np.pad(X, ((0, 0), (0, 0), (pad, pad), (pad, pad)),
+                      mode="constant", constant_values=0)
     else:
         X_p = X
 
+    # Contiguous memory required for stride tricks
+    X_p = np.ascontiguousarray(X_p)
     H_p, W_p = X_p.shape[2], X_p.shape[3]
 
     H_out = (H_p - KH) // stride + 1
     W_out = (W_p - KW) // stride + 1
 
-    patch_size = C * KH * KW
-    n_patches_per_img = H_out * W_out
-    cols = np.zeros((patch_size, B * n_patches_per_img), dtype=X.dtype)
+    # Extract all patches as a 6D view without copying data
+    sB, sC, sH, sW = X_p.strides
+    patches = as_strided(
+        X_p,
+        shape=(B, C, H_out, W_out, KH, KW),
+        strides=(sB, sC, sH * stride, sW * stride, sH, sW),
+        writeable=False
+    )
 
-    col_idx = 0
-    for b in range(B):
-        for i in range(H_out):
-            h0 = i * stride
-            h1 = h0 + KH
-            for j in range(W_out):
-                w0 = j * stride
-                w1 = w0 + KW
-                patch = X_p[b, :, h0:h1, w0:w1]
-                cols[:, col_idx] = patch.reshape(-1)
-                col_idx += 1
+    # Reshape to (C*KH*KW, B*H_out*W_out) for matrix multiply with filters
+    cols = patches.transpose(1, 4, 5, 0, 2, 3).reshape(C * KH * KW, B * H_out * W_out)
 
     return H_out, W_out, cols
+
+
+def _col2im_addat(cols, input_shape, kernel_size, stride, pad):
+    """General col2im using np.add.at scatter-add. Works for any stride."""
+    B, C, H, W = input_shape
+
+    if isinstance(kernel_size, int):
+        KH, KW = kernel_size, kernel_size
+    else:
+        KH, KW = kernel_size
+
+    H_p = H + 2 * pad
+    W_p = W + 2 * pad
+    H_out = (H_p - KH) // stride + 1
+    W_out = (W_p - KW) // stride + 1
+
+    dX_p = np.zeros((B, C, H_p, W_p), dtype=cols.dtype)
+
+    # Reshape cols back to (B, C, H_out, W_out, KH, KW)
+    vals = cols.reshape(C, KH, KW, B, H_out, W_out).transpose(3, 0, 4, 5, 1, 2)
+
+    # Build scatter indices for each output position + kernel offset
+    h0 = np.arange(H_out) * stride
+    w0 = np.arange(W_out) * stride
+    kh = np.arange(KH)
+    kw = np.arange(KW)
+
+    H_idx = (h0[:, None] + kh[None, :])[:, None, :, None]
+    W_idx = (w0[:, None] + kw[None, :])[None, :, None, :]
+    B_idx = np.arange(B)[:, None, None, None, None, None]
+    C_idx = np.arange(C)[None, :, None, None, None, None]
+
+    # Broadcast all indices to (B, C, H_out, W_out, KH, KW)
+    shape_6d = (B, C, H_out, W_out, KH, KW)
+    H_idx = np.broadcast_to(H_idx[None, None, :, :, :, :], shape_6d)
+    W_idx = np.broadcast_to(W_idx[None, None, :, :, :, :], shape_6d)
+    B_idx = np.broadcast_to(B_idx, shape_6d)
+    C_idx = np.broadcast_to(C_idx, shape_6d)
+
+    np.add.at(dX_p, (B_idx, C_idx, H_idx, W_idx), vals)
+
+    if pad > 0:
+        return dX_p[:, :, pad:pad + H, pad:pad + W]
+    return dX_p
+
+
+def _col2im_stride1(cols, input_shape, kernel_size, pad):
+    """Fast col2im for stride=1 using slice accumulation instead of scatter."""
+    B, C, H, W = input_shape
+
+    if isinstance(kernel_size, int):
+        KH, KW = kernel_size, kernel_size
+    else:
+        KH, KW = kernel_size
+
+    H_p = H + 2 * pad
+    W_p = W + 2 * pad
+    H_out = (H_p - KH) + 1
+    W_out = (W_p - KW) + 1
+
+    dX_p = np.zeros((B, C, H_p, W_p), dtype=cols.dtype)
+
+    # Reshape to (B, C, KH, KW, H_out, W_out) for per-offset accumulation
+    cols6 = cols.reshape(C, KH, KW, B, H_out, W_out).transpose(3, 0, 1, 2, 4, 5)
+
+    # Accumulate each kernel offset via slicing (no scatter needed for stride=1)
+    for kh in range(KH):
+        for kw in range(KW):
+            dX_p[:, :, kh:kh + H_out, kw:kw + W_out] += cols6[:, :, kh, kw, :, :]
+
+    if pad > 0:
+        return dX_p[:, :, pad:pad + H, pad:pad + W]
+    return dX_p
 
 
 def col2im(cols, input_shape, kernel_size, stride=1, pad=0):
     """
     Convert columns back to image (inverse of im2col).
+    Dispatches to stride-1 fast path or general np.add.at version.
 
     Args:
         cols (ndarray): shape (C * KH * KW, B * H_out * W_out)
@@ -78,37 +147,9 @@ def col2im(cols, input_shape, kernel_size, stride=1, pad=0):
     Returns:
         ndarray: Reconstructed tensor of shape (B, C, H, W)
     """
-    B, C, H, W = input_shape
-
-    if isinstance(kernel_size, int):
-        KH, KW = kernel_size, kernel_size
-    else:
-        KH, KW = kernel_size
-
-    H_p = H + 2 * pad
-    W_p = W + 2 * pad
-
-    H_out = (H_p - KH) // stride + 1
-    W_out = (W_p - KW) // stride + 1
-
-    dX_p = np.zeros((B, C, H_p, W_p), dtype=cols.dtype)
-
-    col_idx = 0
-    for b in range(B):
-        for i in range(H_out):
-            h0 = i * stride
-            h1 = h0 + KH
-            for j in range(W_out):
-                w0 = j * stride
-                w1 = w0 + KW
-                patch = cols[:, col_idx].reshape(C, KH, KW)
-                dX_p[b, :, h0:h1, w0:w1] += patch
-                col_idx += 1
-
-    if pad > 0:
-        return dX_p[:, :, pad:pad+H, pad:pad+W]
-    else:
-        return dX_p
+    if stride == 1:
+        return _col2im_stride1(cols, input_shape, kernel_size, pad)
+    return _col2im_addat(cols, input_shape, kernel_size, stride, pad)
 
 
 class Layer:
