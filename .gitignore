@@ -1,2 +1,8 @@
-dataset/acv_train_32x32
+dataset
 venv
+checkpoints
+python excercise solutions
+eval_temp
+*.log
+*.csv
+*.pyc
