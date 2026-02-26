@@ -263,8 +263,8 @@ def test_adam():
     adam.step([conv])
 
     check("weights updated", not np.allclose(conv.W, W_before))
-    check("momentum state created", hasattr(conv, 'mW'))
-    check("velocity state created", hasattr(conv, 'vW'))
+    check("momentum state created", hasattr(conv, '_adam_m_W'))
+    check("velocity state created", hasattr(conv, '_adam_v_W'))
     check("timestep incremented", adam.t == 1)
 
     # Second step

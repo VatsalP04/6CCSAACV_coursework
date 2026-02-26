@@ -164,10 +164,20 @@ class Layer:
         raise NotImplementedError
 
 
+def _param_pairs(layer):
+    """Yield (weight_name, bias_name) pairs for a layer's trainable parameters."""
+    if hasattr(layer, 'W') and hasattr(layer, 'b'):
+        yield ('W', 'b')
+    if hasattr(layer, 'W1') and hasattr(layer, 'b1'):
+        yield ('W1', 'b1')
+    if hasattr(layer, 'W2') and hasattr(layer, 'b2'):
+        yield ('W2', 'b2')
+
+
 def _param_layers(layers):
     """Yield layers that have trainable weights."""
     for layer in layers:
-        if hasattr(layer, 'W') and hasattr(layer, 'b'):
+        if list(_param_pairs(layer)):
             yield layer
 
 
@@ -177,8 +187,11 @@ class SGD:
 
     def step(self, layers):
         for layer in _param_layers(layers):
-            layer.W -= self.lr * layer.dW
-            layer.b -= self.lr * layer.db
+            for wname, bname in _param_pairs(layer):
+                dw = getattr(layer, 'd' + wname)
+                db = getattr(layer, 'd' + bname)
+                setattr(layer, wname, getattr(layer, wname) - self.lr * dw)
+                setattr(layer, bname, getattr(layer, bname) - self.lr * db)
 
 
 class Adam:
@@ -189,26 +202,32 @@ class Adam:
         self.eps = eps
         self.t = 0
 
+    def _update_param(self, layer, pname):
+        """Adam update for a single parameter (weight or bias)."""
+        p = getattr(layer, pname)
+        dp = getattr(layer, 'd' + pname)
+        m_key = '_adam_m_' + pname
+        v_key = '_adam_v_' + pname
+
+        if not hasattr(layer, m_key):
+            setattr(layer, m_key, np.zeros_like(p))
+            setattr(layer, v_key, np.zeros_like(p))
+
+        m = self.beta1 * getattr(layer, m_key) + (1 - self.beta1) * dp
+        v = self.beta2 * getattr(layer, v_key) + (1 - self.beta2) * (dp ** 2)
+        setattr(layer, m_key, m)
+        setattr(layer, v_key, v)
+
+        m_hat = m / (1 - self.beta1 ** self.t)
+        v_hat = v / (1 - self.beta2 ** self.t)
+        setattr(layer, pname, p - self.lr * m_hat / (np.sqrt(v_hat) + self.eps))
+
     def step(self, layers):
         self.t += 1
         for layer in _param_layers(layers):
-            if not hasattr(layer, 'mW'):
-                layer.mW = np.zeros_like(layer.W)
-                layer.vW = np.zeros_like(layer.W)
-                layer.mb = np.zeros_like(layer.b)
-                layer.vb = np.zeros_like(layer.b)
-
-            layer.mW = self.beta1 * layer.mW + (1 - self.beta1) * layer.dW
-            layer.vW = self.beta2 * layer.vW + (1 - self.beta2) * (layer.dW ** 2)
-            mW_hat = layer.mW / (1 - self.beta1 ** self.t)
-            vW_hat = layer.vW / (1 - self.beta2 ** self.t)
-            layer.W -= self.lr * mW_hat / (np.sqrt(vW_hat) + self.eps)
-
-            layer.mb = self.beta1 * layer.mb + (1 - self.beta1) * layer.db
-            layer.vb = self.beta2 * layer.vb + (1 - self.beta2) * (layer.db ** 2)
-            mb_hat = layer.mb / (1 - self.beta1 ** self.t)
-            vb_hat = layer.vb / (1 - self.beta2 ** self.t)
-            layer.b -= self.lr * mb_hat / (np.sqrt(vb_hat) + self.eps)
+            for wname, bname in _param_pairs(layer):
+                self._update_param(layer, wname)
+                self._update_param(layer, bname)
 
 
 class Network:
@@ -367,6 +386,80 @@ class ReshapeLayer(Layer):
 
     def backward(self, dY):
         return dY.reshape(self.input_shape)
+
+
+class GlobalContextLayer(Layer):
+    """
+    Squeeze-and-excite style global context: GAP → FC → FC → sigmoid → scale.
+    Gives each spatial position knowledge of the whole image.
+
+    Input:  (B, C, H, W)
+    Output: (B, C, H, W)  — same shape, channels re-weighted by global context.
+    """
+    def __init__(self, channels, reduction=4):
+        super().__init__()
+        mid = max(channels // reduction, 1)
+        # FC1: C → mid
+        scale = np.sqrt(2.0 / channels)
+        self.W1 = np.random.randn(mid, channels) * scale
+        self.b1 = np.zeros(mid)
+        # FC2: mid → C
+        scale2 = np.sqrt(2.0 / mid)
+        self.W2 = np.random.randn(channels, mid) * scale2
+        self.b2 = np.zeros(channels)
+
+        self.channels = channels
+        self.mid = mid
+
+    def forward(self, X):
+        B, C, H, W = X.shape
+        self.X = X
+
+        # Global Average Pooling: (B, C)
+        self.gap = X.mean(axis=(2, 3))  # (B, C)
+
+        # FC1 + ReLU: (B, C) → (B, mid)
+        self.fc1_out = self.gap @ self.W1.T + self.b1  # (B, mid)
+        self.relu_mask = (self.fc1_out > 0)
+        self.fc1_relu = self.fc1_out * self.relu_mask  # (B, mid)
+
+        # FC2 + Sigmoid: (B, mid) → (B, C)
+        self.fc2_out = self.fc1_relu @ self.W2.T + self.b2  # (B, C)
+        self.scale = 1.0 / (1.0 + np.exp(-self.fc2_out))  # sigmoid, (B, C)
+
+        # Scale: (B, C, 1, 1) * (B, C, H, W)
+        return X * self.scale[:, :, None, None]
+
+    def backward(self, dY):
+        B, C, H, W = dY.shape
+
+        # dY wrt scaled output: out = X * scale
+        # d(out)/d(X) = scale, d(out)/d(scale) = X
+        dX_direct = dY * self.scale[:, :, None, None]
+
+        # d(out)/d(scale): sum over spatial dims because scale is (B, C)
+        dscale = (dY * self.X).sum(axis=(2, 3))  # (B, C)
+
+        # Sigmoid backward: d(sigmoid)/d(fc2_out) = sig * (1 - sig)
+        dsig = dscale * self.scale * (1.0 - self.scale)  # (B, C)
+
+        # FC2 backward
+        self.dW2 = dsig.T @ self.fc1_relu  # (C, mid)
+        self.db2 = dsig.sum(axis=0)  # (C,)
+        dfc1_relu = dsig @ self.W2  # (B, mid)
+
+        # ReLU backward
+        dfc1 = dfc1_relu * self.relu_mask  # (B, mid)
+
+        # FC1 backward
+        self.dW1 = dfc1.T @ self.gap  # (mid, C)
+        self.db1 = dfc1.sum(axis=0)  # (mid,)
+        dgap = dfc1 @ self.W1  # (B, C)
+
+        # GAP backward: spread gradient evenly across spatial positions
+        dX_gap = dgap[:, :, None, None] / (H * W)
+
+        return dX_direct + dX_gap
 
 
 class SoftmaxLayer(Layer):
