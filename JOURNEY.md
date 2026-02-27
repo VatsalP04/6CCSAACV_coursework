@@ -196,3 +196,13 @@ Evaluated all three approaches across all four datasets (1000 images each):
 - **>=60% = 70 marks (full marks)**
 
 The global context model at 68.09% val accuracy exceeds the 60% threshold for full marks.
+
+---
+
+## Training Procedure Summary
+
+Training progressed through a series of experiments, each building on the last. `run_base.py` trained the baseline CNN with SGD (lr=1e-3, batch=4, no augmentation), reaching ~49%. `run1_adam.py` switched to Adam (lr=1e-3, batch=16) with basic augmentation, pushing to ~55%. `run2_strong_aug_continue_from_run1.py` fine-tuned from Run 1's best checkpoint with lower LR (5e-4), larger batch (32), and stronger augmentation (rotation ±15°, brightness/contrast ±30%). `run2_continue.py` extended this for another 100 epochs with further LR decay, plateauing at ~59.6%.
+
+The best model came from `run_global_context.py`, which added squeeze-and-excite (SE) blocks after each pooling layer. It transferred the 9 pre-trained conv layer weights from Run 2's best checkpoint into the new architecture, so the SE blocks learned on top of already-trained features. This reached **68.1% val accuracy** in 68 epochs.
+
+Two further experiments attempted to improve generalisation: `run_generalise.py` (morphological augmentation) and `run_dropout.py` (dropout regularisation). Neither surpassed the original GC model on the validation set. All experiment scripts import the shared training loop from `train.py` and data utilities from `utils.py`.
