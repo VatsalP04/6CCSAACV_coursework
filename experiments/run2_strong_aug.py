@@ -14,7 +14,33 @@ os.chdir(_PROJECT_ROOT)
 
 from layers import Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, Adam
 from utils import PatchShuffleDataLoader, compute_total_receptive_field, setup_logging
-from train import build_network, train_run
+from train import train_run
+
+
+def build_network(lr=1e-3):
+    """Baseline patch-sorting CNN (Week 5 architecture)."""
+    return Network([
+        ConvLayer(in_channels=1, out_channels=32, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=32, out_channels=32, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        MaxPoolLayer(size=2, stride=2),
+        ConvLayer(in_channels=32, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=64, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        MaxPoolLayer(size=2, stride=2),
+        ConvLayer(in_channels=64, out_channels=128, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=128, out_channels=128, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        MaxPoolLayer(size=2, stride=2),
+        ConvLayer(in_channels=128, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=64, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ConvLayer(in_channels=64, out_channels=16, kernel_size=1, stride=1, pad=0),
+        SoftmaxLayer(axis=1),
+    ], optimizer=Adam(lr=lr))
 
 
 if __name__ == "__main__":

@@ -18,12 +18,38 @@ _PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _PROJECT_ROOT)
 os.chdir(_PROJECT_ROOT)
 
-from train import build_network, train_run
-from layers import Adam
+from train import train_run
+from layers import Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, Adam
 from utils import (
     PatchShuffleDataLoader, setup_logging, compute_total_receptive_field,
     augmented_train_batches, augment_image
 )
+
+
+def build_network(lr=1e-3):
+    """Baseline patch-sorting CNN for testing."""
+    return Network([
+        ConvLayer(in_channels=1, out_channels=32, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=32, out_channels=32, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        MaxPoolLayer(size=2, stride=2),
+        ConvLayer(in_channels=32, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=64, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        MaxPoolLayer(size=2, stride=2),
+        ConvLayer(in_channels=64, out_channels=128, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=128, out_channels=128, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        MaxPoolLayer(size=2, stride=2),
+        ConvLayer(in_channels=128, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ReLULayer(),
+        ConvLayer(in_channels=64, out_channels=64, kernel_size=3, stride=1, pad=1),
+        ConvLayer(in_channels=64, out_channels=16, kernel_size=1, stride=1, pad=0),
+        SoftmaxLayer(axis=1),
+    ], optimizer=Adam(lr=lr))
 
 
 def test_augment_image_custom_params():

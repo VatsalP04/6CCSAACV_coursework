@@ -1,60 +1,13 @@
 """
-Network builder and training loop. Experiment scripts in experiments/ import from here.
-Augmentation functions live in utils.py.
+Training loop used by all experiment scripts. Augmentation and data
+utilities live in utils.py; architecture definitions live in each
+experiment's run file.
 """
 import os
 import pickle
 from tqdm import tqdm
-from layers import (
-    Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, CrossEntropyLoss, Adam
-)
+from layers import CrossEntropyLoss
 from utils import assign_patches, compute_reconstruction_accuracy, augmented_train_batches
-
-
-# ---------------------------------------------------------------------------
-# Network builder
-# ---------------------------------------------------------------------------
-def build_network(lr=1e-3):
-    """Construct and return the patch-sorting CNN (Week 5 architecture)."""
-    return Network([
-        ConvLayer(in_channels=1, out_channels=32, kernel_size=3, stride=1, pad=1),
-        ReLULayer(),
-
-        ConvLayer(in_channels=32, out_channels=32, kernel_size=3, stride=1, pad=1),
-        ReLULayer(),
-
-        MaxPoolLayer(size=2, stride=2),   # 32x32 -> 16x16
-
-        ConvLayer(in_channels=32, out_channels=64, kernel_size=3, stride=1, pad=1),
-        ReLULayer(),
-
-        ConvLayer(in_channels=64, out_channels=64, kernel_size=3, stride=1, pad=1),
-        ReLULayer(),
-
-        MaxPoolLayer(size=2, stride=2),   # 16x16 -> 8x8
-
-        ConvLayer(in_channels=64, out_channels=128, kernel_size=3, stride=1, pad=1),
-        ReLULayer(),
-
-        ConvLayer(in_channels=128, out_channels=128, kernel_size=3, stride=1, pad=1),
-        ReLULayer(),
-
-        MaxPoolLayer(size=2, stride=2),   # 8x8 -> 4x4
-
-        ConvLayer(in_channels=128, out_channels=64, kernel_size=3, stride=1, pad=1),
-        ReLULayer(),
-
-        ConvLayer(in_channels=64, out_channels=64, kernel_size=3, stride=1, pad=1),
-
-        ConvLayer(in_channels=64, out_channels=16, kernel_size=1, stride=1, pad=0),
-
-        SoftmaxLayer(axis=1),  # softmax across channel/class dimension
-    ], optimizer=Adam(lr=lr))
-
-
-# ---------------------------------------------------------------------------
-# Training loop (reusable across runs)
-# ---------------------------------------------------------------------------
 def train_run(net, loader, start_epoch, end_epoch, run_dir, run_name,
               use_augmentation, num_patches, lr_patience, lr_factor, lr_min,
               log, aug_params=None):
