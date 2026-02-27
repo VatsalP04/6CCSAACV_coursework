@@ -33,7 +33,7 @@ def mount_google_drive(drive_path="/content/drive"):
         else:
             print("Failed to mount Google Drive. Please try again.")
 
-def setup_logging(log_file="train.log"):
+def setup_logging(log_file="logs/train.log"):
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
@@ -310,7 +310,7 @@ def compute_reconstruction_accuracy(im, pred, gt, num_patches: int = 4, eps: flo
             if pred[i] == gt[i]:
                 num_correct += 1
 
-    return num_correct / num_total
+    return num_correct / max(num_total, 1)
 
 
 def compute_total_receptive_field(net):

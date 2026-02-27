@@ -1,4 +1,11 @@
+import os
+import sys
 import numpy as np
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _PROJECT_ROOT)
+os.chdir(_PROJECT_ROOT)
+
 from layers import (
     im2col, col2im, ConvLayer, ReLULayer, MaxPoolLayer,
     SoftmaxLayer, CrossEntropyLoss, Network, SGD, Adam

@@ -7,11 +7,16 @@ Runs 2 epochs of Run 1 → 2 epochs of Run 2 with tiny data to verify:
   - Checkpoint save/load roundtrip
 """
 import os
+import sys
 import json
 import shutil
 import pickle
 import tempfile
 import numpy as np
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _PROJECT_ROOT)
+os.chdir(_PROJECT_ROOT)
 
 from train import build_network, train_run, augmented_train_batches, augment_image
 from layers import Adam

@@ -1,7 +1,13 @@
 """Train with GlobalContextLayer added after the bottleneck convolutions."""
 import os
+import sys
 import pickle
 from datetime import datetime
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _PROJECT_ROOT)
+os.chdir(_PROJECT_ROOT)
+
 from layers import (
     Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer,
     GlobalContextLayer, Adam
@@ -68,7 +74,7 @@ def build_network_global_context(lr=1e-3):
 
 
 if __name__ == "__main__":
-    log = setup_logging(log_file="train_global_context.log")
+    log = setup_logging(log_file="logs/train_global_context.log")
 
     dataset_dir = "dataset/acv_train_32x32"
     json_file = "dataset/acv_train_32x32_cross_val/fold_1.json"

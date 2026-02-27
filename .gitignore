@@ -6,3 +6,5 @@ eval_temp
 *.log
 *.csv
 *.pyc
+evaluation
+images

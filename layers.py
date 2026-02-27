@@ -230,10 +230,38 @@ class Adam:
                 self._update_param(layer, bname)
 
 
+class DropoutLayer(Layer):
+    """Inverted dropout: scales activations by 1/(1-p) during training."""
+    def __init__(self, p=0.5):
+        super().__init__()
+        self.p = p
+        self.training = True
+        self.mask = None
+
+    def forward(self, X):
+        if self.training:
+            self.mask = (np.random.rand(*X.shape) > self.p).astype(X.dtype)
+            return X * self.mask / (1.0 - self.p)
+        return X
+
+    def backward(self, dY):
+        return dY * self.mask / (1.0 - self.p)
+
+
 class Network:
     def __init__(self, layers, optimizer=None):
         self.layers = layers
         self.optimizer = optimizer or SGD()
+
+    def train_mode(self):
+        for layer in self.layers:
+            if hasattr(layer, 'training'):
+                layer.training = True
+
+    def eval_mode(self):
+        for layer in self.layers:
+            if hasattr(layer, 'training'):
+                layer.training = False
 
     def forward(self, X):
         for layer in self.layers:

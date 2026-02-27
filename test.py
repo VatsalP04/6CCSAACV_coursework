@@ -8,7 +8,7 @@ import scipy.optimize
 # Required for pickle to reconstruct the network object
 from layers import (
     Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer,
-    SGD, Adam
+    SGD, Adam, GlobalContextLayer, DropoutLayer
 )
 
 
@@ -58,6 +58,8 @@ def main():
     # Load model
     with open(args.model, "rb") as f:
         net = pickle.load(f)
+    if hasattr(net, 'eval_mode'):
+        net.eval_mode()
 
     # Get all PNG images in the test directory
     image_files = sorted([

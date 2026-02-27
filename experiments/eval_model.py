@@ -1,10 +1,15 @@
 import argparse
 import json
 import os
+import sys
 import random
 import subprocess
 import numpy as np
 import cv2 as cv
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _PROJECT_ROOT)
+os.chdir(_PROJECT_ROOT)
 
 
 def shuffle_patches(image, num_patches=4):
@@ -84,7 +89,7 @@ def main():
     np.random.seed(args.seed)
 
     # Setup temp directories (clear previous run)
-    temp_dir = "eval_temp"
+    temp_dir = "evaluation"
     shuffled_dir = os.path.join(temp_dir, "shuffled")
     if os.path.exists(shuffled_dir):
         for f in os.listdir(shuffled_dir):

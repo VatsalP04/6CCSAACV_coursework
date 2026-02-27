@@ -1,5 +1,12 @@
+import os
+import sys
 import numpy as np
 import torch
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _PROJECT_ROOT)
+os.chdir(_PROJECT_ROOT)
+
 from layers import ConvLayer, ReLULayer, MaxPoolLayer, CrossEntropyLoss, Network
 
 

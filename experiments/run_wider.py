@@ -1,7 +1,13 @@
 """Train with wider bottleneck: 128→256 channels at bottleneck, 64→128 final."""
 import os
+import sys
 import pickle
 from datetime import datetime
+
+_PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _PROJECT_ROOT)
+os.chdir(_PROJECT_ROOT)
+
 from layers import (
     Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, Adam
 )
@@ -51,7 +57,7 @@ def build_network_wider(lr=1e-3):
 
 
 if __name__ == "__main__":
-    log = setup_logging(log_file="train_wider.log")
+    log = setup_logging(log_file="logs/train_wider.log")
 
     dataset_dir = "dataset/acv_train_32x32"
     json_file = "dataset/acv_train_32x32_cross_val/fold_1.json"

@@ -18,8 +18,14 @@ from utils import (
 # Data augmentation (grayscale HWC uint8, applied BEFORE patch shuffle)
 # ---------------------------------------------------------------------------
 def augment_image(image, p_flip=0.5, max_rotation=10,
-                  brightness_range=0.2, contrast_range=0.2, blur_prob=0.3):
-    """Apply random augmentations to a grayscale image (H, W, C) uint8."""
+                  brightness_range=0.2, contrast_range=0.2, blur_prob=0.3,
+                  morph_prob=0.4, noise_prob=0.3):
+    """Apply random augmentations to a grayscale image (H, W, C) uint8.
+
+    All augmentations preserve the black background: rotation uses black
+    border fill, and a final threshold pass ensures low-value pixels from
+    interpolation artefacts are cleaned to pure black.
+    """
     h, w = image.shape[:2]
 
     if random.random() < p_flip:
@@ -28,22 +34,55 @@ def augment_image(image, p_flip=0.5, max_rotation=10,
     angle = random.uniform(-max_rotation, max_rotation)
     if abs(angle) > 0.5:
         M = cv.getRotationMatrix2D((w / 2, h / 2), angle, 1.0)
-        image = cv.warpAffine(image, M, (w, h), borderMode=cv.BORDER_REFLECT_101)
+        image = cv.warpAffine(image, M, (w, h), borderMode=cv.BORDER_CONSTANT, borderValue=0)
         if image.ndim == 2:
             image = image[:, :, np.newaxis]
 
-    shift = random.uniform(-brightness_range, brightness_range) * 255
-    image = np.clip(image.astype(np.float32) + shift, 0, 255).astype(np.uint8)
+    # Morphological augmentation: random erosion or dilation to vary stroke thickness
+    if random.random() < morph_prob:
+        ksize = random.choice([2, 3])
+        kernel = np.ones((ksize, ksize), np.uint8)
+        img_2d = image[:, :, 0] if image.ndim == 3 else image
+        if random.random() < 0.5:
+            img_2d = cv.erode(img_2d, kernel, iterations=1)
+        else:
+            img_2d = cv.dilate(img_2d, kernel, iterations=1)
+        image = img_2d[:, :, np.newaxis] if image.ndim == 3 else img_2d
 
+    # Foreground-only brightness
+    img_f = image.astype(np.float32)
+    fg_mask = img_f > 12.0  # current foreground
+    shift = random.uniform(-brightness_range, brightness_range) * 255
+    img_f[fg_mask] += shift
+    image = np.clip(img_f, 0, 255).astype(np.uint8)
+
+    # Foreground-only contrast
+    img_f = image.astype(np.float32)
     factor = random.uniform(1.0 - contrast_range, 1.0 + contrast_range)
-    mean = image.mean()
-    image = np.clip((image.astype(np.float32) - mean) * factor + mean, 0, 255).astype(np.uint8)
+    if fg_mask.any():
+        fg_mean = img_f[fg_mask].mean()
+        img_f[fg_mask] = (img_f[fg_mask] - fg_mean) * factor + fg_mean
+    image = np.clip(img_f, 0, 255).astype(np.uint8)
 
     if random.random() < blur_prob:
         ksize = random.choice([3, 5])
         image = cv.GaussianBlur(image, (ksize, ksize), 0)
         if image.ndim == 2:
             image = image[:, :, np.newaxis]
+
+    # Foreground-only Gaussian noise
+    if random.random() < noise_prob:
+        img_f = image.astype(np.float32)
+        fg_now = img_f > 12.0
+        sigma = random.uniform(5, 15)
+        noise = np.random.randn(*image.shape) * sigma
+        img_f[fg_now] += noise[fg_now]
+        image = np.clip(img_f, 0, 255).astype(np.uint8)
+
+    # Final cleanup: threshold low-value pixels to pure black.
+    # This removes interpolation artefacts from rotation/blur that would
+    # otherwise make black patches non-black (penalised in evaluation).
+    image[image < 13] = 0  # 13/255 ≈ 0.05
 
     return image
 
@@ -142,6 +181,7 @@ def train_run(net, loader, start_epoch, end_epoch, run_dir, run_name,
 
     for epoch in range(start_epoch, end_epoch):
         # ---- Train ----
+        net.train_mode()
         epoch_loss = 0.0
         iter_train = 0
 
@@ -167,6 +207,7 @@ def train_run(net, loader, start_epoch, end_epoch, run_dir, run_name,
         avg_train_loss = epoch_loss / max(iter_train, 1)
 
         # ---- Validation (no augmentation) ----
+        net.eval_mode()
         val_loss_sum = 0.0
         val_correct = 0.0
         val_total = 0
@@ -264,8 +305,8 @@ if __name__ == "__main__":
     run1_lr = 1e-3
     run1_epochs = 50
     run1_lr_patience = 10
-    run1_resume_ckpt = "checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl"
-    run1_resume_epoch = 111
+    run1_resume_ckpt = "checkpoints/run_20260226_052437/best_run2_adam_b32_strong_aug.pkl"
+    run1_resume_epoch = 202
 
     timestamp1 = datetime.now().strftime("%Y%m%d_%H%M%S")
     run1_dir = os.path.join("checkpoints", f"run_{timestamp1}")
