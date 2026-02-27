@@ -1,125 +1,14 @@
 """
-Reusable training components: augmentation, batch generation, network builder,
-and the main training loop. Experiment scripts in experiments/ import from here.
+Network builder and training loop. Experiment scripts in experiments/ import from here.
+Augmentation functions live in utils.py.
 """
 import os
 import pickle
-import random
-import numpy as np
-import cv2 as cv
 from tqdm import tqdm
 from layers import (
     Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer, CrossEntropyLoss, Adam
 )
-from utils import assign_patches, compute_reconstruction_accuracy
-
-
-# ---------------------------------------------------------------------------
-# Data augmentation (grayscale HWC uint8, applied BEFORE patch shuffle)
-# ---------------------------------------------------------------------------
-def augment_image(image, p_flip=0.5, max_rotation=10,
-                  brightness_range=0.2, contrast_range=0.2, blur_prob=0.3,
-                  morph_prob=0.4, noise_prob=0.3):
-    """Apply random augmentations to a grayscale image (H, W, C) uint8.
-
-    All augmentations preserve the black background: rotation uses black
-    border fill, and a final threshold pass ensures low-value pixels from
-    interpolation artefacts are cleaned to pure black.
-    """
-    h, w = image.shape[:2]
-
-    if random.random() < p_flip:
-        image = np.ascontiguousarray(image[:, ::-1, :])
-
-    angle = random.uniform(-max_rotation, max_rotation)
-    if abs(angle) > 0.5:
-        M = cv.getRotationMatrix2D((w / 2, h / 2), angle, 1.0)
-        image = cv.warpAffine(image, M, (w, h), borderMode=cv.BORDER_CONSTANT, borderValue=0)
-        if image.ndim == 2:
-            image = image[:, :, np.newaxis]
-
-    # Morphological augmentation: random erosion or dilation to vary stroke thickness
-    if random.random() < morph_prob:
-        ksize = random.choice([2, 3])
-        kernel = np.ones((ksize, ksize), np.uint8)
-        img_2d = image[:, :, 0] if image.ndim == 3 else image
-        if random.random() < 0.5:
-            img_2d = cv.erode(img_2d, kernel, iterations=1)
-        else:
-            img_2d = cv.dilate(img_2d, kernel, iterations=1)
-        image = img_2d[:, :, np.newaxis] if image.ndim == 3 else img_2d
-
-    # Foreground-only brightness
-    img_f = image.astype(np.float32)
-    fg_mask = img_f > 12.0  # current foreground
-    shift = random.uniform(-brightness_range, brightness_range) * 255
-    img_f[fg_mask] += shift
-    image = np.clip(img_f, 0, 255).astype(np.uint8)
-
-    # Foreground-only contrast
-    img_f = image.astype(np.float32)
-    factor = random.uniform(1.0 - contrast_range, 1.0 + contrast_range)
-    if fg_mask.any():
-        fg_mean = img_f[fg_mask].mean()
-        img_f[fg_mask] = (img_f[fg_mask] - fg_mean) * factor + fg_mean
-    image = np.clip(img_f, 0, 255).astype(np.uint8)
-
-    if random.random() < blur_prob:
-        ksize = random.choice([3, 5])
-        image = cv.GaussianBlur(image, (ksize, ksize), 0)
-        if image.ndim == 2:
-            image = image[:, :, np.newaxis]
-
-    # Foreground-only Gaussian noise
-    if random.random() < noise_prob:
-        img_f = image.astype(np.float32)
-        fg_now = img_f > 12.0
-        sigma = random.uniform(5, 15)
-        noise = np.random.randn(*image.shape) * sigma
-        img_f[fg_now] += noise[fg_now]
-        image = np.clip(img_f, 0, 255).astype(np.uint8)
-
-    # Final cleanup: threshold low-value pixels to pure black.
-    # This removes interpolation artefacts from rotation/blur that would
-    # otherwise make black patches non-black (penalised in evaluation).
-    image[image < 13] = 0  # 13/255 ≈ 0.05
-
-    return image
-
-
-def augmented_train_batches(loader, aug_params=None):
-    """Yield augmented training batches. Augmentation runs before patch shuffle."""
-    if aug_params is None:
-        aug_params = {}
-
-    files = list(loader.train_files)
-    if loader.shuffle:
-        random.shuffle(files)
-
-    for start in range(0, len(files), loader.batch_size):
-        batch_files = files[start:start + loader.batch_size]
-        X, Y = [], []
-        for fname in batch_files:
-            full_path = os.path.join(loader.dataset_dir, fname)
-            image = cv.imread(full_path)
-            if image is None:
-                continue
-            image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-            image = cv.resize(image, loader.image_size)
-            if image.ndim == 2:
-                image = image[:, :, np.newaxis]
-
-            image = augment_image(image, **aug_params)
-
-            image, labels = loader._shuffle_patches(image)
-            image = image.astype(np.float32) / 255.0
-            image = np.transpose(image, (2, 0, 1))
-
-            X.append(image)
-            Y.append(labels)
-
-        if len(X) > 0:
-            yield np.stack(X, axis=0), np.stack(Y, axis=0)
+from utils import assign_patches, compute_reconstruction_accuracy, augmented_train_batches
 
 
 # ---------------------------------------------------------------------------

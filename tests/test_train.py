@@ -18,9 +18,12 @@ _PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _PROJECT_ROOT)
 os.chdir(_PROJECT_ROOT)
 
-from train import build_network, train_run, augmented_train_batches, augment_image
+from train import build_network, train_run
 from layers import Adam
-from utils import PatchShuffleDataLoader, setup_logging, compute_total_receptive_field
+from utils import (
+    PatchShuffleDataLoader, setup_logging, compute_total_receptive_field,
+    augmented_train_batches, augment_image
+)
 
 
 def test_augment_image_custom_params():
