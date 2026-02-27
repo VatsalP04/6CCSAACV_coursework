@@ -1,0 +1,125 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{float}
+
+\usepackage{etoolbox}
+
+% This targets the specific spacing after the title block in IEEEtran
+\makeatletter
+\patchcmd{\@maketitle}{\addvspace{0.5\baselineskip}}{\vspace{-4em}}{}{}
+% Reduce space above subsection titles
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}{-0.3em}{0.01em}{\normalfont\normalsize\bfseries}}
+\makeatother
+\usepackage[top=0.3in, bottom=0.3in, left=0.5in, right=0.5in]{geometry}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\begin{center}
+{\large \textbf{6CCSAACV Coursework -- CNN from Scratch}}\\[0.3em]
+{\small Vatsal Patel K22015880}
+\end{center}
+\vspace{-0.5em}
+
+
+\subsection{CNN Architecture and Design Choices}
+
+The network is a fully convolutional CNN that takes a 32$\times$32 grayscale shuffled image and outputs a 16-channel 4$\times$4 probability map. The architecture consists of four convolutional blocks, each containing two 3$\times$3 convolutions with ReLU activations followed by 2$\times$2 max pooling, progressively halving spatial dimensions (32$\times$32 $\rightarrow$ 16$\times$16 $\rightarrow$ 8$\times$8 $\rightarrow$ 4$\times$4). Channel depth increases through the network (32 $\rightarrow$ 64 $\rightarrow$ 128) then narrows back to 64, with a final 1$\times$1 convolution reducing to 16 channels. A softmax layer normalises across channels so each spatial location produces a probability distribution over the 16 possible original positions.
+
+The key design choice is the addition of channel attention modules after each max-pooling layer. These modules perform global average pooling to compress the spatial dimensions into a single value per channel, passes the result through two fully connected layers (with a reduction factor of 4) using ReLU and sigmoid activations, and rescales each channel accordingly. This allows the network to learn which feature channels are most informative at each spatial resolution. At inference, the Hungarian algorithm is applied to the softmax outputs to find the optimal one-to-one assignment of patches to their original positions. The fully convolutional design was chosen to preserve spatial correspondence with the 4$\times$4 patch grid while avoiding a large parameter count.
+
+
+\subsection{Training Procedure}
+
+The model was trained using cross-entropy loss over 16-class patch position predictions, with all-black patches (pixels below 0.05) excluded from the loss since identical empty patches carry no positional information.
+
+Training began with SGD (lr=$1\times10^{-3}$, batch size 4) on the baseline CNN without channel attention, reaching approximately 49\% validation accuracy. Switching to Adam (lr=$1\times10^{-3}$, batch size 16) with reduce-on-plateau scheduling (halving the learning rate after 10 stagnant epochs, minimum $1\times10^{-6}$) improved this to 59.6\% over approximately 300 epochs. To break through this plateau, two architectural changes were tested: widening the bottleneck to 256 channels (which reached only 52.7\% and was significantly slower), and adding channel attention modules with the nine pre-trained convolutional weights transferred into the new architecture, which reached \textbf{68.1\%} in 68 further epochs.
+
+Data augmentation was applied before patch shuffling: horizontal flips, rotation ($\pm15^{\circ}$ with black border fill), foreground-only brightness and contrast shifts ($\pm30\%$), Gaussian blur, and morphological erosion and dilation to simulate varying stroke thicknesses (Figure~\ref{fig:aug}). All augmentations are applied only to foreground pixels, with black backgrounds preserved via a final threshold cleanup. Inverted dropout ($p=0.15$) was also tested but did not improve generalisation and was not used in the final model.
+
+
+\subsection{Evaluation}
+
+Accuracy is measured per image as the fraction of non-black patches correctly assigned to their original position, averaged across the dataset.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Phase & Epochs & Built On & Val Acc. \\
+\midrule
+SGD baseline & 120 & --- & 49\% \\
+Adam + LR scheduling & $\sim$300 & SGD ckpt & 59.6\% \\
+Wider bottleneck (256ch) & 22 & Scratch & 52.7\% \\
+Channel attention (SE) & 68 & Adam ckpt & \textbf{68.1\%} \\
+\bottomrule
+\end{tabular}
+\label{tab:training}
+\end{table}
+
+Each phase addressed a specific bottleneck: SGD was too slow to converge, Adam with learning rate decay pushed further but plateaued at the architecture's limit, and channel attention broke through by allowing the network to weight informative features at each spatial scale. The wider bottleneck was trained independently but underperformed and was abandoned. Figure~\ref{fig:recon} shows example reconstructions from the final model, correctly reconstructed images tend to have distinctive patches with clear stroke features, while errors occur when patches are visually similar or mostly empty.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{augmentation_comparison_v2.png}
+        \caption{Augmentation: original (left) and variants.}
+        \label{fig:aug}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Figure_2 transformed.png}
+        \caption{Correct (top) and incorrect (bottom) reconstructions.}
+        \label{fig:recon}
+    \end{subfigure}
+\end{figure}
+
+
+\subsection{Reflections and Improvements}
+
+Training efficiency was a key challenge. The initial \texttt{im2col} implementation used triple-nested Python loops, creating a bottleneck for the CPU-bound training pipeline. Replacing it with NumPy stride tricks (\texttt{as\_strided}) and rewriting \texttt{col2im} with slice-based accumulation eliminated this overhead. The cross-entropy loss was further optimised by replacing one-hot encoding with direct gather indexing, reducing memory allocation from $O(B \cdot H \cdot W \cdot C)$ to $O(B \cdot H \cdot W)$.
+
+To assess whether the model learns generalisable spatial features rather than overfitting to the training distribution, we evaluated on three unseen handwritten digit datasets with varying resolutions and stroke characteristics:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Dataset & Resolution & Accuracy \\
+\midrule
+Validation (acv\_train)  & 32$\times$32 & \textbf{68.1\%} \\
+QMNIST  \cite{QMNIST} & 28$\times$28 $\rightarrow$ 32$\times$32 & 68.9\% \\
+Handwritten Digits \cite{progjava} & 28$\times$28 $\rightarrow$ 32$\times$32 & 27.0\% \\
+USPS\cite{USPS} & 16$\times$16 $\rightarrow$ 32$\times$32 & 26.2\% \\
+\bottomrule
+\end{tabular}
+\label{tab:generalisation}
+\end{table}
+\vspace{-0.5em}
+
+QMNIST matches in-domain accuracy, confirming that the model generalises well to similar distributions. Handwritten Digits and USPS drop significantly, Handwritten Digits have thinner strokes and lower pixel intensity, while USPS images require 4$\times$ upscaling from 16$\times$16 which blurs the fine spatial details the model relies on for patch discrimination. Fine-tuning with morphological augmentation (erosion/dilation) improved USPS accuracy to 31.8\% but reduced validation accuracy to 64.1\%, so the original model was kept. The primary improvement would be to train on a more diverse set of handwritten digit sources, exposing the model to varied stroke styles and resolutions during training rather than relying on augmentation alone to simulate this variation.
+
+\begin{thebibliography}{1}
+\bibitem{QMNIST} QMNIST, https://github.com/facebookresearch/qmnist/tree/main
+\bibitem{progjava} jc-progjava\_2021, ``Handwritten Digit Dataset,'' Kaggle, 2021.
+\bibitem{USPS} USPS,https://ieeexplore.ieee.org/document/291440
+
+\end{thebibliography}
+\end{document}

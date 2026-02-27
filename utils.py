@@ -10,47 +10,6 @@ import cv2 as cv
 import matplotlib.pyplot as plt
 import scipy.optimize
 
-# Google Colab guard — allows the file to be imported outside Colab
-try:
-    from google.colab import drive as _colab_drive
-    _IN_COLAB = True
-except ImportError:
-    _IN_COLAB = False
-
-
-def mount_google_drive(drive_path="/content/drive"):
-    """Check if Google Drive is mounted in Colab. Mount it if not."""
-    if not _IN_COLAB:
-        print("Not running in Colab, skipping drive mount.")
-        return
-    if os.path.exists(drive_path):
-        print("Google Drive is already mounted.")
-    else:
-        print("Mounting Google Drive...")
-        _colab_drive.mount(drive_path)
-        if os.path.exists(drive_path):
-            print("Google Drive mounted successfully.")
-        else:
-            print("Failed to mount Google Drive. Please try again.")
-
-def setup_logging(log_file="logs/train.log"):
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[
-            logging.FileHandler(log_file),
-            logging.StreamHandler(),
-        ]
-    )
-    return logging.getLogger(__name__)
-
-
-def save_checkpoint(net, epoch, checkpoint_dir="checkpoints"):
-    os.makedirs(checkpoint_dir, exist_ok=True)
-    path = os.path.join(checkpoint_dir, f"epoch_{epoch}.pkl")
-    with open(path, "wb") as f:
-        pickle.dump(net, f)
-    return path
 
 def list_all_images(file_path):
     """List all image filenames in a directory."""
@@ -339,10 +298,6 @@ def compute_total_receptive_field(net):
 
     return R
 
-
-# ---------------------------------------------------------------------------
-# Data augmentation (grayscale HWC uint8, applied BEFORE patch shuffle)
-# ---------------------------------------------------------------------------
 def augment_image(image, p_flip=0.5, max_rotation=10,
                   brightness_range=0.2, contrast_range=0.2, blur_prob=0.3,
                   morph_prob=0.4, noise_prob=0.3):
@@ -414,10 +369,15 @@ def augment_image(image, p_flip=0.5, max_rotation=10,
 
 
 def augmented_train_batches(loader, aug_params=None):
-    """Yield augmented training batches. Augmentation runs before patch shuffle."""
+    """Yield augmented training batches. Augmentation runs before patch shuffle.
+
+    Pipeline per image: load -> grayscale -> resize -> augment -> shuffle -> normalise.
+    aug_params are forwarded to augment_image() (e.g. max_rotation, brightness_range).
+    """
     if aug_params is None:
         aug_params = {}
 
+    # Randomise file order each epoch for stochastic training
     files = list(loader.train_files)
     if loader.shuffle:
         random.shuffle(files)
@@ -430,14 +390,20 @@ def augmented_train_batches(loader, aug_params=None):
             image = cv.imread(full_path)
             if image is None:
                 continue
+
+            # Convert to single-channel grayscale with (H, W, 1) shape
             image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
             image = cv.resize(image, loader.image_size)
             if image.ndim == 2:
                 image = image[:, :, np.newaxis]
 
+            # Apply augmentation BEFORE shuffling so transforms affect the whole image
             image = augment_image(image, **aug_params)
 
+            # Shuffle into patches and get ground-truth permutation labels
             image, labels = loader._shuffle_patches(image)
+
+            # Normalise to [0, 1] and convert to (C, H, W) for the network
             image = image.astype(np.float32) / 255.0
             image = np.transpose(image, (2, 0, 1))
 
@@ -446,3 +412,22 @@ def augmented_train_batches(loader, aug_params=None):
 
         if len(X) > 0:
             yield np.stack(X, axis=0), np.stack(Y, axis=0)
+
+def setup_logging(log_file="logs/train.log"):
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler(),
+        ]
+    )
+    return logging.getLogger(__name__)
+
+
+def save_checkpoint(net, epoch, checkpoint_dir="checkpoints"):
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    path = os.path.join(checkpoint_dir, f"epoch_{epoch}.pkl")
+    with open(path, "wb") as f:
+        pickle.dump(net, f)
+    return path

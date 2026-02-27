@@ -1,8 +1,7 @@
 import numpy as np
 from numpy.lib.stride_tricks import as_strided
 
-# CuPy is used for GPU-accelerated matrix ops in ConvLayer.
-# Falls back to NumPy transparently on CPU-only machines (e.g. Mac laptops).
+# CuPy is used for GPU-accelerated matrix ops in ConvLayer. Falls back to NumPy transparently on CPU-only machines (e.g. Mac laptops).
 try:
     import cupy as xp
 except ImportError:
