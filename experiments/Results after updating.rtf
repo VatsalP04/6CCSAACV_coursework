@@ -1,0 +1,183 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 HelveticaNeue-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f0\fs26 \cf0 python experiments/run_dropout.py\
+2026-02-26 23:59:33,381 [INFO] Transferred 9 conv + 3 GC layers from checkpoints/run_gc_20260226_185216/best_global_context.pkl\
+2026-02-26 23:59:33,385 [INFO] Receptive field: 68 pixels\
+2026-02-26 23:59:33,385 [INFO] Architecture: Global Context + Dropout(p=0.15)\
+2026-02-26 23:59:33,385 [INFO] Augmentation: morph=0.5, noise=0.3, brightness=0.4, contrast=0.4\
+2026-02-26 23:59:33,385 [INFO] Training epochs 1 \uc0\u8594  80 | batch=16 | lr=0.0005
+\f1\b \
+
+\fs36 checkpoints/run_drop_20260226_235933/epoch_gc_dropout_epoch_25.pkl
+\f0\b0\fs26 \
+==================================================\
+UNSEEN DATA EVALUATION \'97 archive\
+==================================================\
+Model: checkpoints/run_drop_20260226_235933/epoch_gc_dropout_epoch_25.pkl\
+Dataset: dataset/unseen_data/archive\
+Images evaluated: 1000\
+Average accuracy: 0.2560 (25.60%)\
+==================================================\
+Loading model: checkpoints/run_drop_20260226_235933/epoch_gc_dropout_epoch_25.pkl\
+Loading images: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Dataset: QMNIST | Total images: 60000 | Image size: 28x28\
+Evaluating on 1000 images\
+\
+==================================================\
+UNSEEN DATA EVALUATION \'97 QMNIST\
+==================================================\
+Model: checkpoints/run_drop_20260226_235933/epoch_gc_dropout_epoch_25.pkl\
+Dataset: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Images evaluated: 1000\
+Average accuracy: 0.6279 (62.79%)\
+==================================================\
+usage: eval_unseen.py [-h] --model MODEL [--data DATA] [--num-images NUM_IMAGES] [--batch-size BATCH_SIZE] [--seed SEED] [--num-patches NUM_PATCHES]\
+eval_unseen.py: error: unrecognized arguments: epoch_gc_dropout_epoch_25.pkl\
+Loading model: checkpoints/run_drop_20260226_235933/epoch_gc_dropout_epoch_25.pkl\
+Loading images: dataset/acv_train_32x32\
+Dataset: acv_train_32x32 | Total images: 60000 | Image size: 32x32\
+Evaluating on 1000 images\
+\
+==================================================\
+EVALUATION RESULTS - ORIGINAL\
+==================================================\
+Images evaluated: 1000\
+Default predictions (failed to load): 0\
+Average accuracy: 0.5967 (59.67%)\
+==================================================\
+\
+==================================================\
+UNSEEN DATA EVALUATION \'97 USPS\
+==================================================\
+Model: checkpoints/run_drop_20260226_235933/epoch_gc_dropout_epoch_25.pkl\
+Dataset: dataset/unseen_data/usps.h5\
+Images evaluated: 1000\
+Average accuracy: 0.2946 (29.46%)\
+==================================================\
+\
+\
+\
+python run_global_context.py                                                   \
+2026-02-26 18:52:16,091 [INFO] Transferred 9 conv layers from checkpoints/run_20260226_093924/best_run2_continued.pkl\
+2026-02-26 18:52:16,094 [INFO] Receptive field: 68 pixels\
+2026-02-26 18:52:16,094 [INFO] Architecture: Global Context (SE blocks after each pool) + weight transfer\
+2026-02-26 18:52:16,094 [INFO] Training epochs 1 \uc0\u8594  100 | batch=16 | lr=0.001\
+
+\f1\b\fs36 checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_68.pkl
+\fs26 \
+\
+\
+
+\f0\b0 ==================================================\
+UNSEEN DATA EVALUATION \'97 archive\
+==================================================\
+Model: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_68.pkl\
+Dataset: dataset/unseen_data/archive\
+Images evaluated: 1000\
+Average accuracy: 0.2700 (27.00%)\
+==================================================\
+Loading model: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_68.pkl\
+Loading images: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Dataset: QMNIST | Total images: 60000 | Image size: 28x28\
+Evaluating on 1000 images\
+\
+==================================================\
+UNSEEN DATA EVALUATION \'97 QMNIST\
+==================================================\
+Model: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_68.pkl\
+Dataset: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Images evaluated: 1000\
+Average accuracy: 0.6888 (68.88%)\
+==================================================\
+Loading model: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_68.pkl\
+Loading images: dataset/unseen_data/usps.h5\
+Dataset: USPS | Total images: 2007 | Image size: 16x16\
+Evaluating on 1000 images\
+\
+==================================================\
+UNSEEN DATA EVALUATION \'97 USPS\
+==================================================\
+Model: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_68.pkl\
+Dataset: dataset/unseen_data/usps.h5\
+Images evaluated: 1000\
+Average accuracy: 0.2619 (26.19%)\
+==================================================\
+Loading model: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_68.pkl\
+Loading images: dataset/acv_train_32x32\
+Dataset: acv_train_32x32 | Total images: 60000 | Image size: 32x32\
+Evaluating on 1000 images\
+\
+==================================================\
+EVALUATION RESULTS - ORIGINAL \
+==================================================\
+Images evaluated: 1000\
+Default predictions (failed to load): 0\
+Average accuracy: 0.6809 (68.09%)\
+==================================================\
+\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python experiments/run_generalise.py\
+2026-02-26 23:34:54,142 [INFO] Resuming from global context model: checkpoints/run_gc_20260226_185216/best_global_context.pkl\
+2026-02-26 23:34:54,188 [INFO] Receptive field: 68 pixels\
+2026-02-26 23:34:54,188 [INFO] Architecture: Global Context (SE blocks) + generalisation augmentation\
+2026-02-26 23:34:54,188 [INFO] Augmentation: morph_prob=0.5, noise_prob=0.3, brightness=0.4, contrast=0.4, rotation=15, blur=0.4\
+2026-02-26 23:34:54,188 [INFO] Training epochs 1 \uc0\u8594  80 | batch=16 | lr=0.0005\
+
+\f1\b\fs36 checkpoints/run_gen_20260226_233454/epoch_generalise_epoch_32.pkl
+\f0\b0\fs26 \
+
+\f1\b \
+
+\f0\b0 ==================================================\
+UNSEEN DATA EVALUATION \'97 archive\
+==================================================\
+Model: checkpoints/run_gen_20260226_233454/epoch_generalise_epoch_32.pkl\
+Dataset: dataset/unseen_data/archive\
+Images evaluated: 1000\
+Average accuracy: 0.2653 (26.53%)\
+==================================================\
+\
+Loading model: checkpoints/run_gen_20260226_233454/epoch_generalise_epoch_32.pkl\
+Loading images: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Dataset: QMNIST | Total images: 60000 | Image size: 28x28\
+Evaluating on 1000 images\
+==================================================\
+UNSEEN DATA EVALUATION \'97 QMNIST\
+==================================================\
+Model: checkpoints/run_gen_20260226_233454/epoch_generalise_epoch_32.pkl\
+Dataset: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Images evaluated: 1000\
+Average accuracy: 0.6769 (67.69%)\
+==================================================\
+\
+Loading model: checkpoints/run_gen_20260226_233454/epoch_generalise_epoch_32.pkl\
+Loading images: dataset/unseen_data/usps.h5\
+Dataset: USPS | Total images: 2007 | Image size: 16x16\
+Evaluating on 1000 images\
+==================================================\
+UNSEEN DATA EVALUATION \'97 USPS\
+==================================================\
+Model: checkpoints/run_gen_20260226_233454/epoch_generalise_epoch_32.pkl\
+Dataset: dataset/unseen_data/usps.h5\
+Images evaluated: 1000\
+Average accuracy: 0.3178 (31.78%)\
+==================================================\
+Generating 1000 shuffled images...\
+Saved shuffled images to evaluation/shuffled\
+Saved ground truth to evaluation/ground_truth.csv\
+\
+Running: python test.py --test-dir evaluation/shuffled --model checkpoints/run_gen_20260226_233454/epoch_generalise_epoch_32.pkl\
+\
+==================================================\
+EVALUATION RESULTS - ORIGINAL\
+==================================================\
+Images evaluated: 1000\
+Default predictions (failed to load): 0\
+Average accuracy: 0.6414 (64.14%)\
+==================================================}

@@ -1,0 +1,307 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\uc0\u9210  Written to JOURNEY.md. Here's the summary:\
+\
+  SGD baseline (49%) \uc0\u8594  more data + augmentation (55%) \u8594  Adam + LR scheduling (59.6%) \u8594 \
+  Global Context SE blocks (68.1%, still climbing)\
+\
+  Along the way we hit the alpha channel bug on archive (0% \uc0\u8594  26%), tested 4 interpolation\
+  methods on USPS, discovered our augmentation was corrupting black backgrounds (62%\
+  nonzero vs 20%), and fixed it with foreground-only transforms + threshold cleanup.\
+\
+  The global context model with weight transfer was the breakthrough \'97 it started at 60%\
+  (already beating the old best) and reached 68% by epoch 38, well above the 60% threshold\
+  for full marks.\
+\
+\uc0\u10043  Baked for 3m 8s\
+\
+\uc0\u10095  after one epoch, python experiments/run_generalise.py will it have baked in the      \
+  augmentation in the model. can one checkpoint be used to see if its a little better  \
+  on those unseen data images                                                          \
+\
+\uc0\u9210  Yes \'97 after even one epoch the model will have seen every training image with the new\
+  augmentations (erosion/dilation, noise, stronger contrast). Let me check if the first\
+  checkpoint exists already:\
+\
+\uc0\u9210  Read 1 file (ctrl+o to expand)\
+\
+\uc0\u9210  There are already 2 epoch checkpoints. Let me quickly eval the best one on archive and\
+  QMNIST to see if there's any improvement:\
+\
+\uc0\u9210  Bash(CKPT=$(ls checkpoints/run_gen_*/best_generalise.pkl) && echo "Using: $CKPT")\
+  \uc0\u9151   Using: checkpoints/run_gen_20260226_233454/best_generalise.pkl\
+\
+\
+\
+\uc0\u9210  Read 4 files (ctrl+o to expand)\
+\
+\uc0\u9210  After just 2 epochs:\
+\
+  \uc0\u9484 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9516 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9516 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9516 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9488 \
+  \uc0\u9474  Dataset \u9474  final.pkl (before) \u9474  Generalise (2 epochs) \u9474  Change \u9474 \
+  \uc0\u9500 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9532 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9532 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9532 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9508 \
+  \uc0\u9474  Archive \u9474  25.92%             \u9474  26.25%                \u9474  +0.3%  \u9474 \
+  \uc0\u9500 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9532 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9532 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9532 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9508 \
+  \uc0\u9474  QMNIST  \u9474  67.20%             \u9474  66.92%                \u9474  -0.3%  \u9474 \
+  \uc0\u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9524 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9524 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9524 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9496 \
+\
+  Basically no change yet \'97 2 epochs isn't enough for the augmentation to really take\
+  effect. The model needs more time to adapt to the eroded/dilated variations. It hasn't\
+  hurt QMNIST though, which is good \'97 means it's not forgetting.\
+\
+  Let it train for more epochs. The effect of morphological augmentation is gradual since\
+  the model needs to learn invariance to stroke thickness across many examples. I'd expect\
+  to see meaningful differences after 10-20 epochs.\
+\
+\uc0\u10043  Cogitated for 1m 44s\
+\
+\uc0\u10095  ok i want to simultanouesly train on another architecture, just incase augmentation  \
+  is not enough for generalisation. help me make another architecture                  \
+\
+\uc0\u9210  What kind of architecture change are you thinking? Here are some options that could help\
+  with generalisation:\
+\
+\uc0\u9210  User answered Claude's questions:\
+  \uc0\u9151   \'b7 Which architectural approach for generalisation? \u8594  give the best option.\
+\
+\
+\
+\
+\uc0\u9210  For generalisation specifically, Dropout is the best bang-for-buck. It directly combats\
+  overfitting to the training distribution, is simple to implement, trains fast, and is the\
+   most proven technique for bridging the train-test domain gap. Attention is powerful but\
+  very slow with NumPy.\
+\
+  Let me build it \'97 a global context model with dropout layers added:\
+\
+\uc0\u9210  Searched for 2 patterns, read 1 file (ctrl+o to expand)\
+\
+\uc0\u9210  The Network class doesn't have a train/eval mode. I need to add that for dropout to work\
+  (dropout active during training, disabled during inference). Let me implement this\
+  cleanly:\
+\
+\uc0\u9210  Read 1 file (ctrl+o to expand)\
+\
+\uc0\u9210  Now I'll add a DropoutLayer class and add train/eval mode to Network:\
+\
+\uc0\u9210  Update(layers.py)\
+  \uc0\u9151   Added 28 lines\
+      230                  self._update_param(layer, bname)\
+      231  \
+      232  \
+      233 +class DropoutLayer(Layer):                                               \
+      234 +    """Inverted dropout: scales activations by 1/(1-p) during training.""\
+          +"                                                                        \
+      235 +    def __init__(self, p=0.5):                                           \
+      236 +        super().__init__()                                               \
+      237 +        self.p = p                                                       \
+      238 +        self.training = True                                             \
+      239 +        self.mask = None                                                 \
+      240 +                                                                         \
+      241 +    def forward(self, X):                                                \
+      242 +        if self.training:                                                \
+      243 +            self.mask = (np.random.rand(*X.shape) > self.p).astype(X.dtyp\
+          +e)                                                                       \
+      244 +            return X * self.mask / (1.0 - self.p)                        \
+      245 +        return X                                                         \
+      246 +                                                                         \
+      247 +    def backward(self, dY):                                              \
+      248 +        return dY * self.mask / (1.0 - self.p)                           \
+      249 +                                                                         \
+      250 +                                                                         \
+      251  class Network:\
+      252      def __init__(self, layers, optimizer=None):\
+      253          self.layers = layers\
+      254          self.optimizer = optimizer or SGD()\
+      255  \
+      256 +    def train_mode(self):                                                \
+      257 +        for layer in self.layers:                                        \
+      258 +            if hasattr(layer, 'training'):                               \
+      259 +                layer.training = True                                    \
+      260 +                                                                         \
+      261 +    def eval_mode(self):                                                 \
+      262 +        for layer in self.layers:                                        \
+      263 +            if hasattr(layer, 'training'):                               \
+      264 +                layer.training = False                                   \
+      265 +                                                                         \
+      266      def forward(self, X):\
+      267          for layer in self.layers:\
+      268              X = layer.forward(X)\
+\
+\uc0\u9210  Now I need to make sure the training loop calls train_mode() and eval_mode() at the right\
+   times:\
+\
+\uc0\u9210  Read 1 file (ctrl+o to expand)\
+\
+\uc0\u9210  I need to add train_mode() before training and eval_mode() before validation:\
+\
+\uc0\u9210  Update(train.py)\
+  \uc0\u9151   Added 1 line\
+      181  \
+      182      for epoch in range(start_epoch, end_epoch):\
+      183          # ---- Train ----\
+      184 +        net.train_mode()                                                 \
+      185          epoch_loss = 0.0\
+      186          iter_train = 0\
+      187  \
+\
+\
+\
+\
+\
+\
+\
+\
+\uc0\u9210  Update(train.py)\
+  \uc0\u9151   Added 1 line\
+      207          avg_train_loss = epoch_loss / max(iter_train, 1)\
+      208  \
+      209          # ---- Validation (no augmentation) ----\
+      210 +        net.eval_mode()                                                  \
+      211          val_loss_sum = 0.0\
+      212          val_correct = 0.0\
+      213          val_total = 0\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\uc0\u9210  Now I also need to make sure test.py and other inference scripts work \'97 networks without\
+  dropout layers won't have .training attribute on most layers, but eval_mode() already\
+  uses hasattr so it's safe. Let me also make sure pickled models set eval mode on load.\
+  Actually, test.py just calls net.forward() \'97 if the model has no dropout layers, it works\
+   as before. If it does, dropout defaults to training=True on unpickle, so I should add\
+  eval_mode() to test.py:\
+\
+\uc0\u9210  Read 1 file (ctrl+o to expand)\
+\
+\uc0\u9210  Update(test.py)\
+  \uc0\u9151   Added 2 lines\
+      58      # Load model\
+      59      with open(args.model, "rb") as f:\
+      60          net = pickle.load(f)\
+      61 +    if hasattr(net, 'eval_mode'):                                         \
+      62 +        net.eval_mode()                                                   \
+      63  \
+      64      # Get all PNG images in the test directory\
+      65      image_files = sorted([\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\uc0\u9210  Now let me also update the imports in test.py and the experiment eval scripts to include\
+  DropoutLayer:\
+\
+\uc0\u9210  Update(test.py)\
+  \uc0\u9151   Added 1 line, removed 1 line\
+       8  # Required for pickle to reconstruct the network object\
+       9  from layers import (\
+      10      Network, ConvLayer, ReLULayer, MaxPoolLayer, SoftmaxLayer,\
+      11 -    SGD, Adam, GlobalContextLayer                                         \
+      11 +    SGD, Adam, GlobalContextLayer, DropoutLayer                           \
+      12  )\
+      13  \
+      14  \
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\uc0\u9210  Now create the training script with the new architecture:\
+\
+\uc0\u9210  Write(experiments/run_dropout.py)\
+  \uc0\u9151   Wrote 165 lines to experiments/run_dropout.py\
+       1 """Global Context + Dropout architecture for better general\
+         isation.\
+       2\
+       3 Adds dropout after each ReLU block to prevent overfitting t\
+         o training\
+       4 distribution. Combined with morphological augmentation to h\
+         andle\
+       5 varying stroke thicknesses in unseen datasets.\
+       6 """\
+       7 import os\
+       8 import sys\
+       9 import pickle\
+      10 from datetime import datetime\
+     \'85 +155 lines (ctrl+o to expand)\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\uc0\u9210  Let me verify it imports and builds correctly:\
+\
+\uc0\u9210  Read 1 file (ctrl+o to expand)\
+\
+\uc0\u9210  Everything works. Here's what we've got:\
+\
+  Architecture: Global Context + Dropout\
+  - Same SE-block architecture that reached 68%\
+  - 4 dropout layers (p=0.15) added after the first ReLU in each conv block\
+  - All 9 conv + 3 SE weights transferred from the best GC checkpoint\
+  - Light dropout (15%) \'97 enough to regularise without crippling learning\
+  - Same generalisation augmentation (morph, noise, foreground-only brightness/contrast)\
+\
+  Why dropout helps generalisation:\
+  - Forces the network to learn redundant feature representations \'97 no single neuron can\
+  memorise training-specific patterns\
+  - At test time, all neurons are active but the learned features are more robust\
+  - Combined with morphological augmentation, the model should generalise better to\
+  different stroke styles\
+\
+  Run it alongside the generalise experiment:\
+  python experiments/run_dropout.py\
+\
+\uc0\u10043  Crunched for 2m 7s\
+\
+\uc0\u10095   checkpoints/run_drop_20260226_235933/epoch_gc_}

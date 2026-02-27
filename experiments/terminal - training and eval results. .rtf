@@ -1,0 +1,395 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww19280\viewh15320\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python -m venv venv\
+(base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % source venv/bin/activate\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python eval_model.py --model final.pkl --num-images 200                                                      \
+Generating 200 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 200\
+Average accuracy: 0.4777 (47.77%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python eval_model.py --model final.pkl --num-images 2000                                                                                                                   \
+Generating 2000 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 2000\
+Average accuracy: 0.5061 (50.61%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python eval_model.py --model final.pkl --num-images 200                                                      \
+Generating 200 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 200\
+Average accuracy: 0.4751 (47.51%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python eval_model.py --model final.pkl --num-images 2000                                                                                                                   \
+Generating 2000 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 2000\
+Average accuracy: 0.5113 (51.13%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python eval_model.py --model final.pkl --num-images 10000\
+Generating 10000 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 10000\
+Default predictions (failed to load): 0\
+Average accuracy: 0.5133 (51.33%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python eval_model.py --model final.pkl --num-images 100  \
+Generating 100 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 100\
+Default predictions (failed to load): 0\
+Average accuracy: 0.4947 (49.47%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % git status\
+On branch refactor\
+Changes not staged for commit:\
+  (use "git add/rm <file>..." to update what will be committed)\
+  (use "git restore <file>..." to discard changes in working directory)\
+        deleted:    "\\"Understanding im2col\\".txt"\
+        deleted:    6CCSAACV 25~26 SEM2 000001 ADVANCED COMPUT_ Coursework Instructions _ KEATS.pdf\
+        deleted:    acv_weekly_excercises.ipynb\
+        deleted:    acv_weekly_excercises.py\
+        deleted:    acv_weekly_excercises_v2.ipynb\
+        deleted:    backward pass_col2im.txt\
+        modified:   train.py\
+\
+Untracked files:\
+  (use "git add <file>..." to include in what will be committed)\
+        final.pkl\
+        test_layers.py\
+\
+no changes added to commit (use "git add" and/or "git commit -a")\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % git status   \
+On branch refactor\
+Changes not staged for commit:\
+  (use "git add/rm <file>..." to update what will be committed)\
+  (use "git restore <file>..." to discard changes in working directory)\
+        deleted:    "\\"Understanding im2col\\".txt"\
+        deleted:    6CCSAACV 25~26 SEM2 000001 ADVANCED COMPUT_ Coursework Instructions _ KEATS.pdf\
+        deleted:    acv_weekly_excercises.ipynb\
+        deleted:    acv_weekly_excercises.py\
+        deleted:    acv_weekly_excercises_v2.ipynb\
+        deleted:    backward pass_col2im.txt\
+        modified:   train.py\
+\
+Untracked files:\
+  (use "git add <file>..." to include in what will be committed)\
+        final.pkl\
+        test_layers.py\
+\
+no changes added to commit (use "git add" and/or "git commit -a")\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % git checkout cnn_mnist\
+Switched to branch 'cnn_mnist'\
+Your branch is ahead of 'origin/claude/review-cnn-exercises-0gkdt' by 5 commits.\
+  (use "git push" to publish your local commits)\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % git push\
+fatal: The upstream branch of your current branch does not match\
+the name of your current branch.  To push to the upstream branch\
+on the remote, use\
+\
+    git push origin HEAD:claude/review-cnn-exercises-0gkdt\
+\
+To push to the branch of the same name on the remote, use\
+\
+    git push origin HEAD\
+\
+To choose either option permanently, see push.default in 'git help config'.\
+\
+To avoid automatically configuring an upstream branch when its name\
+won't match the local branch, see option 'simple' of branch.autoSetupMerge\
+in 'git help config'.\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % git status  \
+On branch cnn_mnist\
+Your branch is ahead of 'origin/claude/review-cnn-exercises-0gkdt' by 5 commits.\
+  (use "git push" to publish your local commits)\
+\
+Untracked files:\
+  (use "git add <file>..." to include in what will be committed)\
+        final.pkl\
+\
+nothing added to commit but untracked files present (use "git add" to track)\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % git checkout refactor         \
+Switched to branch 'refactor'\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python visualise.py final.pkl  --num-images 8\
+usage: visualise.py [-h] --model MODEL [--dataset-dir DATASET_DIR] [--json-file JSON_FILE] [--num-images NUM_IMAGES] [--seed SEED] [--output OUTPUT]\
+visualise.py: error: the following arguments are required: --model\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python visualise.py --model final.pkl --num-images 8                                                         \
+Saved report_examples.png with 8 examples\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python visualise.py --model final.pkl --num-images 8                                                         \
+Saved report_examples.png with 8 examples\
+^[[A^[[B^CTraceback (most recent call last):\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/visualise.py", line 194, in <module>\
+    main()\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/visualise.py", line 190, in main\
+    plt.show()\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/venv/lib/python3.12/site-packages/matplotlib/pyplot.py", line 613, in show\
+    return _get_backend_mod().show(*args, **kwargs)\
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/venv/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 3550, in show\
+    cls.mainloop()\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/venv/lib/python3.12/site-packages/matplotlib/backends/backend_macosx.py", line 179, in start_main_loop\
+    with _allow_interrupt_macos():\
+         ^^^^^^^^^^^^^^^^^^^^^^^^\
+  File "/opt/anaconda3/lib/python3.12/contextlib.py", line 144, in __exit__\
+    next(self.gen)\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/venv/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 1660, in _allow_interrupt\
+    old_sigint_handler(*handler_args)\
+KeyboardInterrupt\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python visualise.py --model final.pkl --num-images 8                                                         \
+Saved report_examples.png with 8 examples\
+2026-02-25 18:10:39.223 python[75190:6407361] The class 'NSSavePanel' overrides the method identifier.  This method is implemented by class 'NSWindow'\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python visualise.py --model final.pkl --num-images 4                                                                                                                      \
+Saved report_examples.png with 4 examples\
+2026-02-25 18:11:20.402 python[76120:6409850] The class 'NSSavePanel' overrides the method identifier.  This method is implemented by class 'NSWindow'\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python train.py\
+2026-02-26 09:35:25,713 [INFO] ============================================================\
+2026-02-26 09:35:25,714 [INFO] RUN 1: Adam lr=1e-3, batch=16, default augmentation\
+2026-02-26 09:35:25,714 [INFO] ============================================================\
+2026-02-26 09:35:25,719 [INFO] Resuming from checkpoint: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl\
+2026-02-26 09:35:25,731 [INFO] Receptive field: 68 pixels\
+2026-02-26 09:35:25,731 [INFO] Training epochs 112 \uc0\u8594  161\
+Epoch 112/161 [train]: 152it [00:24,  5.85it/s, loss=1.5283]^Z\
+zsh: suspended  python train.py\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python run2_continue.py                                  \
+2026-02-26 09:39:24,191 [INFO] Resuming from: checkpoints/run_20260226_052437/best_run2_adam_b32_strong_aug.pkl\
+2026-02-26 09:39:24,292 [INFO] Receptive field: 68 pixels\
+2026-02-26 09:39:24,292 [INFO] Training epochs 198 \uc0\u8594  297 | batch=32 | lr=0.00025 | stronger aug\
+2026-02-26 09:47:33,382 [INFO] Epoch 198/297 | Train Loss: 1.0145 | Val Loss: 1.1438 | Val Acc: 0.5852 \uc0\u9733  best | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_197.pkl\
+2026-02-26 09:55:39,351 [INFO] Epoch 199/297 | Train Loss: 1.0195 | Val Loss: 1.1486 | Val Acc: 0.5829 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_198.pkl\
+2026-02-26 10:02:30,782 [INFO] Epoch 200/297 | Train Loss: 1.0181 | Val Loss: 1.1452 | Val Acc: 0.5850 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_199.pkl\
+2026-02-26 10:08:17,391 [INFO] Epoch 201/297 | Train Loss: 1.0174 | Val Loss: 1.1383 | Val Acc: 0.5843 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_200.pkl\
+2026-02-26 10:14:04,634 [INFO] Epoch 202/297 | Train Loss: 1.0196 | Val Loss: 1.1441 | Val Acc: 0.5834 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_201.pkl\
+2026-02-26 10:19:50,836 [INFO] Epoch 203/297 | Train Loss: 1.0165 | Val Loss: 1.1411 | Val Acc: 0.5849 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_202.pkl\
+2026-02-26 10:25:35,586 [INFO] Epoch 204/297 | Train Loss: 1.0172 | Val Loss: 1.1433 | Val Acc: 0.5873 \uc0\u9733  best | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_203.pkl\
+2026-02-26 10:31:19,566 [INFO] Epoch 205/297 | Train Loss: 1.0185 | Val Loss: 1.1412 | Val Acc: 0.5856 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_204.pkl\
+2026-02-26 10:37:04,547 [INFO] Epoch 206/297 | Train Loss: 1.0171 | Val Loss: 1.1442 | Val Acc: 0.5854 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_205.pkl\
+2026-02-26 10:42:48,463 [INFO] Epoch 207/297 | Train Loss: 1.0159 | Val Loss: 1.1506 | Val Acc: 0.5832 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_206.pkl\
+2026-02-26 10:48:33,374 [INFO] Epoch 208/297 | Train Loss: 1.0166 | Val Loss: 1.1288 | Val Acc: 0.5871 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_207.pkl\
+2026-02-26 10:54:13,979 [INFO] Epoch 209/297 | Train Loss: 1.0146 | Val Loss: 1.1363 | Val Acc: 0.5895 \uc0\u9733  best | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_208.pkl\
+2026-02-26 11:00:01,493 [INFO] Epoch 210/297 | Train Loss: 1.0142 | Val Loss: 1.1384 | Val Acc: 0.5874 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_209.pkl\
+2026-02-26 11:05:47,936 [INFO] Epoch 211/297 | Train Loss: 1.0132 | Val Loss: 1.1413 | Val Acc: 0.5854 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_210.pkl\
+2026-02-26 11:11:32,264 [INFO] Epoch 212/297 | Train Loss: 1.0136 | Val Loss: 1.1385 | Val Acc: 0.5870 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_211.pkl\
+2026-02-26 11:17:18,296 [INFO] Epoch 213/297 | Train Loss: 1.0129 | Val Loss: 1.1467 | Val Acc: 0.5850 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_212.pkl\
+2026-02-26 11:23:03,337 [INFO] Epoch 214/297 | Train Loss: 1.0119 | Val Loss: 1.1431 | Val Acc: 0.5826 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_213.pkl\
+2026-02-26 11:28:48,019 [INFO] Epoch 215/297 | Train Loss: 1.0139 | Val Loss: 1.1386 | Val Acc: 0.5863 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_214.pkl\
+2026-02-26 11:35:40,223 [INFO] Reducing LR: 0.000250 \uc0\u8594  0.000125\
+2026-02-26 11:35:40,383 [INFO] Epoch 216/297 | Train Loss: 1.0117 | Val Loss: 1.1415 | Val Acc: 0.5839 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_215.pkl\
+2026-02-26 11:45:14,728 [INFO] Epoch 217/297 | Train Loss: 1.0007 | Val Loss: 1.1285 | Val Acc: 0.5891 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_216.pkl\
+2026-02-26 11:52:11,318 [INFO] Epoch 218/297 | Train Loss: 1.0026 | Val Loss: 1.1260 | Val Acc: 0.5876 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_217.pkl\
+2026-02-26 11:59:09,982 [INFO] Epoch 219/297 | Train Loss: 1.0004 | Val Loss: 1.1280 | Val Acc: 0.5872 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_218.pkl\
+2026-02-26 12:06:00,189 [INFO] Epoch 220/297 | Train Loss: 1.0011 | Val Loss: 1.1287 | Val Acc: 0.5882 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_219.pkl\
+2026-02-26 12:12:50,631 [INFO] Epoch 221/297 | Train Loss: 0.9991 | Val Loss: 1.1255 | Val Acc: 0.5894 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_220.pkl\
+2026-02-26 12:19:35,724 [INFO] Epoch 222/297 | Train Loss: 1.0030 | Val Loss: 1.1260 | Val Acc: 0.5879 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_221.pkl\
+2026-02-26 12:26:23,711 [INFO] Epoch 223/297 | Train Loss: 0.9996 | Val Loss: 1.1240 | Val Acc: 0.5902 \uc0\u9733  best | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_222.pkl\
+2026-02-26 12:33:13,461 [INFO] Epoch 224/297 | Train Loss: 1.0015 | Val Loss: 1.1266 | Val Acc: 0.5883 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_223.pkl\
+2026-02-26 12:40:13,392 [INFO] Epoch 225/297 | Train Loss: 0.9968 | Val Loss: 1.1248 | Val Acc: 0.5904 \uc0\u9733  best | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_224.pkl\
+2026-02-26 12:47:02,294 [INFO] Epoch 226/297 | Train Loss: 0.9976 | Val Loss: 1.1214 | Val Acc: 0.5889 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_225.pkl\
+2026-02-26 12:53:47,889 [INFO] Epoch 227/297 | Train Loss: 0.9989 | Val Loss: 1.1282 | Val Acc: 0.5886 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_226.pkl\
+2026-02-26 13:00:34,951 [INFO] Epoch 228/297 | Train Loss: 0.9958 | Val Loss: 1.1298 | Val Acc: 0.5872 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_227.pkl\
+2026-02-26 13:07:26,038 [INFO] Epoch 229/297 | Train Loss: 0.9972 | Val Loss: 1.1275 | Val Acc: 0.5881 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_228.pkl\
+2026-02-26 13:14:18,022 [INFO] Epoch 230/297 | Train Loss: 0.9957 | Val Loss: 1.1219 | Val Acc: 0.5937 \uc0\u9733  best | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_229.pkl\
+2026-02-26 13:21:09,716 [INFO] Epoch 231/297 | Train Loss: 0.9959 | Val Loss: 1.1224 | Val Acc: 0.5898 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_230.pkl\
+2026-02-26 13:28:04,824 [INFO] Epoch 232/297 | Train Loss: 0.9952 | Val Loss: 1.1246 | Val Acc: 0.5887 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_231.pkl\
+2026-02-26 13:34:55,169 [INFO] Epoch 233/297 | Train Loss: 0.9961 | Val Loss: 1.1261 | Val Acc: 0.5890 | LR: 0.000125 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_232.pkl\
+2026-02-26 13:41:39,223 [INFO] Reducing LR: 0.000125 \uc0\u8594  0.000063\
+2026-02-26 13:41:39,353 [INFO] Epoch 234/297 | Train Loss: 0.9950 | Val Loss: 1.1239 | Val Acc: 0.5889 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_233.pkl\
+2026-02-26 13:48:26,305 [INFO] Epoch 235/297 | Train Loss: 0.9917 | Val Loss: 1.1159 | Val Acc: 0.5934 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_234.pkl\
+2026-02-26 13:55:08,736 [INFO] Epoch 236/297 | Train Loss: 0.9917 | Val Loss: 1.1216 | Val Acc: 0.5914 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_235.pkl\
+2026-02-26 14:01:54,358 [INFO] Epoch 237/297 | Train Loss: 0.9908 | Val Loss: 1.1208 | Val Acc: 0.5917 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_236.pkl\
+2026-02-26 14:08:43,693 [INFO] Epoch 238/297 | Train Loss: 0.9916 | Val Loss: 1.1147 | Val Acc: 0.5934 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_237.pkl\
+2026-02-26 14:15:47,351 [INFO] Epoch 239/297 | Train Loss: 0.9891 | Val Loss: 1.1208 | Val Acc: 0.5909 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_238.pkl\
+2026-02-26 14:22:34,739 [INFO] Epoch 240/297 | Train Loss: 0.9918 | Val Loss: 1.1136 | Val Acc: 0.5939 \uc0\u9733  best | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_239.pkl\
+2026-02-26 14:29:44,674 [INFO] Epoch 241/297 | Train Loss: 0.9898 | Val Loss: 1.1176 | Val Acc: 0.5905 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_240.pkl\
+2026-02-26 14:37:10,927 [INFO] Epoch 242/297 | Train Loss: 0.9891 | Val Loss: 1.1166 | Val Acc: 0.5925 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_241.pkl\
+2026-02-26 14:44:04,695 [INFO] Epoch 243/297 | Train Loss: 0.9868 | Val Loss: 1.1145 | Val Acc: 0.5931 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_242.pkl\
+2026-02-26 14:51:10,365 [INFO] Epoch 244/297 | Train Loss: 0.9893 | Val Loss: 1.1144 | Val Acc: 0.5925 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_243.pkl\
+2026-02-26 14:58:18,608 [INFO] Epoch 245/297 | Train Loss: 0.9868 | Val Loss: 1.1140 | Val Acc: 0.5922 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_244.pkl\
+2026-02-26 15:05:13,165 [INFO] Epoch 246/297 | Train Loss: 0.9901 | Val Loss: 1.1187 | Val Acc: 0.5921 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_245.pkl\
+2026-02-26 15:12:15,708 [INFO] Epoch 247/297 | Train Loss: 0.9852 | Val Loss: 1.1149 | Val Acc: 0.5938 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_246.pkl\
+2026-02-26 15:19:07,140 [INFO] Epoch 248/297 | Train Loss: 0.9887 | Val Loss: 1.1128 | Val Acc: 0.5928 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_247.pkl\
+2026-02-26 15:26:30,981 [INFO] Epoch 249/297 | Train Loss: 0.9878 | Val Loss: 1.1184 | Val Acc: 0.5891 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_248.pkl\
+2026-02-26 15:34:00,986 [INFO] Epoch 250/297 | Train Loss: 0.9880 | Val Loss: 1.1157 | Val Acc: 0.5907 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_249.pkl\
+2026-02-26 15:41:22,906 [INFO] Epoch 251/297 | Train Loss: 0.9861 | Val Loss: 1.1138 | Val Acc: 0.5940 \uc0\u9733  best | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_250.pkl\
+2026-02-26 15:48:51,044 [INFO] Epoch 252/297 | Train Loss: 0.9891 | Val Loss: 1.1214 | Val Acc: 0.5893 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_251.pkl\
+2026-02-26 15:56:03,306 [INFO] Epoch 253/297 | Train Loss: 0.9845 | Val Loss: 1.1143 | Val Acc: 0.5916 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_252.pkl\
+2026-02-26 16:03:20,544 [INFO] Epoch 254/297 | Train Loss: 0.9877 | Val Loss: 1.1136 | Val Acc: 0.5958 \uc0\u9733  best | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_253.pkl\
+2026-02-26 16:10:18,147 [INFO] Epoch 255/297 | Train Loss: 0.9866 | Val Loss: 1.1141 | Val Acc: 0.5917 | LR: 0.000063 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_254.pkl\
+2026-02-26 16:17:10,940 [INFO] Reducing LR: 0.000063 \uc0\u8594  0.000031\
+2026-02-26 16:17:11,275 [INFO] Epoch 256/297 | Train Loss: 0.9853 | Val Loss: 1.1132 | Val Acc: 0.5925 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_255.pkl\
+2026-02-26 16:24:08,677 [INFO] Epoch 257/297 | Train Loss: 0.9858 | Val Loss: 1.1136 | Val Acc: 0.5909 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_256.pkl\
+2026-02-26 16:31:09,029 [INFO] Epoch 258/297 | Train Loss: 0.9865 | Val Loss: 1.1130 | Val Acc: 0.5920 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_257.pkl\
+2026-02-26 16:38:04,557 [INFO] Epoch 259/297 | Train Loss: 0.9816 | Val Loss: 1.1141 | Val Acc: 0.5934 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_258.pkl\
+2026-02-26 16:44:58,685 [INFO] Epoch 260/297 | Train Loss: 0.9837 | Val Loss: 1.1094 | Val Acc: 0.5936 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_259.pkl\
+2026-02-26 16:51:52,237 [INFO] Epoch 261/297 | Train Loss: 0.9835 | Val Loss: 1.1129 | Val Acc: 0.5916 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_260.pkl\
+2026-02-26 16:58:48,262 [INFO] Epoch 262/297 | Train Loss: 0.9823 | Val Loss: 1.1127 | Val Acc: 0.5924 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_261.pkl\
+2026-02-26 17:05:45,693 [INFO] Epoch 263/297 | Train Loss: 0.9819 | Val Loss: 1.1158 | Val Acc: 0.5925 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_262.pkl\
+2026-02-26 17:12:51,865 [INFO] Epoch 264/297 | Train Loss: 0.9840 | Val Loss: 1.1151 | Val Acc: 0.5896 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_263.pkl\
+2026-02-26 17:20:18,472 [INFO] Epoch 265/297 | Train Loss: 0.9840 | Val Loss: 1.1138 | Val Acc: 0.5923 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_264.pkl\
+2026-02-26 17:27:47,207 [INFO] Epoch 266/297 | Train Loss: 0.9837 | Val Loss: 1.1119 | Val Acc: 0.5938 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_265.pkl\
+2026-02-26 17:34:43,722 [INFO] Epoch 267/297 | Train Loss: 0.9840 | Val Loss: 1.1140 | Val Acc: 0.5911 | LR: 0.000031 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_266.pkl\
+2026-02-26 17:41:41,479 [INFO] Reducing LR: 0.000031 \uc0\u8594  0.000016\
+2026-02-26 17:41:41,607 [INFO] Epoch 268/297 | Train Loss: 0.9803 | Val Loss: 1.1124 | Val Acc: 0.5935 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_267.pkl\
+2026-02-26 17:48:49,846 [INFO] Epoch 269/297 | Train Loss: 0.9830 | Val Loss: 1.1102 | Val Acc: 0.5957 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_268.pkl\
+2026-02-26 17:55:41,730 [INFO] Epoch 270/297 | Train Loss: 0.9816 | Val Loss: 1.1126 | Val Acc: 0.5916 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_269.pkl\
+2026-02-26 18:02:30,203 [INFO] Epoch 271/297 | Train Loss: 0.9804 | Val Loss: 1.1102 | Val Acc: 0.5924 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_270.pkl\
+2026-02-26 18:09:42,459 [INFO] Epoch 272/297 | Train Loss: 0.9836 | Val Loss: 1.1129 | Val Acc: 0.5948 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_271.pkl\
+2026-02-26 18:16:36,894 [INFO] Epoch 273/297 | Train Loss: 0.9853 | Val Loss: 1.1078 | Val Acc: 0.5926 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_272.pkl\
+2026-02-26 18:23:31,194 [INFO] Epoch 274/297 | Train Loss: 0.9811 | Val Loss: 1.1144 | Val Acc: 0.5937 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_273.pkl\
+2026-02-26 18:30:25,787 [INFO] Epoch 275/297 | Train Loss: 0.9800 | Val Loss: 1.1115 | Val Acc: 0.5932 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_274.pkl\
+2026-02-26 18:37:25,355 [INFO] Epoch 276/297 | Train Loss: 0.9815 | Val Loss: 1.1129 | Val Acc: 0.5927 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_275.pkl\
+2026-02-26 18:44:41,033 [INFO] Epoch 277/297 | Train Loss: 0.9803 | Val Loss: 1.1104 | Val Acc: 0.5950 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_276.pkl\
+2026-02-26 18:52:09,084 [INFO] Epoch 278/297 | Train Loss: 0.9807 | Val Loss: 1.1143 | Val Acc: 0.5889 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_277.pkl\
+2026-02-26 19:00:06,890 [INFO] Epoch 279/297 | Train Loss: 0.9809 | Val Loss: 1.1113 | Val Acc: 0.5935 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_278.pkl\
+2026-02-26 19:08:10,748 [INFO] Epoch 280/297 | Train Loss: 0.9823 | Val Loss: 1.1103 | Val Acc: 0.5933 | LR: 0.000016 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_279.pkl\
+2026-02-26 19:16:14,437 [INFO] Reducing LR: 0.000016 \uc0\u8594  0.000008\
+2026-02-26 19:16:14,631 [INFO] Epoch 281/297 | Train Loss: 0.9842 | Val Loss: 1.1120 | Val Acc: 0.5920 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_280.pkl\
+2026-02-26 19:24:17,260 [INFO] Epoch 282/297 | Train Loss: 0.9806 | Val Loss: 1.1092 | Val Acc: 0.5947 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_281.pkl\
+2026-02-26 19:32:21,502 [INFO] Epoch 283/297 | Train Loss: 0.9814 | Val Loss: 1.1084 | Val Acc: 0.5931 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_282.pkl\
+2026-02-26 19:40:24,101 [INFO] Epoch 284/297 | Train Loss: 0.9794 | Val Loss: 1.1115 | Val Acc: 0.5915 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_283.pkl\
+2026-02-26 19:48:27,253 [INFO] Epoch 285/297 | Train Loss: 0.9778 | Val Loss: 1.1067 | Val Acc: 0.5923 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_284.pkl\
+2026-02-26 19:56:30,917 [INFO] Epoch 286/297 | Train Loss: 0.9797 | Val Loss: 1.1114 | Val Acc: 0.5927 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_285.pkl\
+2026-02-26 20:04:34,366 [INFO] Epoch 287/297 | Train Loss: 0.9804 | Val Loss: 1.1092 | Val Acc: 0.5944 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_286.pkl\
+2026-02-26 20:12:40,397 [INFO] Epoch 288/297 | Train Loss: 0.9797 | Val Loss: 1.1073 | Val Acc: 0.5951 | LR: 0.000008 | Ckpt: checkpoints/run_20260226_093924/epoch_run2_continued_epoch_287.pkl\
+Traceback (most recent call last):                          ^C\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/run2_continue.py", line 60, in <module>\
+    best_ckpt = train_run(\
+                ^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 164, in train_run\
+    net.backward(dX)\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 226, in backward\
+    self.t += 1\
+             ^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 287, in backward\
+    out = W_col @ patches_col + self.b[:, None]\
+              ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~\
+KeyboardInterrupt\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python test.py                                             \
+usage: test.py [-h] --test-dir TEST_DIR --model MODEL\
+test.py: error: the following arguments are required: --test-dir, --model\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python test.py final.pkl\
+usage: test.py [-h] --test-dir TEST_DIR --model MODEL\
+test.py: error: the following arguments are required: --test-dir, --model\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python eval_model.py --model final.pkl\
+Generating 200 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+test.py failed:\
+Traceback (most recent call last):\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/test.py", line 86, in <module>\
+    main()\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/test.py", line 59, in main\
+    with open(args.model, "rb") as f:\
+         ^^^^^^^^^^^^^^^^^^^^^^\
+FileNotFoundError: [Errno 2] No such file or directory: 'final.pkl'\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python eval_model.py --model final.pkl\
+Generating 200 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 200\
+Default predictions (failed to load): 0\
+Average accuracy: 0.6502 (65.02%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python eval_model.py --model final.pkl --num-images 1000                     \
+Generating 1000 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 1000\
+Default predictions (failed to load): 0\
+Average accuracy: 0.6616 (66.16%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python eval_model.py --model final.pkl --num-images 1000 --seed 123            \
+Generating 1000 shuffled images...\
+Saved shuffled images to eval_temp/shuffled\
+Saved ground truth to eval_temp/ground_truth.csv\
+\
+Running: python test.py --test-dir eval_temp/shuffled --model final.pkl\
+\
+==================================================\
+EVALUATION RESULTS\
+==================================================\
+Images evaluated: 1000\
+Default predictions (failed to load): 0\
+Average accuracy: 0.6633 (66.33%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python eval_unseen.py --model final.pkl --num-images 5000                      \
+Loading model: final.pkl\
+Loading images: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Total images available: 60000\
+Evaluating on 5000 images\
+\
+Evaluating: 100%|\uc0\u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 \u9608 | 157/157 [00:15<00:00,  9.86it/s, acc=0.6770]\
+\
+==================================================\
+UNSEEN DATA EVALUATION RESULTS\
+==================================================\
+Model: final.pkl\
+Dataset: dataset/unseen_data/qmnist-test-images-idx3-ubyte.gz\
+Images evaluated: 5000\
+Average accuracy: 0.6770 (67.70%)\
+==================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % }

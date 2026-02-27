@@ -1,0 +1,620 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww21020\viewh15040\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 2026-02-25 00:12:31,175 [INFO] Mode: Training | Epoch: 4 | Iter: 11987 | Loss: 2.6709\
+2026-02-25 00:12:31,251 [INFO] Mode: Training | Epoch: 4 | Iter: 11988 | Loss: 2.4876\
+2026-02-25 00:12:31,327 [INFO] Mode: Training | Epoch: 4 | Iter: 11989 | Loss: 2.4931\
+2026-02-25 00:12:31,403 [INFO] Mode: Training | Epoch: 4 | Iter: 11990 | Loss: 2.5037\
+2026-02-25 00:12:31,477 [INFO] Mode: Training | Epoch: 4 | Iter: 11991 | Loss: 2.6262\
+2026-02-25 00:12:31,553 [INFO] Mode: Training | Epoch: 4 | Iter: 11992 | Loss: 2.5523\
+2026-02-25 00:12:31,628 [INFO] Mode: Training | Epoch: 4 | Iter: 11993 | Loss: 2.6159\
+2026-02-25 00:12:31,704 [INFO] Mode: Training | Epoch: 4 | Iter: 11994 | Loss: 2.5795\
+2026-02-25 00:12:31,780 [INFO] Mode: Training | Epoch: 4 | Iter: 11995 | Loss: 2.5243\
+2026-02-25 00:12:31,855 [INFO] Mode: Training | Epoch: 4 | Iter: 11996 | Loss: 2.4622\
+2026-02-25 00:12:31,931 [INFO] Mode: Training | Epoch: 4 | Iter: 11997 | Loss: 2.5335\
+2026-02-25 00:12:32,007 [INFO] Mode: Training | Epoch: 4 | Iter: 11998 | Loss: 2.4448\
+2026-02-25 00:12:32,083 [INFO] Mode: Training | Epoch: 4 | Iter: 11999 | Loss: 2.5455\
+2026-02-25 00:12:32,158 [INFO] Mode: Training | Epoch: 4 | Iter: 12000 | Loss: 2.5614\
+2026-02-25 00:12:32,202 [INFO] Epoch 4 complete | Avg Loss: 2.5553\
+2026-02-25 00:12:32,218 [INFO] Checkpoint saved: checkpoints/epoch_4.pkl\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python train.py\
+Traceback (most recent call last):\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 1, in <module>\
+    from tqdm import tqdm\
+ModuleNotFoundError: No module named 'tqdm'\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % pip install tqdm\
+Collecting tqdm\
+  Downloading tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)\
+Downloading tqdm-4.67.3-py3-none-any.whl (78 kB)\
+Installing collected packages: tqdm\
+Successfully installed tqdm-4.67.3\
+\
+[notice] A new release of pip is available: 24.2 -> 26.0.1\
+[notice] To update, run: pip install --upgrade pip\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python train.py \
+2026-02-25 00:28:23,867 [INFO] Receptive field: 68 pixels\
+2026-02-25 00:28:23,867 [INFO] Starting training | epochs=30 | batch_size=8 | samples=2000\
+2026-02-25 00:29:06,549 [INFO] Epoch 1/30 | Loss: 2.7776 | Val Acc: 0.0789 | Checkpoint: checkpoints/epoch_0.pkl\
+2026-02-25 00:29:49,042 [INFO] Epoch 2/30 | Loss: 2.7571 | Val Acc: 0.0798 | Checkpoint: checkpoints/epoch_1.pkl\
+2026-02-25 00:30:32,218 [INFO] Epoch 3/30 | Loss: 2.7370 | Val Acc: 0.0971 | Checkpoint: checkpoints/epoch_2.pkl\
+2026-02-25 00:31:15,688 [INFO] Epoch 4/30 | Loss: 2.7155 | Val Acc: 0.1178 | Checkpoint: checkpoints/epoch_3.pkl\
+2026-02-25 00:31:58,657 [INFO] Epoch 5/30 | Loss: 2.6833 | Val Acc: 0.1094 | Checkpoint: checkpoints/epoch_4.pkl\
+2026-02-25 00:32:41,500 [INFO] Epoch 6/30 | Loss: 2.6546 | Val Acc: 0.1054 | Checkpoint: checkpoints/epoch_5.pkl\
+2026-02-25 00:33:25,263 [INFO] Epoch 7/30 | Loss: 2.6233 | Val Acc: 0.1314 | Checkpoint: checkpoints/epoch_6.pkl\
+2026-02-25 00:34:08,056 [INFO] Epoch 8/30 | Loss: 2.5959 | Val Acc: 0.1177 | Checkpoint: checkpoints/epoch_7.pkl\
+2026-02-25 00:34:50,363 [INFO] Epoch 9/30 | Loss: 2.5606 | Val Acc: 0.1534 | Checkpoint: checkpoints/epoch_8.pkl\
+2026-02-25 00:35:33,037 [INFO] Epoch 10/30 | Loss: 2.5289 | Val Acc: 0.1538 | Checkpoint: checkpoints/epoch_9.pkl\
+2026-02-25 00:36:15,896 [INFO] Epoch 11/30 | Loss: 2.5055 | Val Acc: 0.1514 | Checkpoint: checkpoints/epoch_10.pkl\
+2026-02-25 00:36:59,237 [INFO] Epoch 12/30 | Loss: 2.4668 | Val Acc: 0.1557 | Checkpoint: checkpoints/epoch_11.pkl\
+2026-02-25 00:37:42,359 [INFO] Epoch 13/30 | Loss: 2.4405 | Val Acc: 0.1751 | Checkpoint: checkpoints/epoch_12.pkl\
+Traceback (most recent call last):                ^C\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 109, in <module>\
+    net.backward(dX)\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 185, in backward\
+    dY = layer.backward(dY)\
+         ^^^^^^^^^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 264, in backward\
+    dX = col2im(dX_patches, (B, C, H, W), self.kernel_size, self.stride, self.pad)\
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 106, in col2im\
+    col_idx += 1\
+    ^^^^^^^\
+KeyboardInterrupt\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python train.py\
+2026-02-25 00:38:49,747 [INFO] ============================================================\
+2026-02-25 00:38:49,747 [INFO] Starting stage1_2x2_2k\
+2026-02-25 00:38:49,747 [INFO] ============================================================\
+2026-02-25 00:38:49,759 [INFO] Training | epochs=120 | batch=8 | samples=2000 | patches=4\
+2026-02-25 00:39:32,464 [INFO] stage1_2x2_2k | Epoch 1/120 | Loss: 2.7797 | Val Acc: 0.0737 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_0.pkl\
+2026-02-25 00:40:18,301 [INFO] stage1_2x2_2k | Epoch 2/120 | Loss: 2.7643 | Val Acc: 0.0768 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_1.pkl\
+2026-02-25 00:41:01,900 [INFO] stage1_2x2_2k | Epoch 3/120 | Loss: 2.7469 | Val Acc: 0.0943 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_2.pkl\
+2026-02-25 00:41:44,967 [INFO] stage1_2x2_2k | Epoch 4/120 | Loss: 2.7289 | Val Acc: 0.1041 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_3.pkl\
+2026-02-25 00:42:28,668 [INFO] stage1_2x2_2k | Epoch 5/120 | Loss: 2.7020 | Val Acc: 0.1143 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_4.pkl\
+2026-02-25 00:43:12,100 [INFO] stage1_2x2_2k | Epoch 6/120 | Loss: 2.6766 | Val Acc: 0.1175 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_5.pkl\
+2026-02-25 00:43:55,820 [INFO] stage1_2x2_2k | Epoch 7/120 | Loss: 2.6392 | Val Acc: 0.1058 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_6.pkl\
+2026-02-25 00:44:38,463 [INFO] stage1_2x2_2k | Epoch 8/120 | Loss: 2.6135 | Val Acc: 0.1390 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_7.pkl\
+2026-02-25 00:45:21,050 [INFO] stage1_2x2_2k | Epoch 9/120 | Loss: 2.5929 | Val Acc: 0.1520 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_8.pkl\
+2026-02-25 00:46:05,024 [INFO] stage1_2x2_2k | Epoch 10/120 | Loss: 2.5529 | Val Acc: 0.1407 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_9.pkl\
+2026-02-25 00:46:50,406 [INFO] stage1_2x2_2k | Epoch 11/120 | Loss: 2.5228 | Val Acc: 0.1671 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_10.pkl\
+2026-02-25 00:47:33,662 [INFO] stage1_2x2_2k | Epoch 12/120 | Loss: 2.4979 | Val Acc: 0.1612 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_11.pkl\
+2026-02-25 00:48:16,208 [INFO] stage1_2x2_2k | Epoch 13/120 | Loss: 2.4630 | Val Acc: 0.1694 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_12.pkl\
+2026-02-25 00:49:00,157 [INFO] stage1_2x2_2k | Epoch 14/120 | Loss: 2.4418 | Val Acc: 0.2014 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_13.pkl\
+2026-02-25 00:49:42,765 [INFO] stage1_2x2_2k | Epoch 15/120 | Loss: 2.4087 | Val Acc: 0.1912 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_14.pkl\
+2026-02-25 00:50:26,183 [INFO] stage1_2x2_2k | Epoch 16/120 | Loss: 2.3826 | Val Acc: 0.2024 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_15.pkl\
+2026-02-25 00:51:08,518 [INFO] stage1_2x2_2k | Epoch 17/120 | Loss: 2.3610 | Val Acc: 0.2089 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_16.pkl\
+2026-02-25 00:51:50,895 [INFO] stage1_2x2_2k | Epoch 18/120 | Loss: 2.3307 | Val Acc: 0.2021 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_17.pkl\
+2026-02-25 00:52:33,399 [INFO] stage1_2x2_2k | Epoch 19/120 | Loss: 2.3030 | Val Acc: 0.2307 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_18.pkl\
+2026-02-25 00:53:16,648 [INFO] stage1_2x2_2k | Epoch 20/120 | Loss: 2.2812 | Val Acc: 0.2280 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_19.pkl\
+2026-02-25 00:53:59,080 [INFO] stage1_2x2_2k | Epoch 21/120 | Loss: 2.2539 | Val Acc: 0.2377 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_20.pkl\
+2026-02-25 00:54:41,606 [INFO] stage1_2x2_2k | Epoch 22/120 | Loss: 2.2334 | Val Acc: 0.2645 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_21.pkl\
+2026-02-25 00:55:25,504 [INFO] stage1_2x2_2k | Epoch 23/120 | Loss: 2.2103 | Val Acc: 0.2463 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_22.pkl\
+2026-02-25 00:56:07,750 [INFO] stage1_2x2_2k | Epoch 24/120 | Loss: 2.1914 | Val Acc: 0.2504 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_23.pkl\
+2026-02-25 00:56:50,054 [INFO] stage1_2x2_2k | Epoch 25/120 | Loss: 2.1798 | Val Acc: 0.2617 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_24.pkl\
+2026-02-25 00:57:32,294 [INFO] stage1_2x2_2k | Epoch 26/120 | Loss: 2.1515 | Val Acc: 0.2876 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_25.pkl\
+2026-02-25 00:58:14,540 [INFO] stage1_2x2_2k | Epoch 27/120 | Loss: 2.1428 | Val Acc: 0.2749 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_26.pkl\
+2026-02-25 00:58:56,985 [INFO] stage1_2x2_2k | Epoch 28/120 | Loss: 2.1136 | Val Acc: 0.2844 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_27.pkl\
+2026-02-25 00:59:40,419 [INFO] stage1_2x2_2k | Epoch 29/120 | Loss: 2.1109 | Val Acc: 0.2892 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_28.pkl\
+2026-02-25 01:00:22,847 [INFO] stage1_2x2_2k | Epoch 30/120 | Loss: 2.0833 | Val Acc: 0.2968 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_29.pkl\
+2026-02-25 01:01:05,121 [INFO] stage1_2x2_2k | Epoch 31/120 | Loss: 2.0698 | Val Acc: 0.2800 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_30.pkl\
+2026-02-25 01:01:47,431 [INFO] stage1_2x2_2k | Epoch 32/120 | Loss: 2.0614 | Val Acc: 0.3195 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_31.pkl\
+2026-02-25 01:02:29,801 [INFO] stage1_2x2_2k | Epoch 33/120 | Loss: 2.0431 | Val Acc: 0.3067 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_32.pkl\
+2026-02-25 01:03:12,912 [INFO] stage1_2x2_2k | Epoch 34/120 | Loss: 2.0174 | Val Acc: 0.3128 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_33.pkl\
+2026-02-25 01:03:55,177 [INFO] stage1_2x2_2k | Epoch 35/120 | Loss: 2.0154 | Val Acc: 0.3145 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_34.pkl\
+2026-02-25 01:04:37,485 [INFO] stage1_2x2_2k | Epoch 36/120 | Loss: 2.0001 | Val Acc: 0.3170 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_35.pkl\
+2026-02-25 01:05:19,742 [INFO] stage1_2x2_2k | Epoch 37/120 | Loss: 1.9867 | Val Acc: 0.3469 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_36.pkl\
+2026-02-25 01:06:01,954 [INFO] stage1_2x2_2k | Epoch 38/120 | Loss: 1.9749 | Val Acc: 0.3303 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_37.pkl\
+2026-02-25 01:06:44,385 [INFO] stage1_2x2_2k | Epoch 39/120 | Loss: 1.9638 | Val Acc: 0.3299 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_38.pkl\
+2026-02-25 01:07:28,025 [INFO] stage1_2x2_2k | Epoch 40/120 | Loss: 1.9521 | Val Acc: 0.3385 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_39.pkl\
+2026-02-25 01:08:10,552 [INFO] stage1_2x2_2k | Epoch 41/120 | Loss: 1.9469 | Val Acc: 0.3389 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_40.pkl\
+2026-02-25 01:08:52,772 [INFO] stage1_2x2_2k | Epoch 42/120 | Loss: 1.9230 | Val Acc: 0.3302 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_41.pkl\
+2026-02-25 01:09:34,904 [INFO] stage1_2x2_2k | Epoch 43/120 | Loss: 1.9124 | Val Acc: 0.3485 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_42.pkl\
+2026-02-25 01:10:17,529 [INFO] stage1_2x2_2k | Epoch 44/120 | Loss: 1.8986 | Val Acc: 0.3409 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_43.pkl\
+2026-02-25 01:11:00,258 [INFO] stage1_2x2_2k | Epoch 45/120 | Loss: 1.8868 | Val Acc: 0.3777 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_44.pkl\
+2026-02-25 01:11:42,505 [INFO] stage1_2x2_2k | Epoch 46/120 | Loss: 1.8664 | Val Acc: 0.3587 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_45.pkl\
+2026-02-25 01:12:24,884 [INFO] stage1_2x2_2k | Epoch 47/120 | Loss: 1.8679 | Val Acc: 0.3532 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_46.pkl\
+2026-02-25 01:13:07,870 [INFO] stage1_2x2_2k | Epoch 48/120 | Loss: 1.8573 | Val Acc: 0.3690 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_47.pkl\
+2026-02-25 01:13:50,002 [INFO] stage1_2x2_2k | Epoch 49/120 | Loss: 1.8443 | Val Acc: 0.3781 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_48.pkl\
+2026-02-25 01:14:32,150 [INFO] stage1_2x2_2k | Epoch 50/120 | Loss: 1.8297 | Val Acc: 0.3756 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_49.pkl\
+2026-02-25 01:15:14,398 [INFO] stage1_2x2_2k | Epoch 51/120 | Loss: 1.8360 | Val Acc: 0.3706 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_50.pkl\
+2026-02-25 01:15:56,607 [INFO] stage1_2x2_2k | Epoch 52/120 | Loss: 1.8148 | Val Acc: 0.3762 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_51.pkl\
+2026-02-25 01:16:38,860 [INFO] stage1_2x2_2k | Epoch 53/120 | Loss: 1.8113 | Val Acc: 0.3637 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_52.pkl\
+2026-02-25 01:17:21,003 [INFO] stage1_2x2_2k | Epoch 54/120 | Loss: 1.8061 | Val Acc: 0.3830 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_53.pkl\
+2026-02-25 01:18:03,267 [INFO] stage1_2x2_2k | Epoch 55/120 | Loss: 1.7889 | Val Acc: 0.3897 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_54.pkl\
+2026-02-25 01:18:45,423 [INFO] stage1_2x2_2k | Epoch 56/120 | Loss: 1.7683 | Val Acc: 0.3844 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_55.pkl\
+2026-02-25 01:19:27,562 [INFO] stage1_2x2_2k | Epoch 57/120 | Loss: 1.7704 | Val Acc: 0.3833 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_56.pkl\
+2026-02-25 01:20:09,710 [INFO] stage1_2x2_2k | Epoch 58/120 | Loss: 1.7620 | Val Acc: 0.4046 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_57.pkl\
+2026-02-25 01:20:52,451 [INFO] stage1_2x2_2k | Epoch 59/120 | Loss: 1.7581 | Val Acc: 0.4020 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_58.pkl\
+2026-02-25 01:21:36,170 [INFO] stage1_2x2_2k | Epoch 60/120 | Loss: 1.7553 | Val Acc: 0.4014 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_59.pkl\
+2026-02-25 01:22:18,367 [INFO] stage1_2x2_2k | Epoch 61/120 | Loss: 1.7408 | Val Acc: 0.4061 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_60.pkl\
+2026-02-25 01:23:01,561 [INFO] stage1_2x2_2k | Epoch 62/120 | Loss: 1.7351 | Val Acc: 0.4128 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_61.pkl\
+2026-02-25 01:23:43,891 [INFO] stage1_2x2_2k | Epoch 63/120 | Loss: 1.7231 | Val Acc: 0.4063 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_62.pkl\
+2026-02-25 01:24:26,255 [INFO] stage1_2x2_2k | Epoch 64/120 | Loss: 1.7157 | Val Acc: 0.4218 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_63.pkl\
+2026-02-25 01:25:08,589 [INFO] stage1_2x2_2k | Epoch 65/120 | Loss: 1.7166 | Val Acc: 0.3952 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_64.pkl\
+2026-02-25 01:25:50,909 [INFO] stage1_2x2_2k | Epoch 66/120 | Loss: 1.7125 | Val Acc: 0.4000 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_65.pkl\
+2026-02-25 01:26:33,240 [INFO] stage1_2x2_2k | Epoch 67/120 | Loss: 1.6878 | Val Acc: 0.4111 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_66.pkl\
+2026-02-25 01:27:16,278 [INFO] stage1_2x2_2k | Epoch 68/120 | Loss: 1.6885 | Val Acc: 0.4394 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_67.pkl\
+2026-02-25 01:28:07,779 [INFO] stage1_2x2_2k | Epoch 69/120 | Loss: 1.6988 | Val Acc: 0.4217 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_68.pkl\
+2026-02-25 01:29:05,609 [INFO] stage1_2x2_2k | Epoch 70/120 | Loss: 1.6692 | Val Acc: 0.4089 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_69.pkl\
+2026-02-25 01:29:56,216 [INFO] stage1_2x2_2k | Epoch 71/120 | Loss: 1.6667 | Val Acc: 0.4373 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_70.pkl\
+2026-02-25 01:30:41,632 [INFO] stage1_2x2_2k | Epoch 72/120 | Loss: 1.6512 | Val Acc: 0.4409 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_71.pkl\
+2026-02-25 01:31:24,141 [INFO] stage1_2x2_2k | Epoch 73/120 | Loss: 1.6573 | Val Acc: 0.4218 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_72.pkl\
+2026-02-25 01:32:06,702 [INFO] stage1_2x2_2k | Epoch 74/120 | Loss: 1.6531 | Val Acc: 0.4231 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_73.pkl\
+2026-02-25 01:32:49,417 [INFO] stage1_2x2_2k | Epoch 75/120 | Loss: 1.6526 | Val Acc: 0.4319 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_74.pkl\
+2026-02-25 01:33:33,018 [INFO] stage1_2x2_2k | Epoch 76/120 | Loss: 1.6424 | Val Acc: 0.4162 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_75.pkl\
+2026-02-25 01:34:16,481 [INFO] stage1_2x2_2k | Epoch 77/120 | Loss: 1.6347 | Val Acc: 0.4225 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_76.pkl\
+2026-02-25 01:34:58,978 [INFO] stage1_2x2_2k | Epoch 78/120 | Loss: 1.6350 | Val Acc: 0.4407 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_77.pkl\
+2026-02-25 01:35:41,366 [INFO] stage1_2x2_2k | Epoch 79/120 | Loss: 1.6349 | Val Acc: 0.4342 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_78.pkl\
+2026-02-25 01:36:23,813 [INFO] stage1_2x2_2k | Epoch 80/120 | Loss: 1.6310 | Val Acc: 0.4372 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_79.pkl\
+2026-02-25 01:37:06,497 [INFO] stage1_2x2_2k | Epoch 81/120 | Loss: 1.6230 | Val Acc: 0.4386 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_80.pkl\
+2026-02-25 01:37:49,741 [INFO] stage1_2x2_2k | Epoch 82/120 | Loss: 1.6108 | Val Acc: 0.4619 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_81.pkl\
+2026-02-25 01:38:32,249 [INFO] stage1_2x2_2k | Epoch 83/120 | Loss: 1.6052 | Val Acc: 0.4310 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_82.pkl\
+2026-02-25 01:39:14,548 [INFO] stage1_2x2_2k | Epoch 84/120 | Loss: 1.5959 | Val Acc: 0.4290 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_83.pkl\
+2026-02-25 01:39:57,024 [INFO] stage1_2x2_2k | Epoch 85/120 | Loss: 1.5811 | Val Acc: 0.4292 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_84.pkl\
+2026-02-25 01:40:39,479 [INFO] stage1_2x2_2k | Epoch 86/120 | Loss: 1.5869 | Val Acc: 0.4467 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_85.pkl\
+2026-02-25 01:41:22,180 [INFO] stage1_2x2_2k | Epoch 87/120 | Loss: 1.5898 | Val Acc: 0.4210 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_86.pkl\
+2026-02-25 01:42:05,023 [INFO] stage1_2x2_2k | Epoch 88/120 | Loss: 1.5866 | Val Acc: 0.4386 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_87.pkl\
+2026-02-25 01:42:47,421 [INFO] stage1_2x2_2k | Epoch 89/120 | Loss: 1.5743 | Val Acc: 0.4732 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_88.pkl\
+2026-02-25 01:43:30,709 [INFO] stage1_2x2_2k | Epoch 90/120 | Loss: 1.5716 | Val Acc: 0.4394 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_89.pkl\
+2026-02-25 01:44:14,229 [INFO] stage1_2x2_2k | Epoch 91/120 | Loss: 1.5697 | Val Acc: 0.4377 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_90.pkl\
+2026-02-25 01:44:56,652 [INFO] stage1_2x2_2k | Epoch 92/120 | Loss: 1.5603 | Val Acc: 0.4520 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_91.pkl\
+2026-02-25 01:45:38,820 [INFO] stage1_2x2_2k | Epoch 93/120 | Loss: 1.5533 | Val Acc: 0.4596 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_92.pkl\
+2026-02-25 01:46:21,254 [INFO] stage1_2x2_2k | Epoch 94/120 | Loss: 1.5573 | Val Acc: 0.4327 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_93.pkl\
+2026-02-25 01:47:03,824 [INFO] stage1_2x2_2k | Epoch 95/120 | Loss: 1.5568 | Val Acc: 0.4403 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_94.pkl\
+2026-02-25 01:47:47,314 [INFO] stage1_2x2_2k | Epoch 96/120 | Loss: 1.5392 | Val Acc: 0.4496 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_95.pkl\
+2026-02-25 01:48:30,817 [INFO] stage1_2x2_2k | Epoch 97/120 | Loss: 1.5489 | Val Acc: 0.4551 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_96.pkl\
+2026-02-25 01:49:14,319 [INFO] stage1_2x2_2k | Epoch 98/120 | Loss: 1.5435 | Val Acc: 0.4463 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_97.pkl\
+2026-02-25 01:49:56,828 [INFO] stage1_2x2_2k | Epoch 99/120 | Loss: 1.5373 | Val Acc: 0.4667 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_98.pkl\
+2026-02-25 01:50:39,006 [INFO] stage1_2x2_2k | Epoch 100/120 | Loss: 1.5401 | Val Acc: 0.4484 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_99.pkl\
+2026-02-25 01:51:21,920 [INFO] stage1_2x2_2k | Epoch 101/120 | Loss: 1.5311 | Val Acc: 0.4619 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_100.pkl\
+2026-02-25 01:52:04,959 [INFO] stage1_2x2_2k | Epoch 102/120 | Loss: 1.5233 | Val Acc: 0.4517 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_101.pkl\
+2026-02-25 01:52:47,426 [INFO] stage1_2x2_2k | Epoch 103/120 | Loss: 1.5271 | Val Acc: 0.4769 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_102.pkl\
+2026-02-25 01:53:30,560 [INFO] stage1_2x2_2k | Epoch 104/120 | Loss: 1.5147 | Val Acc: 0.4486 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_103.pkl\
+2026-02-25 01:54:12,891 [INFO] stage1_2x2_2k | Epoch 105/120 | Loss: 1.5008 | Val Acc: 0.4646 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_104.pkl\
+2026-02-25 01:54:55,144 [INFO] stage1_2x2_2k | Epoch 106/120 | Loss: 1.5124 | Val Acc: 0.4445 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_105.pkl\
+2026-02-25 01:55:37,246 [INFO] stage1_2x2_2k | Epoch 107/120 | Loss: 1.5162 | Val Acc: 0.4703 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_106.pkl\
+2026-02-25 01:56:19,653 [INFO] stage1_2x2_2k | Epoch 108/120 | Loss: 1.5005 | Val Acc: 0.4618 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_107.pkl\
+2026-02-25 01:57:03,413 [INFO] stage1_2x2_2k | Epoch 109/120 | Loss: 1.5018 | Val Acc: 0.4739 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_108.pkl\
+2026-02-25 01:57:46,175 [INFO] stage1_2x2_2k | Epoch 110/120 | Loss: 1.4879 | Val Acc: 0.4579 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_109.pkl\
+2026-02-25 01:58:29,601 [INFO] stage1_2x2_2k | Epoch 111/120 | Loss: 1.4960 | Val Acc: 0.4556 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_110.pkl\
+2026-02-25 01:59:13,354 [INFO] stage1_2x2_2k | Epoch 112/120 | Loss: 1.4855 | Val Acc: 0.4621 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_111.pkl\
+2026-02-25 01:59:56,648 [INFO] stage1_2x2_2k | Epoch 113/120 | Loss: 1.4931 | Val Acc: 0.4669 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_112.pkl\
+2026-02-25 02:00:40,310 [INFO] stage1_2x2_2k | Epoch 114/120 | Loss: 1.4837 | Val Acc: 0.4701 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_113.pkl\
+2026-02-25 02:01:22,826 [INFO] stage1_2x2_2k | Epoch 115/120 | Loss: 1.4783 | Val Acc: 0.4656 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_114.pkl\
+2026-02-25 02:02:05,660 [INFO] stage1_2x2_2k | Epoch 116/120 | Loss: 1.4714 | Val Acc: 0.4875 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_115.pkl\
+2026-02-25 02:02:49,125 [INFO] stage1_2x2_2k | Epoch 117/120 | Loss: 1.4701 | Val Acc: 0.4906 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_116.pkl\
+2026-02-25 02:03:32,801 [INFO] stage1_2x2_2k | Epoch 118/120 | Loss: 1.4594 | Val Acc: 0.4859 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_117.pkl\
+2026-02-25 02:04:15,758 [INFO] stage1_2x2_2k | Epoch 119/120 | Loss: 1.4698 | Val Acc: 0.4692 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_118.pkl\
+2026-02-25 02:04:59,395 [INFO] stage1_2x2_2k | Epoch 120/120 | Loss: 1.4474 | Val Acc: 0.4567 | Checkpoint: checkpoints/epoch_stage1_2x2_2k_epoch_119.pkl\
+2026-02-25 02:04:59,395 [INFO] ============================================================\
+2026-02-25 02:04:59,395 [INFO] Starting stage2_2x2_10k\
+2026-02-25 02:04:59,395 [INFO] ============================================================\
+2026-02-25 02:04:59,412 [INFO] Loading weights from checkpoints/epoch_stage1_2x2_2k_epoch_119.pkl\
+Traceback (most recent call last):\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 128, in <module>\
+    net.load(previous_checkpoint)\
+    ^^^^^^^^\
+AttributeError: 'Network' object has no attribute 'load'\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python train.py\
+2026-02-25 09:44:23,135 [INFO] Checkpoints will be saved to: checkpoints/run_20260225_094423\
+2026-02-25 09:44:23,136 [INFO] ============================================================\
+2026-02-25 09:44:23,136 [INFO] Starting stage2_2x2_10k\
+2026-02-25 09:44:23,136 [INFO] ============================================================\
+2026-02-25 09:44:23,147 [INFO] Training | epochs=80 | batch=8 | samples=10000 | patches=4\
+2026-02-25 09:47:57,925 [INFO] stage2_2x2_10k | Epoch 1/80 | Loss: 2.7487 | Val Acc: 0.1088 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_0.pkl\
+2026-02-25 09:51:28,685 [INFO] stage2_2x2_10k | Epoch 2/80 | Loss: 2.6496 | Val Acc: 0.1372 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_1.pkl\
+2026-02-25 09:54:59,196 [INFO] stage2_2x2_10k | Epoch 3/80 | Loss: 2.5353 | Val Acc: 0.1676 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_2.pkl\
+2026-02-25 09:58:29,850 [INFO] stage2_2x2_10k | Epoch 4/80 | Loss: 2.4259 | Val Acc: 0.2039 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_3.pkl\
+2026-02-25 10:02:00,624 [INFO] stage2_2x2_10k | Epoch 5/80 | Loss: 2.3209 | Val Acc: 0.2296 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_4.pkl\
+2026-02-25 10:05:33,980 [INFO] stage2_2x2_10k | Epoch 6/80 | Loss: 2.2386 | Val Acc: 0.2585 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_5.pkl\
+2026-02-25 10:09:05,680 [INFO] stage2_2x2_10k | Epoch 7/80 | Loss: 2.1624 | Val Acc: 0.2858 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_6.pkl\
+2026-02-25 10:12:37,309 [INFO] stage2_2x2_10k | Epoch 8/80 | Loss: 2.0972 | Val Acc: 0.2988 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_7.pkl\
+2026-02-25 10:16:09,513 [INFO] stage2_2x2_10k | Epoch 9/80 | Loss: 2.0341 | Val Acc: 0.3207 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_8.pkl\
+2026-02-25 10:19:40,338 [INFO] stage2_2x2_10k | Epoch 10/80 | Loss: 1.9858 | Val Acc: 0.3318 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_9.pkl\
+2026-02-25 10:23:11,751 [INFO] stage2_2x2_10k | Epoch 11/80 | Loss: 1.9453 | Val Acc: 0.3485 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_10.pkl\
+2026-02-25 10:26:41,432 [INFO] stage2_2x2_10k | Epoch 12/80 | Loss: 1.9080 | Val Acc: 0.3516 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_11.pkl\
+2026-02-25 10:30:11,442 [INFO] stage2_2x2_10k | Epoch 13/80 | Loss: 1.8661 | Val Acc: 0.3572 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_12.pkl\
+2026-02-25 10:33:42,595 [INFO] stage2_2x2_10k | Epoch 14/80 | Loss: 1.8294 | Val Acc: 0.3699 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_13.pkl\
+2026-02-25 10:37:13,544 [INFO] stage2_2x2_10k | Epoch 15/80 | Loss: 1.8029 | Val Acc: 0.3843 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_14.pkl\
+2026-02-25 10:40:44,203 [INFO] stage2_2x2_10k | Epoch 16/80 | Loss: 1.7754 | Val Acc: 0.3922 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_15.pkl\
+2026-02-25 10:44:15,620 [INFO] stage2_2x2_10k | Epoch 17/80 | Loss: 1.7451 | Val Acc: 0.3972 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_16.pkl\
+2026-02-25 10:47:46,016 [INFO] stage2_2x2_10k | Epoch 18/80 | Loss: 1.7165 | Val Acc: 0.3943 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_17.pkl\
+2026-02-25 10:51:16,426 [INFO] stage2_2x2_10k | Epoch 19/80 | Loss: 1.6950 | Val Acc: 0.4131 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_18.pkl\
+2026-02-25 10:54:47,509 [INFO] stage2_2x2_10k | Epoch 20/80 | Loss: 1.6729 | Val Acc: 0.4263 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_19.pkl\
+2026-02-25 10:58:17,738 [INFO] stage2_2x2_10k | Epoch 21/80 | Loss: 1.6490 | Val Acc: 0.4324 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_20.pkl\
+2026-02-25 11:01:48,490 [INFO] stage2_2x2_10k | Epoch 22/80 | Loss: 1.6276 | Val Acc: 0.4343 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_21.pkl\
+2026-02-25 11:05:20,350 [INFO] stage2_2x2_10k | Epoch 23/80 | Loss: 1.6097 | Val Acc: 0.4420 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_22.pkl\
+2026-02-25 11:08:52,685 [INFO] stage2_2x2_10k | Epoch 24/80 | Loss: 1.5928 | Val Acc: 0.4444 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_23.pkl\
+2026-02-25 11:12:24,948 [INFO] stage2_2x2_10k | Epoch 25/80 | Loss: 1.5803 | Val Acc: 0.4452 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_24.pkl\
+2026-02-25 11:15:56,089 [INFO] stage2_2x2_10k | Epoch 26/80 | Loss: 1.5724 | Val Acc: 0.4503 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_25.pkl\
+2026-02-25 11:19:25,445 [INFO] stage2_2x2_10k | Epoch 27/80 | Loss: 1.5521 | Val Acc: 0.4482 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_26.pkl\
+2026-02-25 11:22:55,098 [INFO] stage2_2x2_10k | Epoch 28/80 | Loss: 1.5417 | Val Acc: 0.4565 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_27.pkl\
+2026-02-25 11:26:24,838 [INFO] stage2_2x2_10k | Epoch 29/80 | Loss: 1.5268 | Val Acc: 0.4559 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_28.pkl\
+2026-02-25 11:29:56,055 [INFO] stage2_2x2_10k | Epoch 30/80 | Loss: 1.5176 | Val Acc: 0.4607 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_29.pkl\
+2026-02-25 11:33:27,429 [INFO] stage2_2x2_10k | Epoch 31/80 | Loss: 1.5042 | Val Acc: 0.4563 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_30.pkl\
+2026-02-25 11:36:56,717 [INFO] stage2_2x2_10k | Epoch 32/80 | Loss: 1.4930 | Val Acc: 0.4697 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_31.pkl\
+2026-02-25 11:40:27,038 [INFO] stage2_2x2_10k | Epoch 33/80 | Loss: 1.4902 | Val Acc: 0.4731 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_32.pkl\
+2026-02-25 11:43:56,997 [INFO] stage2_2x2_10k | Epoch 34/80 | Loss: 1.4803 | Val Acc: 0.4721 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_33.pkl\
+2026-02-25 11:47:27,539 [INFO] stage2_2x2_10k | Epoch 35/80 | Loss: 1.4677 | Val Acc: 0.4792 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_34.pkl\
+2026-02-25 11:50:59,965 [INFO] stage2_2x2_10k | Epoch 36/80 | Loss: 1.4668 | Val Acc: 0.4749 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_35.pkl\
+2026-02-25 11:54:30,202 [INFO] stage2_2x2_10k | Epoch 37/80 | Loss: 1.4537 | Val Acc: 0.4767 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_36.pkl\
+2026-02-25 11:58:00,061 [INFO] stage2_2x2_10k | Epoch 38/80 | Loss: 1.4436 | Val Acc: 0.4903 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_37.pkl\
+2026-02-25 12:01:30,797 [INFO] stage2_2x2_10k | Epoch 39/80 | Loss: 1.4387 | Val Acc: 0.4736 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_38.pkl\
+2026-02-25 12:05:07,668 [INFO] stage2_2x2_10k | Epoch 40/80 | Loss: 1.4308 | Val Acc: 0.4820 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_39.pkl\
+2026-02-25 12:08:41,920 [INFO] stage2_2x2_10k | Epoch 41/80 | Loss: 1.4252 | Val Acc: 0.4867 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_40.pkl\
+2026-02-25 12:12:16,016 [INFO] stage2_2x2_10k | Epoch 42/80 | Loss: 1.4140 | Val Acc: 0.4892 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_41.pkl\
+2026-02-25 12:15:51,882 [INFO] stage2_2x2_10k | Epoch 43/80 | Loss: 1.4133 | Val Acc: 0.4911 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_42.pkl\
+2026-02-25 12:19:29,301 [INFO] stage2_2x2_10k | Epoch 44/80 | Loss: 1.4087 | Val Acc: 0.4903 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_43.pkl\
+2026-02-25 12:23:06,016 [INFO] stage2_2x2_10k | Epoch 45/80 | Loss: 1.4016 | Val Acc: 0.4883 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_44.pkl\
+2026-02-25 12:26:40,095 [INFO] stage2_2x2_10k | Epoch 46/80 | Loss: 1.3954 | Val Acc: 0.4957 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_45.pkl\
+2026-02-25 12:30:11,513 [INFO] stage2_2x2_10k | Epoch 47/80 | Loss: 1.3909 | Val Acc: 0.5024 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_46.pkl\
+2026-02-25 12:33:44,326 [INFO] stage2_2x2_10k | Epoch 48/80 | Loss: 1.3848 | Val Acc: 0.5004 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_47.pkl\
+2026-02-25 12:37:13,797 [INFO] stage2_2x2_10k | Epoch 49/80 | Loss: 1.3747 | Val Acc: 0.5001 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_48.pkl\
+2026-02-25 12:40:44,097 [INFO] stage2_2x2_10k | Epoch 50/80 | Loss: 1.3744 | Val Acc: 0.4989 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_49.pkl\
+2026-02-25 12:44:16,608 [INFO] stage2_2x2_10k | Epoch 51/80 | Loss: 1.3681 | Val Acc: 0.5088 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_50.pkl\
+2026-02-25 12:47:50,939 [INFO] stage2_2x2_10k | Epoch 52/80 | Loss: 1.3589 | Val Acc: 0.5073 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_51.pkl\
+2026-02-25 12:51:25,602 [INFO] stage2_2x2_10k | Epoch 53/80 | Loss: 1.3595 | Val Acc: 0.5020 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_52.pkl\
+2026-02-25 12:55:04,167 [INFO] stage2_2x2_10k | Epoch 54/80 | Loss: 1.3536 | Val Acc: 0.4949 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_53.pkl\
+2026-02-25 12:58:39,871 [INFO] stage2_2x2_10k | Epoch 55/80 | Loss: 1.3509 | Val Acc: 0.5076 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_54.pkl\
+2026-02-25 13:02:13,607 [INFO] stage2_2x2_10k | Epoch 56/80 | Loss: 1.3484 | Val Acc: 0.5081 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_55.pkl\
+2026-02-25 13:05:48,458 [INFO] stage2_2x2_10k | Epoch 57/80 | Loss: 1.3467 | Val Acc: 0.5011 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_56.pkl\
+2026-02-25 13:09:24,687 [INFO] stage2_2x2_10k | Epoch 58/80 | Loss: 1.3380 | Val Acc: 0.5071 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_57.pkl\
+2026-02-25 13:13:01,600 [INFO] stage2_2x2_10k | Epoch 59/80 | Loss: 1.3324 | Val Acc: 0.5054 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_58.pkl\
+2026-02-25 13:16:35,390 [INFO] stage2_2x2_10k | Epoch 60/80 | Loss: 1.3319 | Val Acc: 0.5150 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_59.pkl\
+2026-02-25 13:20:09,272 [INFO] stage2_2x2_10k | Epoch 61/80 | Loss: 1.3241 | Val Acc: 0.5070 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_60.pkl\
+2026-02-25 13:23:44,125 [INFO] stage2_2x2_10k | Epoch 62/80 | Loss: 1.3250 | Val Acc: 0.5088 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_61.pkl\
+2026-02-25 13:27:15,273 [INFO] stage2_2x2_10k | Epoch 63/80 | Loss: 1.3125 | Val Acc: 0.5143 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_62.pkl\
+2026-02-25 13:30:49,034 [INFO] stage2_2x2_10k | Epoch 64/80 | Loss: 1.3184 | Val Acc: 0.5116 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_63.pkl\
+2026-02-25 13:34:23,440 [INFO] stage2_2x2_10k | Epoch 65/80 | Loss: 1.3124 | Val Acc: 0.5209 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_64.pkl\
+2026-02-25 13:37:59,550 [INFO] stage2_2x2_10k | Epoch 66/80 | Loss: 1.3101 | Val Acc: 0.5148 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_65.pkl\
+2026-02-25 13:41:36,803 [INFO] stage2_2x2_10k | Epoch 67/80 | Loss: 1.3065 | Val Acc: 0.5174 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_66.pkl\
+2026-02-25 13:45:14,667 [INFO] stage2_2x2_10k | Epoch 68/80 | Loss: 1.2996 | Val Acc: 0.5219 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_67.pkl\
+2026-02-25 13:48:55,305 [INFO] stage2_2x2_10k | Epoch 69/80 | Loss: 1.2962 | Val Acc: 0.5194 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_68.pkl\
+2026-02-25 13:52:29,644 [INFO] stage2_2x2_10k | Epoch 70/80 | Loss: 1.2959 | Val Acc: 0.5255 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_69.pkl\
+2026-02-25 13:56:03,749 [INFO] stage2_2x2_10k | Epoch 71/80 | Loss: 1.2888 | Val Acc: 0.5259 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_70.pkl\
+2026-02-25 13:59:40,874 [INFO] stage2_2x2_10k | Epoch 72/80 | Loss: 1.2853 | Val Acc: 0.5239 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_71.pkl\
+2026-02-25 14:03:16,304 [INFO] stage2_2x2_10k | Epoch 73/80 | Loss: 1.2844 | Val Acc: 0.5144 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_72.pkl\
+2026-02-25 14:06:51,096 [INFO] stage2_2x2_10k | Epoch 74/80 | Loss: 1.2872 | Val Acc: 0.5162 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_73.pkl\
+2026-02-25 14:10:31,748 [INFO] stage2_2x2_10k | Epoch 75/80 | Loss: 1.2750 | Val Acc: 0.5166 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_74.pkl\
+2026-02-25 14:14:06,389 [INFO] stage2_2x2_10k | Epoch 76/80 | Loss: 1.2768 | Val Acc: 0.5260 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_75.pkl\
+2026-02-25 14:17:41,856 [INFO] stage2_2x2_10k | Epoch 77/80 | Loss: 1.2806 | Val Acc: 0.5284 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_76.pkl\
+2026-02-25 14:21:13,441 [INFO] stage2_2x2_10k | Epoch 78/80 | Loss: 1.2668 | Val Acc: 0.5167 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_77.pkl\
+2026-02-25 14:24:45,251 [INFO] stage2_2x2_10k | Epoch 79/80 | Loss: 1.2689 | Val Acc: 0.5249 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_78.pkl\
+2026-02-25 14:28:19,747 [INFO] stage2_2x2_10k | Epoch 80/80 | Loss: 1.2615 | Val Acc: 0.5245 | Checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_79.pkl\
+2026-02-25 14:28:19,747 [INFO] ============================================================\
+2026-02-25 14:28:19,747 [INFO] Starting stage3_3x3_5k\
+2026-02-25 14:28:19,747 [INFO] ============================================================\
+2026-02-25 14:28:19,752 [INFO] Loading network from checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_79.pkl\
+2026-02-25 14:28:19,763 [INFO] Training | epochs=40 | batch=8 | samples=5000 | patches=9\
+Traceback (most recent call last):          \
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 161, in <module>\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/venv/lib/python3.12/site-packages/tqdm/std.py", line 1181, in __iter__\
+    for obj in iterable:\
+               ^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/utils.py", line 231, in _get_batches\
+    img, label = self._load_image(fname)\
+                 ^^^^^^^^^^^^^^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/utils.py", line 203, in _load_image\
+    image, labels = self._shuffle_patches(image)\
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/utils.py", line 151, in _shuffle_patches\
+    raise ValueError(\
+ValueError: Image size (32, 32) not divisible by num_patches=9. Choose a different num_patches or resize/crop the image.\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python train.py\
+2026-02-25 15:22:53,551 [INFO] Resuming from checkpoint: checkpoints/run_20260225_094423/epoch_stage2_2x2_10k_epoch_76.pkl\
+2026-02-25 15:22:53,570 [INFO] Loaded model \'97 continuing from epoch 78\
+2026-02-25 15:22:53,570 [INFO] Receptive field: 68 pixels\
+2026-02-25 15:22:53,570 [INFO] Training epochs 78 \uc0\u8594  127 | batch_size=4 | augmentation=True\
+2026-02-25 15:34:37,876 [INFO] Epoch 78/127 | Train Loss: 1.5978 | Val Loss: 1.4791 | Val Acc: 0.4844 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_77.pkl\
+2026-02-25 15:46:29,805 [INFO] Epoch 79/127 | Train Loss: 1.5095 | Val Loss: 1.4624 | Val Acc: 0.4890 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_78.pkl\
+2026-02-25 15:58:05,213 [INFO] Epoch 80/127 | Train Loss: 1.4692 | Val Loss: 1.4331 | Val Acc: 0.4962 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_79.pkl\
+2026-02-25 16:09:53,472 [INFO] Epoch 81/127 | Train Loss: 1.4411 | Val Loss: 1.4435 | Val Acc: 0.4925 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_80.pkl\
+2026-02-25 16:21:32,205 [INFO] Epoch 82/127 | Train Loss: 1.4164 | Val Loss: 1.4238 | Val Acc: 0.4983 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_81.pkl\
+2026-02-25 16:33:14,349 [INFO] Epoch 83/127 | Train Loss: 1.3977 | Val Loss: 1.4231 | Val Acc: 0.4970 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_82.pkl\
+2026-02-25 16:44:55,028 [INFO] Epoch 84/127 | Train Loss: 1.3837 | Val Loss: 1.3960 | Val Acc: 0.5053 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_83.pkl\
+2026-02-25 16:56:33,234 [INFO] Epoch 85/127 | Train Loss: 1.3684 | Val Loss: 1.4134 | Val Acc: 0.4980 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_84.pkl\
+2026-02-25 17:08:03,166 [INFO] Epoch 86/127 | Train Loss: 1.3559 | Val Loss: 1.3853 | Val Acc: 0.5095 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_85.pkl\
+2026-02-25 17:19:23,529 [INFO] Epoch 87/127 | Train Loss: 1.3457 | Val Loss: 1.3700 | Val Acc: 0.5135 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_86.pkl\
+2026-02-25 17:30:56,990 [INFO] Epoch 88/127 | Train Loss: 1.3357 | Val Loss: 1.3739 | Val Acc: 0.5114 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_87.pkl\
+2026-02-25 17:42:44,740 [INFO] Epoch 89/127 | Train Loss: 1.3263 | Val Loss: 1.3742 | Val Acc: 0.5125 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_88.pkl\
+2026-02-25 17:54:42,182 [INFO] Epoch 90/127 | Train Loss: 1.3163 | Val Loss: 1.3661 | Val Acc: 0.5147 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_89.pkl\
+2026-02-25 18:06:17,036 [INFO] Epoch 91/127 | Train Loss: 1.3098 | Val Loss: 1.3367 | Val Acc: 0.5251 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_90.pkl\
+2026-02-25 18:17:57,049 [INFO] Epoch 92/127 | Train Loss: 1.3018 | Val Loss: 1.3317 | Val Acc: 0.5271 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_91.pkl\
+2026-02-25 18:29:05,446 [INFO] Epoch 93/127 | Train Loss: 1.2918 | Val Loss: 1.3451 | Val Acc: 0.5218 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_92.pkl\
+2026-02-25 18:40:15,355 [INFO] Epoch 94/127 | Train Loss: 1.2862 | Val Loss: 1.3212 | Val Acc: 0.5290 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_93.pkl\
+2026-02-25 18:51:27,719 [INFO] Epoch 95/127 | Train Loss: 1.2801 | Val Loss: 1.3324 | Val Acc: 0.5247 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_94.pkl\
+2026-02-25 19:02:48,887 [INFO] Epoch 96/127 | Train Loss: 1.2744 | Val Loss: 1.3151 | Val Acc: 0.5308 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_95.pkl\
+2026-02-25 19:14:04,002 [INFO] Epoch 97/127 | Train Loss: 1.2682 | Val Loss: 1.3175 | Val Acc: 0.5295 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_96.pkl\
+2026-02-25 19:25:14,285 [INFO] Epoch 98/127 | Train Loss: 1.2629 | Val Loss: 1.3169 | Val Acc: 0.5307 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_97.pkl\
+2026-02-25 19:36:29,475 [INFO] Epoch 99/127 | Train Loss: 1.2570 | Val Loss: 1.3124 | Val Acc: 0.5332 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_98.pkl\
+2026-02-25 19:47:57,254 [INFO] Epoch 100/127 | Train Loss: 1.2531 | Val Loss: 1.2971 | Val Acc: 0.5393 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_99.pkl\
+2026-02-25 19:59:19,648 [INFO] Epoch 101/127 | Train Loss: 1.2471 | Val Loss: 1.2968 | Val Acc: 0.5373 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_100.pkl\
+2026-02-25 20:10:35,388 [INFO] Epoch 102/127 | Train Loss: 1.2427 | Val Loss: 1.3071 | Val Acc: 0.5337 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_101.pkl\
+2026-02-25 20:21:46,581 [INFO] Epoch 103/127 | Train Loss: 1.2399 | Val Loss: 1.2921 | Val Acc: 0.5382 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_102.pkl\
+2026-02-25 20:41:40,206 [INFO] Epoch 104/127 | Train Loss: 1.2352 | Val Loss: 1.2867 | Val Acc: 0.5417 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_103.pkl\
+2026-02-25 20:52:59,072 [INFO] Epoch 105/127 | Train Loss: 1.2318 | Val Loss: 1.2838 | Val Acc: 0.5413 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_104.pkl\
+2026-02-25 21:04:17,781 [INFO] Epoch 106/127 | Train Loss: 1.2296 | Val Loss: 1.2923 | Val Acc: 0.5402 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_105.pkl\
+2026-02-25 21:15:43,219 [INFO] Epoch 107/127 | Train Loss: 1.2253 | Val Loss: 1.2791 | Val Acc: 0.5448 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_106.pkl\
+2026-02-25 21:27:06,175 [INFO] Epoch 108/127 | Train Loss: 1.2220 | Val Loss: 1.2676 | Val Acc: 0.5481 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_107.pkl\
+2026-02-25 21:38:05,012 [INFO] Epoch 109/127 | Train Loss: 1.2162 | Val Loss: 1.2702 | Val Acc: 0.5473 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_108.pkl\
+2026-02-25 21:49:08,980 [INFO] Epoch 110/127 | Train Loss: 1.2129 | Val Loss: 1.2708 | Val Acc: 0.5444 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_109.pkl\
+2026-02-25 22:00:12,432 [INFO] Epoch 111/127 | Train Loss: 1.2108 | Val Loss: 1.2570 | Val Acc: 0.5529 \uc0\u9733  best | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl\
+2026-02-25 22:11:14,506 [INFO] Epoch 112/127 | Train Loss: 1.2098 | Val Loss: 1.2868 | Val Acc: 0.5419 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_111.pkl\
+2026-02-25 22:22:34,002 [INFO] Epoch 113/127 | Train Loss: 1.2038 | Val Loss: 1.2757 | Val Acc: 0.5433 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_112.pkl\
+2026-02-25 22:33:44,354 [INFO] Epoch 114/127 | Train Loss: 1.2003 | Val Loss: 1.2660 | Val Acc: 0.5469 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_113.pkl\
+2026-02-25 22:45:05,044 [INFO] Epoch 115/127 | Train Loss: 1.1999 | Val Loss: 1.2505 | Val Acc: 0.5524 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_114.pkl\
+2026-02-25 22:56:40,499 [INFO] Epoch 116/127 | Train Loss: 1.1968 | Val Loss: 1.2671 | Val Acc: 0.5488 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_115.pkl\
+2026-02-25 23:08:09,817 [INFO] Epoch 117/127 | Train Loss: 1.1927 | Val Loss: 1.2719 | Val Acc: 0.5470 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_116.pkl\
+Traceback (most recent call last):                          ^C\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 202, in <module>\
+    net.backward(dX)\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 180, in backward\
+    layer.W -= self.lr * layer.dW\
+         ^^^^^^^^^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 247, in backward\
+    super().__init__()\
+        ^^^^^^^^^^^^^^^\
+KeyboardInterrupt\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % nohup python train.py > output.log 2>&1 &\
+[1] 85713\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % tail -f train.log \
+2026-02-25 22:33:44,354 [INFO] Epoch 114/127 | Train Loss: 1.2003 | Val Loss: 1.2660 | Val Acc: 0.5469 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_113.pkl\
+2026-02-25 22:45:05,044 [INFO] Epoch 115/127 | Train Loss: 1.1999 | Val Loss: 1.2505 | Val Acc: 0.5524 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_114.pkl\
+2026-02-25 22:56:40,499 [INFO] Epoch 116/127 | Train Loss: 1.1968 | Val Loss: 1.2671 | Val Acc: 0.5488 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_115.pkl\
+2026-02-25 23:08:09,817 [INFO] Epoch 117/127 | Train Loss: 1.1927 | Val Loss: 1.2719 | Val Acc: 0.5470 | Ckpt: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_116.pkl\
+2026-02-25 23:42:37,441 [INFO] ============================================================\
+2026-02-25 23:42:37,442 [INFO] RUN 1: Adam lr=1e-3, batch=16, default augmentation\
+2026-02-25 23:42:37,442 [INFO] ============================================================\
+2026-02-25 23:42:37,445 [INFO] Resuming from checkpoint: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl\
+2026-02-25 23:42:37,459 [INFO] Receptive field: 68 pixels\
+2026-02-25 23:42:37,459 [INFO] Training epochs 112 \uc0\u8594  161\
+^C\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %                                          \
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   tmux new -s train\
+  python train.py\
+zsh: command not found: tmux\
+2026-02-25 23:46:29,130 [INFO] ============================================================\
+2026-02-25 23:46:29,130 [INFO] RUN 1: Adam lr=1e-3, batch=16, default augmentation\
+2026-02-25 23:46:29,130 [INFO] ============================================================\
+2026-02-25 23:46:29,133 [INFO] Resuming from checkpoint: checkpoints/run_20260225_152253/epoch_stage2_2x2_10k_aug_epoch_110.pkl\
+2026-02-25 23:46:29,143 [INFO] Receptive field: 68 pixels\
+2026-02-25 23:46:29,143 [INFO] Training epochs 112 \uc0\u8594  161\
+2026-02-25 23:53:22,191 [INFO] Epoch 112/161 | Train Loss: 1.2409 | Val Loss: 1.3617 | Val Acc: 0.5222 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_111.pkl\
+2026-02-26 00:00:13,278 [INFO] Epoch 113/161 | Train Loss: 1.2960 | Val Loss: 1.3383 | Val Acc: 0.5305 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_112.pkl\
+2026-02-26 00:07:05,198 [INFO] Epoch 114/161 | Train Loss: 1.2990 | Val Loss: 1.3561 | Val Acc: 0.5277 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_113.pkl\
+2026-02-26 00:13:51,443 [INFO] Epoch 115/161 | Train Loss: 1.2947 | Val Loss: 1.3720 | Val Acc: 0.5239 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_114.pkl\
+2026-02-26 00:20:35,888 [INFO] Epoch 116/161 | Train Loss: 1.2931 | Val Loss: 1.3461 | Val Acc: 0.5284 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_115.pkl\
+2026-02-26 00:27:18,274 [INFO] Epoch 117/161 | Train Loss: 1.2899 | Val Loss: 1.3704 | Val Acc: 0.5200 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_116.pkl\
+2026-02-26 00:34:03,099 [INFO] Epoch 118/161 | Train Loss: 1.2867 | Val Loss: 1.3404 | Val Acc: 0.5304 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_117.pkl\
+2026-02-26 00:40:47,916 [INFO] Epoch 119/161 | Train Loss: 1.2781 | Val Loss: 1.3366 | Val Acc: 0.5326 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_118.pkl\
+2026-02-26 00:47:32,163 [INFO] Epoch 120/161 | Train Loss: 1.2745 | Val Loss: 1.3264 | Val Acc: 0.5367 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_119.pkl\
+2026-02-26 00:54:15,782 [INFO] Epoch 121/161 | Train Loss: 1.2702 | Val Loss: 1.3376 | Val Acc: 0.5321 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_120.pkl\
+2026-02-26 01:01:00,430 [INFO] Epoch 122/161 | Train Loss: 1.2657 | Val Loss: 1.3379 | Val Acc: 0.5345 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_121.pkl\
+2026-02-26 01:07:44,449 [INFO] Epoch 123/161 | Train Loss: 1.2615 | Val Loss: 1.3246 | Val Acc: 0.5366 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_122.pkl\
+2026-02-26 01:14:27,056 [INFO] Epoch 124/161 | Train Loss: 1.2568 | Val Loss: 1.3172 | Val Acc: 0.5362 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_123.pkl\
+2026-02-26 01:21:12,419 [INFO] Epoch 125/161 | Train Loss: 1.2534 | Val Loss: 1.3066 | Val Acc: 0.5435 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_124.pkl\
+2026-02-26 01:27:57,224 [INFO] Epoch 126/161 | Train Loss: 1.2492 | Val Loss: 1.3069 | Val Acc: 0.5428 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_125.pkl\
+2026-02-26 01:34:40,386 [INFO] Epoch 127/161 | Train Loss: 1.2476 | Val Loss: 1.3247 | Val Acc: 0.5353 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_126.pkl\
+2026-02-26 01:41:23,995 [INFO] Epoch 128/161 | Train Loss: 1.2419 | Val Loss: 1.2977 | Val Acc: 0.5436 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_127.pkl\
+2026-02-26 01:48:08,496 [INFO] Epoch 129/161 | Train Loss: 1.2383 | Val Loss: 1.3059 | Val Acc: 0.5429 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_128.pkl\
+2026-02-26 01:54:51,955 [INFO] Epoch 130/161 | Train Loss: 1.2361 | Val Loss: 1.2967 | Val Acc: 0.5464 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_129.pkl\
+2026-02-26 02:01:37,167 [INFO] Epoch 131/161 | Train Loss: 1.2342 | Val Loss: 1.2877 | Val Acc: 0.5487 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_130.pkl\
+2026-02-26 02:08:23,590 [INFO] Epoch 132/161 | Train Loss: 1.2310 | Val Loss: 1.2756 | Val Acc: 0.5524 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_131.pkl\
+2026-02-26 02:15:10,467 [INFO] Epoch 133/161 | Train Loss: 1.2283 | Val Loss: 1.2994 | Val Acc: 0.5441 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_132.pkl\
+2026-02-26 02:21:57,518 [INFO] Epoch 134/161 | Train Loss: 1.2292 | Val Loss: 1.2878 | Val Acc: 0.5499 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_133.pkl\
+2026-02-26 02:28:44,981 [INFO] Epoch 135/161 | Train Loss: 1.2212 | Val Loss: 1.2921 | Val Acc: 0.5469 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_134.pkl\
+2026-02-26 02:35:31,493 [INFO] Epoch 136/161 | Train Loss: 1.2221 | Val Loss: 1.2986 | Val Acc: 0.5456 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_135.pkl\
+2026-02-26 02:42:17,703 [INFO] Epoch 137/161 | Train Loss: 1.2196 | Val Loss: 1.2920 | Val Acc: 0.5443 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_136.pkl\
+2026-02-26 02:49:02,005 [INFO] Epoch 138/161 | Train Loss: 1.2187 | Val Loss: 1.2690 | Val Acc: 0.5514 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_137.pkl\
+2026-02-26 02:55:46,977 [INFO] Epoch 139/161 | Train Loss: 1.2158 | Val Loss: 1.2962 | Val Acc: 0.5456 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_138.pkl\
+2026-02-26 03:02:34,813 [INFO] Epoch 140/161 | Train Loss: 1.2148 | Val Loss: 1.2838 | Val Acc: 0.5487 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_139.pkl\
+2026-02-26 03:09:23,218 [INFO] Epoch 141/161 | Train Loss: 1.2095 | Val Loss: 1.2676 | Val Acc: 0.5524 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_140.pkl\
+2026-02-26 03:16:08,950 [INFO] Epoch 142/161 | Train Loss: 1.2090 | Val Loss: 1.2807 | Val Acc: 0.5482 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_141.pkl\
+2026-02-26 03:22:56,198 [INFO] Epoch 143/161 | Train Loss: 1.2055 | Val Loss: 1.2663 | Val Acc: 0.5559 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_142.pkl\
+2026-02-26 03:29:43,068 [INFO] Epoch 144/161 | Train Loss: 1.2031 | Val Loss: 1.2685 | Val Acc: 0.5566 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_143.pkl\
+2026-02-26 03:36:28,633 [INFO] Epoch 145/161 | Train Loss: 1.2046 | Val Loss: 1.2771 | Val Acc: 0.5535 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_144.pkl\
+2026-02-26 03:43:15,038 [INFO] Epoch 146/161 | Train Loss: 1.2024 | Val Loss: 1.2580 | Val Acc: 0.5584 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_145.pkl\
+2026-02-26 03:50:01,942 [INFO] Epoch 147/161 | Train Loss: 1.2005 | Val Loss: 1.2711 | Val Acc: 0.5526 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_146.pkl\
+2026-02-26 03:56:48,734 [INFO] Epoch 148/161 | Train Loss: 1.1983 | Val Loss: 1.2669 | Val Acc: 0.5528 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_147.pkl\
+2026-02-26 04:03:35,949 [INFO] Epoch 149/161 | Train Loss: 1.1958 | Val Loss: 1.2610 | Val Acc: 0.5571 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_148.pkl\
+2026-02-26 04:10:23,816 [INFO] Epoch 150/161 | Train Loss: 1.1986 | Val Loss: 1.2754 | Val Acc: 0.5502 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_149.pkl\
+2026-02-26 04:17:07,972 [INFO] Epoch 151/161 | Train Loss: 1.1961 | Val Loss: 1.2542 | Val Acc: 0.5583 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_150.pkl\
+2026-02-26 04:23:53,236 [INFO] Epoch 152/161 | Train Loss: 1.1929 | Val Loss: 1.3130 | Val Acc: 0.5351 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_151.pkl\
+2026-02-26 04:30:38,354 [INFO] Epoch 153/161 | Train Loss: 1.1953 | Val Loss: 1.2555 | Val Acc: 0.5545 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_152.pkl\
+2026-02-26 04:37:23,626 [INFO] Epoch 154/161 | Train Loss: 1.1949 | Val Loss: 1.2650 | Val Acc: 0.5545 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_153.pkl\
+2026-02-26 04:44:05,479 [INFO] Epoch 155/161 | Train Loss: 1.1915 | Val Loss: 1.2548 | Val Acc: 0.5578 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_154.pkl\
+2026-02-26 04:50:51,582 [INFO] Epoch 156/161 | Train Loss: 1.1870 | Val Loss: 1.2627 | Val Acc: 0.5538 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_155.pkl\
+2026-02-26 04:57:37,560 [INFO] Epoch 157/161 | Train Loss: 1.1905 | Val Loss: 1.2508 | Val Acc: 0.5584 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_156.pkl\
+2026-02-26 05:04:23,537 [INFO] Epoch 158/161 | Train Loss: 1.1914 | Val Loss: 1.2478 | Val Acc: 0.5617 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_157.pkl\
+2026-02-26 05:11:09,120 [INFO] Epoch 159/161 | Train Loss: 1.1885 | Val Loss: 1.2653 | Val Acc: 0.5544 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_158.pkl\
+2026-02-26 05:17:54,718 [INFO] Epoch 160/161 | Train Loss: 1.1865 | Val Loss: 1.2556 | Val Acc: 0.5569 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_159.pkl\
+2026-02-26 05:24:37,021 [INFO] Epoch 161/161 | Train Loss: 1.1836 | Val Loss: 1.2562 | Val Acc: 0.5609 | LR: 0.001000 | Ckpt: checkpoints/run_20260225_234629/epoch_run1_adam_b16_epoch_160.pkl\
+2026-02-26 05:24:37,022 [INFO] Run complete. Best val accuracy: 0.5617\
+2026-02-26 05:24:37,023 [INFO] ============================================================\
+2026-02-26 05:24:37,023 [INFO] RUN 2: Adam lr=5e-4, batch=32, stronger augmentation\
+2026-02-26 05:24:37,023 [INFO] ============================================================\
+2026-02-26 05:24:37,027 [INFO] Loading Run 1 best checkpoint: checkpoints/run_20260225_234629/best_run1_adam_b16.pkl\
+2026-02-26 05:24:37,068 [INFO] Training epochs 162 \uc0\u8594  201\
+2026-02-26 05:31:28,811 [INFO] Epoch 162/201 | Train Loss: 1.1115 | Val Loss: 1.1884 | Val Acc: 0.5735 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_161.pkl\
+2026-02-26 05:38:17,086 [INFO] Epoch 163/201 | Train Loss: 1.0937 | Val Loss: 1.1914 | Val Acc: 0.5715 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_162.pkl\
+2026-02-26 05:45:05,023 [INFO] Epoch 164/201 | Train Loss: 1.0884 | Val Loss: 1.1847 | Val Acc: 0.5727 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_163.pkl\
+2026-02-26 05:51:55,569 [INFO] Epoch 165/201 | Train Loss: 1.0837 | Val Loss: 1.1974 | Val Acc: 0.5705 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_164.pkl\
+2026-02-26 05:58:43,692 [INFO] Epoch 166/201 | Train Loss: 1.0788 | Val Loss: 1.1946 | Val Acc: 0.5704 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_165.pkl\
+2026-02-26 06:05:34,233 [INFO] Epoch 167/201 | Train Loss: 1.0736 | Val Loss: 1.1905 | Val Acc: 0.5720 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_166.pkl\
+2026-02-26 06:12:29,271 [INFO] Epoch 168/201 | Train Loss: 1.0736 | Val Loss: 1.1857 | Val Acc: 0.5760 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_167.pkl\
+2026-02-26 06:19:21,755 [INFO] Epoch 169/201 | Train Loss: 1.0697 | Val Loss: 1.1782 | Val Acc: 0.5785 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_168.pkl\
+2026-02-26 06:26:11,845 [INFO] Epoch 170/201 | Train Loss: 1.0698 | Val Loss: 1.1857 | Val Acc: 0.5736 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_169.pkl\
+2026-02-26 06:33:00,319 [INFO] Epoch 171/201 | Train Loss: 1.0685 | Val Loss: 1.1830 | Val Acc: 0.5714 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_170.pkl\
+2026-02-26 06:39:50,163 [INFO] Epoch 172/201 | Train Loss: 1.0674 | Val Loss: 1.1874 | Val Acc: 0.5741 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_171.pkl\
+2026-02-26 06:46:46,393 [INFO] Epoch 173/201 | Train Loss: 1.0648 | Val Loss: 1.1802 | Val Acc: 0.5735 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_172.pkl\
+2026-02-26 06:53:38,762 [INFO] Epoch 174/201 | Train Loss: 1.0612 | Val Loss: 1.1720 | Val Acc: 0.5787 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_173.pkl\
+2026-02-26 07:00:29,103 [INFO] Epoch 175/201 | Train Loss: 1.0626 | Val Loss: 1.1804 | Val Acc: 0.5774 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_174.pkl\
+2026-02-26 07:07:18,347 [INFO] Epoch 176/201 | Train Loss: 1.0605 | Val Loss: 1.1702 | Val Acc: 0.5781 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_175.pkl\
+2026-02-26 07:14:05,617 [INFO] Epoch 177/201 | Train Loss: 1.0610 | Val Loss: 1.1716 | Val Acc: 0.5786 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_176.pkl\
+2026-02-26 07:20:52,361 [INFO] Epoch 178/201 | Train Loss: 1.0573 | Val Loss: 1.1639 | Val Acc: 0.5806 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_177.pkl\
+2026-02-26 07:27:42,350 [INFO] Epoch 179/201 | Train Loss: 1.0589 | Val Loss: 1.1787 | Val Acc: 0.5747 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_178.pkl\
+2026-02-26 07:34:33,447 [INFO] Epoch 180/201 | Train Loss: 1.0563 | Val Loss: 1.1734 | Val Acc: 0.5768 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_179.pkl\
+2026-02-26 07:41:26,520 [INFO] Epoch 181/201 | Train Loss: 1.0558 | Val Loss: 1.1855 | Val Acc: 0.5714 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_180.pkl\
+2026-02-26 07:48:17,607 [INFO] Epoch 182/201 | Train Loss: 1.0571 | Val Loss: 1.1706 | Val Acc: 0.5771 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_181.pkl\
+2026-02-26 07:55:08,050 [INFO] Epoch 183/201 | Train Loss: 1.0548 | Val Loss: 1.1707 | Val Acc: 0.5756 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_182.pkl\
+2026-02-26 08:01:59,516 [INFO] Epoch 184/201 | Train Loss: 1.0506 | Val Loss: 1.1683 | Val Acc: 0.5797 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_183.pkl\
+2026-02-26 08:08:53,959 [INFO] Epoch 185/201 | Train Loss: 1.0526 | Val Loss: 1.1774 | Val Acc: 0.5749 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_184.pkl\
+2026-02-26 08:15:44,389 [INFO] Reducing LR: 0.000500 \uc0\u8594  0.000250\
+2026-02-26 08:15:44,587 [INFO] Epoch 186/201 | Train Loss: 1.0516 | Val Loss: 1.1729 | Val Acc: 0.5752 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_185.pkl\
+2026-02-26 08:22:31,253 [INFO] Epoch 187/201 | Train Loss: 1.0312 | Val Loss: 1.1493 | Val Acc: 0.5844 \uc0\u9733  best | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_186.pkl\
+2026-02-26 08:29:17,334 [INFO] Epoch 188/201 | Train Loss: 1.0297 | Val Loss: 1.1528 | Val Acc: 0.5818 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_187.pkl\
+2026-02-26 08:36:07,550 [INFO] Epoch 189/201 | Train Loss: 1.0264 | Val Loss: 1.1447 | Val Acc: 0.5854 \uc0\u9733  best | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_188.pkl\
+2026-02-26 08:42:59,716 [INFO] Epoch 190/201 | Train Loss: 1.0259 | Val Loss: 1.1511 | Val Acc: 0.5833 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_189.pkl\
+2026-02-26 08:49:51,772 [INFO] Epoch 191/201 | Train Loss: 1.0262 | Val Loss: 1.1394 | Val Acc: 0.5850 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_190.pkl\
+2026-02-26 08:56:42,110 [INFO] Epoch 192/201 | Train Loss: 1.0259 | Val Loss: 1.1451 | Val Acc: 0.5846 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_191.pkl\
+2026-02-26 09:03:32,370 [INFO] Epoch 193/201 | Train Loss: 1.0219 | Val Loss: 1.1477 | Val Acc: 0.5816 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_192.pkl\
+2026-02-26 09:10:24,827 [INFO] Epoch 194/201 | Train Loss: 1.0245 | Val Loss: 1.1484 | Val Acc: 0.5836 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_193.pkl\
+2026-02-26 09:17:15,988 [INFO] Epoch 195/201 | Train Loss: 1.0221 | Val Loss: 1.1415 | Val Acc: 0.5832 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_194.pkl\
+2026-02-26 09:24:07,346 [INFO] Epoch 196/201 | Train Loss: 1.0220 | Val Loss: 1.1449 | Val Acc: 0.5843 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_195.pkl\
+2026-02-26 09:30:58,275 [INFO] Epoch 197/201 | Train Loss: 1.0211 | Val Loss: 1.1317 | Val Acc: 0.5899 \uc0\u9733  best | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_196.pkl\
+2026-02-26 09:38:06,933 [INFO] Epoch 198/201 | Train Loss: 1.0184 | Val Loss: 1.1414 | Val Acc: 0.5836 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_197.pkl\
+2026-02-26 09:46:06,913 [INFO] Epoch 199/201 | Train Loss: 1.0205 | Val Loss: 1.1415 | Val Acc: 0.5862 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_198.pkl\
+2026-02-26 09:54:08,970 [INFO] Epoch 200/201 | Train Loss: 1.0159 | Val Loss: 1.1412 | Val Acc: 0.5854 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_199.pkl\
+Epoch 201/201 [train]: 575it [02:48,  3.46it/s, loss=1.2255][1]  + done       nohup python train.py > output.log 2>&1\
+2026-02-26 10:01:22,783 [INFO] Epoch 201/201 | Train Loss: 1.0191 | Val Loss: 1.1489 | Val Acc: 0.5835 | LR: 0.000250 | Ckpt: checkpoints/run_20260226_052437/epoch_run2_adam_b32_strong_aug_epoch_200.pkl\
+2026-02-26 10:01:22,784 [INFO] Run complete. Best val accuracy: 0.5899\
+2026-02-26 10:01:22,784 [INFO] ============================================================\
+2026-02-26 10:01:22,784 [INFO] All runs complete.\
+2026-02-26 10:01:22,784 [INFO] Run 1 best checkpoint: checkpoints/run_20260225_234629/best_run1_adam_b16.pkl\
+2026-02-26 10:01:22,784 [INFO] Run 2 best checkpoint: checkpoints/run_20260226_052437/best_run2_adam_b32_strong_aug.pkl\
+2026-02-26 10:01:22,784 [INFO] ============================================================\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework % python train.py \
+2026-02-26 11:29:46,760 [INFO] ============================================================\
+2026-02-26 11:29:46,761 [INFO] RUN 1: Adam lr=1e-3, batch=16, default augmentation\
+2026-02-26 11:29:46,761 [INFO] ============================================================\
+2026-02-26 11:29:46,764 [INFO] Resuming from checkpoint: checkpoints/run_20260226_052437/best_run2_adam_b32_strong_aug.pkl\
+2026-02-26 11:29:46,809 [INFO] Receptive field: 68 pixels\
+2026-02-26 11:29:46,809 [INFO] Training epochs 203 \uc0\u8594  252\
+2026-02-26 11:36:49,029 [INFO] Epoch 203/252 | Train Loss: 1.1331 | Val Loss: 1.2257 | Val Acc: 0.5697 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_202.pkl\
+2026-02-26 11:46:27,078 [INFO] Epoch 204/252 | Train Loss: 1.1584 | Val Loss: 1.2321 | Val Acc: 0.5682 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_203.pkl\
+2026-02-26 11:53:24,625 [INFO] Epoch 205/252 | Train Loss: 1.1617 | Val Loss: 1.2493 | Val Acc: 0.5594 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_204.pkl\
+2026-02-26 12:00:19,678 [INFO] Epoch 206/252 | Train Loss: 1.1637 | Val Loss: 1.2416 | Val Acc: 0.5632 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_205.pkl\
+2026-02-26 12:07:14,695 [INFO] Epoch 207/252 | Train Loss: 1.1663 | Val Loss: 1.2477 | Val Acc: 0.5624 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_206.pkl\
+2026-02-26 12:14:10,003 [INFO] Epoch 208/252 | Train Loss: 1.1683 | Val Loss: 1.2410 | Val Acc: 0.5626 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_207.pkl\
+2026-02-26 12:21:07,860 [INFO] Epoch 209/252 | Train Loss: 1.1662 | Val Loss: 1.2500 | Val Acc: 0.5580 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_208.pkl\
+2026-02-26 12:28:03,373 [INFO] Epoch 210/252 | Train Loss: 1.1696 | Val Loss: 1.2461 | Val Acc: 0.5646 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_209.pkl\
+2026-02-26 12:35:02,482 [INFO] Epoch 211/252 | Train Loss: 1.1679 | Val Loss: 1.2520 | Val Acc: 0.5557 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_210.pkl\
+2026-02-26 12:41:48,910 [INFO] Epoch 212/252 | Train Loss: 1.1686 | Val Loss: 1.2274 | Val Acc: 0.5658 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_211.pkl\
+2026-02-26 12:48:32,341 [INFO] Epoch 213/252 | Train Loss: 1.1659 | Val Loss: 1.2235 | Val Acc: 0.5708 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_212.pkl\
+2026-02-26 12:55:24,988 [INFO] Epoch 214/252 | Train Loss: 1.1649 | Val Loss: 1.2341 | Val Acc: 0.5639 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_213.pkl\
+2026-02-26 13:02:15,707 [INFO] Epoch 215/252 | Train Loss: 1.1666 | Val Loss: 1.2570 | Val Acc: 0.5541 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_214.pkl\
+2026-02-26 13:09:05,470 [INFO] Epoch 216/252 | Train Loss: 1.1656 | Val Loss: 1.2359 | Val Acc: 0.5652 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_215.pkl\
+2026-02-26 13:15:53,254 [INFO] Epoch 217/252 | Train Loss: 1.1627 | Val Loss: 1.2288 | Val Acc: 0.5648 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_216.pkl\
+2026-02-26 13:22:38,757 [INFO] Epoch 218/252 | Train Loss: 1.1620 | Val Loss: 1.2607 | Val Acc: 0.5561 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_217.pkl\
+2026-02-26 13:29:28,541 [INFO] Epoch 219/252 | Train Loss: 1.1661 | Val Loss: 1.2244 | Val Acc: 0.5660 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_218.pkl\
+2026-02-26 13:36:14,591 [INFO] Epoch 220/252 | Train Loss: 1.1636 | Val Loss: 1.2327 | Val Acc: 0.5664 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_219.pkl\
+2026-02-26 13:42:58,027 [INFO] Epoch 221/252 | Train Loss: 1.1606 | Val Loss: 1.2372 | Val Acc: 0.5606 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_220.pkl\
+2026-02-26 13:49:47,046 [INFO] Epoch 222/252 | Train Loss: 1.1627 | Val Loss: 1.2394 | Val Acc: 0.5622 | LR: 0.001000 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_221.pkl\
+2026-02-26 13:56:31,772 [INFO] Reducing LR: 0.001000 \uc0\u8594  0.000500\
+2026-02-26 13:56:31,829 [INFO] Epoch 223/252 | Train Loss: 1.1634 | Val Loss: 1.2497 | Val Acc: 0.5595 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_222.pkl\
+2026-02-26 14:03:14,469 [INFO] Epoch 224/252 | Train Loss: 1.1092 | Val Loss: 1.1777 | Val Acc: 0.5792 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_223.pkl\
+2026-02-26 14:10:00,085 [INFO] Epoch 225/252 | Train Loss: 1.1014 | Val Loss: 1.1658 | Val Acc: 0.5830 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_224.pkl\
+2026-02-26 14:16:58,399 [INFO] Epoch 226/252 | Train Loss: 1.0981 | Val Loss: 1.1627 | Val Acc: 0.5806 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_225.pkl\
+2026-02-26 14:23:46,039 [INFO] Epoch 227/252 | Train Loss: 1.0931 | Val Loss: 1.1733 | Val Acc: 0.5762 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_226.pkl\
+2026-02-26 14:30:57,019 [INFO] Epoch 228/252 | Train Loss: 1.0927 | Val Loss: 1.1629 | Val Acc: 0.5836 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_227.pkl\
+2026-02-26 14:38:13,345 [INFO] Epoch 229/252 | Train Loss: 1.0859 | Val Loss: 1.1726 | Val Acc: 0.5775 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_228.pkl\
+2026-02-26 14:45:01,163 [INFO] Epoch 230/252 | Train Loss: 1.0890 | Val Loss: 1.1590 | Val Acc: 0.5849 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_229.pkl\
+2026-02-26 14:52:06,690 [INFO] Epoch 231/252 | Train Loss: 1.0891 | Val Loss: 1.1573 | Val Acc: 0.5848 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_230.pkl\
+2026-02-26 14:59:03,489 [INFO] Epoch 232/252 | Train Loss: 1.0854 | Val Loss: 1.1659 | Val Acc: 0.5822 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_231.pkl\
+2026-02-26 15:05:59,751 [INFO] Epoch 233/252 | Train Loss: 1.0839 | Val Loss: 1.1550 | Val Acc: 0.5826 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_232.pkl\
+2026-02-26 15:12:50,242 [INFO] Epoch 234/252 | Train Loss: 1.0850 | Val Loss: 1.1726 | Val Acc: 0.5757 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_233.pkl\
+2026-02-26 15:19:40,567 [INFO] Epoch 235/252 | Train Loss: 1.0825 | Val Loss: 1.1629 | Val Acc: 0.5823 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_234.pkl\
+2026-02-26 15:26:56,022 [INFO] Epoch 236/252 | Train Loss: 1.0810 | Val Loss: 1.1606 | Val Acc: 0.5835 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_235.pkl\
+2026-02-26 15:34:16,689 [INFO] Epoch 237/252 | Train Loss: 1.0818 | Val Loss: 1.1518 | Val Acc: 0.5850 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_236.pkl\
+2026-02-26 15:41:30,267 [INFO] Epoch 238/252 | Train Loss: 1.0809 | Val Loss: 1.1553 | Val Acc: 0.5823 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_237.pkl\
+2026-02-26 15:48:53,031 [INFO] Epoch 239/252 | Train Loss: 1.0795 | Val Loss: 1.1499 | Val Acc: 0.5845 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_238.pkl\
+2026-02-26 15:55:58,716 [INFO] Epoch 240/252 | Train Loss: 1.0763 | Val Loss: 1.1502 | Val Acc: 0.5858 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_239.pkl\
+2026-02-26 16:03:09,216 [INFO] Epoch 241/252 | Train Loss: 1.0771 | Val Loss: 1.1490 | Val Acc: 0.5865 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_240.pkl\
+2026-02-26 16:10:00,024 [INFO] Epoch 242/252 | Train Loss: 1.0791 | Val Loss: 1.1516 | Val Acc: 0.5862 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_241.pkl\
+2026-02-26 16:16:45,462 [INFO] Epoch 243/252 | Train Loss: 1.0746 | Val Loss: 1.1734 | Val Acc: 0.5785 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_242.pkl\
+2026-02-26 16:23:35,798 [INFO] Epoch 244/252 | Train Loss: 1.0754 | Val Loss: 1.1515 | Val Acc: 0.5834 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_243.pkl\
+2026-02-26 16:30:28,605 [INFO] Epoch 245/252 | Train Loss: 1.0777 | Val Loss: 1.1444 | Val Acc: 0.5870 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_244.pkl\
+2026-02-26 16:37:16,574 [INFO] Epoch 246/252 | Train Loss: 1.0773 | Val Loss: 1.1572 | Val Acc: 0.5829 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_245.pkl\
+2026-02-26 16:44:04,942 [INFO] Epoch 247/252 | Train Loss: 1.0737 | Val Loss: 1.1582 | Val Acc: 0.5870 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_246.pkl\
+2026-02-26 16:50:50,591 [INFO] Epoch 248/252 | Train Loss: 1.0753 | Val Loss: 1.1496 | Val Acc: 0.5819 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_247.pkl\
+2026-02-26 16:57:38,419 [INFO] Epoch 249/252 | Train Loss: 1.0755 | Val Loss: 1.1522 | Val Acc: 0.5851 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_248.pkl\
+2026-02-26 17:04:28,171 [INFO] Epoch 250/252 | Train Loss: 1.0745 | Val Loss: 1.1474 | Val Acc: 0.5871 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_249.pkl\
+2026-02-26 17:11:30,334 [INFO] Epoch 251/252 | Train Loss: 1.0732 | Val Loss: 1.1574 | Val Acc: 0.5838 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_250.pkl\
+2026-02-26 17:18:37,662 [INFO] Epoch 252/252 | Train Loss: 1.0739 | Val Loss: 1.1546 | Val Acc: 0.5863 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_112946/epoch_run1_adam_b16_epoch_251.pkl\
+2026-02-26 17:18:37,664 [INFO] Run complete. Best val accuracy: 0.5871\
+2026-02-26 17:18:37,666 [INFO] ============================================================\
+2026-02-26 17:18:37,668 [INFO] RUN 2: Adam lr=5e-4, batch=32, stronger augmentation\
+2026-02-26 17:18:37,668 [INFO] ============================================================\
+2026-02-26 17:18:37,683 [INFO] Loading Run 1 best checkpoint: checkpoints/run_20260226_112946/best_run1_adam_b16.pkl\
+2026-02-26 17:18:37,722 [INFO] Training epochs 253 \uc0\u8594  292\
+2026-02-26 17:26:13,043 [INFO] Epoch 253/292 | Train Loss: 1.0365 | Val Loss: 1.1411 | Val Acc: 0.5876 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_252.pkl\
+2026-02-26 17:33:03,816 [INFO] Epoch 254/292 | Train Loss: 1.0353 | Val Loss: 1.1399 | Val Acc: 0.5872 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_253.pkl\
+2026-02-26 17:40:02,889 [INFO] Epoch 255/292 | Train Loss: 1.0350 | Val Loss: 1.1457 | Val Acc: 0.5866 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_254.pkl\
+2026-02-26 17:47:05,121 [INFO] Epoch 256/292 | Train Loss: 1.0326 | Val Loss: 1.1404 | Val Acc: 0.5895 \uc0\u9733  best | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_255.pkl\
+2026-02-26 17:53:54,805 [INFO] Epoch 257/292 | Train Loss: 1.0335 | Val Loss: 1.1484 | Val Acc: 0.5861 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_256.pkl\
+2026-02-26 18:00:41,253 [INFO] Epoch 258/292 | Train Loss: 1.0280 | Val Loss: 1.1594 | Val Acc: 0.5818 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_257.pkl\
+2026-02-26 18:07:43,008 [INFO] Epoch 259/292 | Train Loss: 1.0273 | Val Loss: 1.1445 | Val Acc: 0.5877 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_258.pkl\
+2026-02-26 18:14:41,436 [INFO] Epoch 260/292 | Train Loss: 1.0294 | Val Loss: 1.1463 | Val Acc: 0.5854 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_259.pkl\
+2026-02-26 18:21:37,292 [INFO] Epoch 261/292 | Train Loss: 1.0273 | Val Loss: 1.1367 | Val Acc: 0.5888 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_260.pkl\
+2026-02-26 18:28:27,349 [INFO] Epoch 262/292 | Train Loss: 1.0291 | Val Loss: 1.1463 | Val Acc: 0.5866 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_261.pkl\
+2026-02-26 18:35:25,690 [INFO] Epoch 263/292 | Train Loss: 1.0247 | Val Loss: 1.1441 | Val Acc: 0.5877 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_262.pkl\
+2026-02-26 18:42:29,304 [INFO] Epoch 264/292 | Train Loss: 1.0232 | Val Loss: 1.1608 | Val Acc: 0.5790 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_263.pkl\
+2026-02-26 18:49:57,565 [INFO] Epoch 265/292 | Train Loss: 1.0269 | Val Loss: 1.1473 | Val Acc: 0.5857 | LR: 0.000500 | Ckpt: checkpoints/run_20260226_171837/epoch_run2_adam_b32_strong_aug_epoch_264.pkl\
+Traceback (most recent call last):                          ^C\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 341, in <module>\
+    best_ckpt_2 = train_run(\
+                  ^^^^^^^^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/train.py", line 164, in train_run\
+    net.backward(dX)\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 226, in backward\
+    self.t += 1\
+             ^^^\
+  File "/Users/vatsalpatel/6CCSAACV_coursework/layers.py", line 287, in backward\
+    out = W_col @ patches_col + self.b[:, None]\
+              ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~\
+KeyboardInterrupt\
+\
+(venv) (base) vatsalpatel@Vatsals-MacBook-Pro 6CCSAACV_coursework %   python run_global_context.py                                                   \
+2026-02-26 18:52:16,091 [INFO] Transferred 9 conv layers from checkpoints/run_20260226_093924/best_run2_continued.pkl\
+2026-02-26 18:52:16,094 [INFO] Receptive field: 68 pixels\
+2026-02-26 18:52:16,094 [INFO] Architecture: Global Context (SE blocks after each pool) + weight transfer\
+2026-02-26 18:52:16,094 [INFO] Training epochs 1 \uc0\u8594  100 | batch=16 | lr=0.001\
+2026-02-26 19:00:32,532 [INFO] Epoch 1/100 | Train Loss: 1.0627 | Val Loss: 1.1222 | Val Acc: 0.5998 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_0.pkl\
+2026-02-26 19:09:07,687 [INFO] Epoch 2/100 | Train Loss: 1.0040 | Val Loss: 1.0923 | Val Acc: 0.6087 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_1.pkl\
+2026-02-26 19:17:40,540 [INFO] Epoch 3/100 | Train Loss: 0.9791 | Val Loss: 1.0394 | Val Acc: 0.6278 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_2.pkl\
+2026-02-26 19:26:14,203 [INFO] Epoch 4/100 | Train Loss: 0.9585 | Val Loss: 1.0327 | Val Acc: 0.6263 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_3.pkl\
+2026-02-26 19:34:50,938 [INFO] Epoch 5/100 | Train Loss: 0.9328 | Val Loss: 1.0127 | Val Acc: 0.6336 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_4.pkl\
+2026-02-26 19:43:23,040 [INFO] Epoch 6/100 | Train Loss: 0.9218 | Val Loss: 1.0166 | Val Acc: 0.6316 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_5.pkl\
+2026-02-26 19:51:58,985 [INFO] Epoch 7/100 | Train Loss: 0.9094 | Val Loss: 0.9921 | Val Acc: 0.6395 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_6.pkl\
+2026-02-26 20:00:33,598 [INFO] Epoch 8/100 | Train Loss: 0.8974 | Val Loss: 0.9991 | Val Acc: 0.6341 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_7.pkl\
+2026-02-26 20:09:07,827 [INFO] Epoch 9/100 | Train Loss: 0.8892 | Val Loss: 0.9731 | Val Acc: 0.6430 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_8.pkl\
+2026-02-26 20:17:26,780 [INFO] Epoch 10/100 | Train Loss: 0.8805 | Val Loss: 0.9724 | Val Acc: 0.6435 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_9.pkl\
+2026-02-26 20:24:34,924 [INFO] Epoch 11/100 | Train Loss: 0.8732 | Val Loss: 0.9618 | Val Acc: 0.6471 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_10.pkl\
+2026-02-26 20:31:39,464 [INFO] Epoch 12/100 | Train Loss: 0.8663 | Val Loss: 0.9568 | Val Acc: 0.6497 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_11.pkl\
+2026-02-26 20:38:39,396 [INFO] Epoch 13/100 | Train Loss: 0.8584 | Val Loss: 0.9527 | Val Acc: 0.6498 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_12.pkl\
+2026-02-26 20:45:42,790 [INFO] Epoch 14/100 | Train Loss: 0.8548 | Val Loss: 0.9322 | Val Acc: 0.6552 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_13.pkl\
+2026-02-26 20:52:44,880 [INFO] Epoch 15/100 | Train Loss: 0.8495 | Val Loss: 0.9541 | Val Acc: 0.6510 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_14.pkl\
+2026-02-26 20:59:50,182 [INFO] Epoch 16/100 | Train Loss: 0.8441 | Val Loss: 0.9257 | Val Acc: 0.6590 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_15.pkl\
+2026-02-26 21:06:51,986 [INFO] Epoch 17/100 | Train Loss: 0.8398 | Val Loss: 0.9189 | Val Acc: 0.6606 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_16.pkl\
+2026-02-26 21:14:22,381 [INFO] Epoch 18/100 | Train Loss: 0.8324 | Val Loss: 0.9330 | Val Acc: 0.6548 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_17.pkl\
+2026-02-26 21:21:25,319 [INFO] Epoch 19/100 | Train Loss: 0.8280 | Val Loss: 0.9203 | Val Acc: 0.6619 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_18.pkl\
+2026-02-26 21:28:33,343 [INFO] Epoch 20/100 | Train Loss: 0.8266 | Val Loss: 0.9228 | Val Acc: 0.6580 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_19.pkl\
+2026-02-26 21:35:45,577 [INFO] Epoch 21/100 | Train Loss: 0.8250 | Val Loss: 0.9012 | Val Acc: 0.6675 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_20.pkl\
+2026-02-26 21:42:54,981 [INFO] Epoch 22/100 | Train Loss: 0.8187 | Val Loss: 0.9082 | Val Acc: 0.6652 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_21.pkl\
+2026-02-26 21:50:07,033 [INFO] Epoch 23/100 | Train Loss: 0.8148 | Val Loss: 0.9091 | Val Acc: 0.6638 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_22.pkl\
+2026-02-26 21:57:24,646 [INFO] Epoch 24/100 | Train Loss: 0.8081 | Val Loss: 0.8981 | Val Acc: 0.6666 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_23.pkl\
+2026-02-26 22:04:56,976 [INFO] Epoch 25/100 | Train Loss: 0.8079 | Val Loss: 0.9023 | Val Acc: 0.6661 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_24.pkl\
+2026-02-26 22:12:36,171 [INFO] Epoch 26/100 | Train Loss: 0.8010 | Val Loss: 0.9079 | Val Acc: 0.6635 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_25.pkl\
+2026-02-26 22:20:05,103 [INFO] Epoch 27/100 | Train Loss: 0.8006 | Val Loss: 0.8799 | Val Acc: 0.6716 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_26.pkl\
+2026-02-26 22:29:50,205 [INFO] Epoch 28/100 | Train Loss: 0.7996 | Val Loss: 0.8902 | Val Acc: 0.6678 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_27.pkl\
+2026-02-26 22:38:03,729 [INFO] Epoch 29/100 | Train Loss: 0.7957 | Val Loss: 0.8927 | Val Acc: 0.6667 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_28.pkl\
+2026-02-26 22:45:48,525 [INFO] Epoch 30/100 | Train Loss: 0.7918 | Val Loss: 0.8862 | Val Acc: 0.6708 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_29.pkl\
+2026-02-26 22:52:03,410 [INFO] Epoch 31/100 | Train Loss: 0.7900 | Val Loss: 0.8710 | Val Acc: 0.6746 \uc0\u9733  best | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_30.pkl\
+2026-02-26 22:58:26,762 [INFO] Epoch 32/100 | Train Loss: 0.7886 | Val Loss: 0.8750 | Val Acc: 0.6729 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_31.pkl\
+2026-02-26 23:04:52,612 [INFO] Epoch 33/100 | Train Loss: 0.7875 | Val Loss: 0.8738 | Val Acc: 0.6732 | LR: 0.001000 | Ckpt: checkpoints/run_gc_20260226_185216/epoch_global_context_epoch_32.pkl\
+Epoch 34/100 [train]: 829it [01:36,  4.47it/s, loss=0.6780]}
