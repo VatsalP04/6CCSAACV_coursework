@@ -8,6 +8,8 @@ import pickle
 from tqdm import tqdm
 from layers import CrossEntropyLoss
 from utils import assign_patches, compute_reconstruction_accuracy, augmented_train_batches
+
+
 def train_run(net, loader, start_epoch, end_epoch, run_dir, run_name,
               use_augmentation, num_patches, lr_patience, lr_factor, lr_min,
               log, aug_params=None):
